@@ -14,7 +14,7 @@ const App = () => {
         parts={{ 1: part1, 2: part2, 3: part3 }}
         exercises={{ 1: exercises1, 2: exercises2, 3: exercises3 }}
       />
-      <p>Number of exercises {exercises1 + exercises2 + exercises3}</p>
+      <Total exercises={{ 1: exercises1, 2: exercises2, 3: exercises3 }} />
     </div>
   );
 };
@@ -38,6 +38,17 @@ const Content = (props) => {
       </p>
       <p>
         {props.parts[3]} {props.exercises[3]}
+      </p>
+    </>
+  );
+};
+
+const Total = (props) => {
+  return (
+    <>
+      <p>
+        Number of exercises{" "}
+        {props.exercises[1] + props.exercises[2] + props.exercises[3]}
       </p>
     </>
   );
