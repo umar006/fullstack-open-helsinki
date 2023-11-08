@@ -21,6 +21,7 @@ const App = () => {
   };
 
   const totalFeedback = good + neutral + bad;
+  const avgFeedback = totalFeedback / 3;
 
   return (
     <div>
@@ -33,6 +34,7 @@ const App = () => {
       <p>neutral {neutral}</p>
       <p>bad {bad}</p>
       <p>all {totalFeedback}</p>
+      <p>average {avgFeedback}</p>
     </div>
   );
 };
