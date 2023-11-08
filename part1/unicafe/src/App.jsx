@@ -9,17 +9,22 @@ const Statistics = (props) => {
     avgFeedback,
     positiveFeedbackInPercentage,
   } = props.data;
-  return (
-    <>
-      <h2>statistics</h2>
-      <p>good {good}</p>
-      <p>neutral {neutral}</p>
-      <p>bad {bad}</p>
-      <p>all {totalFeedback}</p>
-      <p>average {avgFeedback}</p>
-      <p>positive {positiveFeedbackInPercentage} %</p>
-    </>
-  );
+
+  if (totalFeedback <= 0) {
+    return <p>No feedback given</p>;
+  } else {
+    return (
+      <>
+        <h2>statistics</h2>
+        <p>good {good}</p>
+        <p>neutral {neutral}</p>
+        <p>bad {bad}</p>
+        <p>all {totalFeedback}</p>
+        <p>average {avgFeedback}</p>
+        <p>positive {positiveFeedbackInPercentage} %</p>
+      </>
+    );
+  }
 };
 
 const App = () => {
