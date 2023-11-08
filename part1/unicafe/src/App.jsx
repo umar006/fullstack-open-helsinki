@@ -22,6 +22,7 @@ const App = () => {
 
   const totalFeedback = good + neutral + bad;
   const avgFeedback = totalFeedback / 3;
+  const positiveFeedbackInPercentage = (good / totalFeedback) * 100 || 0;
 
   return (
     <div>
@@ -35,6 +36,7 @@ const App = () => {
       <p>bad {bad}</p>
       <p>all {totalFeedback}</p>
       <p>average {avgFeedback}</p>
+      <p>positive {positiveFeedbackInPercentage} %</p>
     </div>
   );
 };
