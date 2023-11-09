@@ -6,9 +6,10 @@ const Button = ({ text, onClick }) => {
 
 const StatisticLine = ({ text, value }) => {
   return (
-    <p>
-      {text} {value}
-    </p>
+    <tr>
+      <td>{text}</td>
+      <td>{value}</td>
+    </tr>
   );
 };
 
@@ -26,14 +27,19 @@ const Statistics = (props) => {
     return <p>No feedback given</p>;
   } else {
     return (
-      <div>
-        <StatisticLine text="good" value={good} />
-        <StatisticLine text="neutral" value={neutral} />
-        <StatisticLine text="bad" value={bad} />
-        <StatisticLine text="all" value={totalFeedback} />
-        <StatisticLine text="average" value={avgFeedback} />
-        <StatisticLine text="positive" value={positiveFeedbackInPercentage} />
-      </div>
+      <table>
+        <tbody>
+          <StatisticLine text="good" value={good} />
+          <StatisticLine text="neutral" value={neutral} />
+          <StatisticLine text="bad" value={bad} />
+          <StatisticLine text="all" value={totalFeedback} />
+          <StatisticLine text="average" value={avgFeedback} />
+          <StatisticLine
+            text="positive"
+            value={positiveFeedbackInPercentage + " %"}
+          />
+        </tbody>
+      </table>
     );
   }
 };
