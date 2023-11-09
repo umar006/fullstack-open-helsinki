@@ -1,5 +1,15 @@
 import { useState } from "react";
 
+const MostVoteAnecdote = ({ anecdotes, vote, selected }) => {
+  return (
+    <>
+      <h2>Anecdote with most votes</h2>
+      <div>{anecdotes[selected]}</div>
+      <p>has {vote[selected]} votes</p>
+    </>
+  );
+};
+
 const AnecdoteOfTheDay = ({ anecdotes, vote, selected }) => {
   return (
     <>
@@ -43,9 +53,11 @@ const Anecdote = () => {
       <AnecdoteOfTheDay anecdotes={anecdotes} vote={vote} selected={selected} />
       <button onClick={handleVote}>vote</button>
       <button onClick={randomAnecdote}>next anecdote</button>
-      <h2>Anecdote with most votes</h2>
-      <div>{anecdotes[mostVoteAnecdote]}</div>
-      <p>has {vote[mostVoteAnecdote]} votes</p>
+      <MostVoteAnecdote
+        anecdotes={anecdotes}
+        vote={vote}
+        selected={mostVoteAnecdote}
+      />
     </>
   );
 };
