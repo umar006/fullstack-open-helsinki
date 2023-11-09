@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const App = () => {
+const Anecdote = () => {
   const anecdotes = [
     "If it hurts, do it more often.",
     "Adding manpower to a late software project makes it later!",
@@ -28,7 +28,6 @@ const App = () => {
   };
 
   const mostVoteAnecdote = vote.indexOf(Math.max(...vote));
-
   return (
     <>
       <h2>Anecdote of the day</h2>
@@ -40,6 +39,14 @@ const App = () => {
       <div>{anecdotes[mostVoteAnecdote]}</div>
       <p>has {vote[mostVoteAnecdote]} votes</p>
     </>
+  );
+};
+
+const App = () => {
+  return (
+    <div>
+      <Anecdote />
+    </div>
   );
 };
 
