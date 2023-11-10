@@ -1,9 +1,5 @@
 const Header = (props) => {
-  return (
-    <>
-      <h1>{props.course}</h1>
-    </>
-  );
+  return <h1>{props.course}</h1>;
 };
 
 const Content = ({ parts }) => {
@@ -11,16 +7,14 @@ const Content = ({ parts }) => {
     return <Part key={p.id} name={p.name} exercise={p.exercises} />;
   });
 
-  return <>{contents}</>;
+  return contents;
 };
 
 const Part = (props) => {
   return (
-    <>
-      <p>
-        {props.name} {props.exercise}
-      </p>
-    </>
+    <p>
+      {props.name} {props.exercise}
+    </p>
   );
 };
 
@@ -29,11 +23,7 @@ const Total = ({ parts }) => {
     return p + c.exercises;
   }, 0);
 
-  return (
-    <>
-      <p>Number of exercises {total}</p>
-    </>
-  );
+  return <p>Number of exercises {total}</p>;
 };
 
 const Course = ({ course }) => {
