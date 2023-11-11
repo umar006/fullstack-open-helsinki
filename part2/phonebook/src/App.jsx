@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Filter from "./components/Filter";
 import PersonForm from "./components/PersonForm";
+import Persons from "./components/Persons";
 
 const App = () => {
   const [persons, setPersons] = useState([
@@ -47,18 +48,6 @@ const App = () => {
     setQuery(e.target.value);
   };
 
-  const filterPhonebooks = persons
-    .filter((person) =>
-      person.name
-        .split(" ")
-        .some((name) => name.toLowerCase().startsWith(query)),
-    )
-    .map((person) => (
-      <div key={person.id}>
-        {person.name} {person.number}
-      </div>
-    ));
-
   return (
     <div>
       <h2>Phonebook</h2>
@@ -72,7 +61,7 @@ const App = () => {
         onChangeNumber={handleNumberChange}
       />
       <h2>Numbers</h2>
-      {filterPhonebooks}
+      <Persons persons={persons} query={query} />
     </div>
   );
 };
