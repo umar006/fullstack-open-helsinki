@@ -4,6 +4,7 @@ import PersonForm from "./components/PersonForm";
 import Persons from "./components/Persons";
 import { useEffect } from "react";
 import axios from "axios";
+import personServices from "./services/personServices";
 
 const App = () => {
   const [persons, setPersons] = useState([]);
@@ -12,9 +13,7 @@ const App = () => {
   const [query, setQuery] = useState("");
 
   useEffect(() => {
-    axios.get("http://localhost:3001/persons").then((res) => {
-      setPersons(res.data);
-    });
+    personServices.getAll().then((persons) => setPersons(persons));
   }, []);
 
   const addPerson = (e) => {
