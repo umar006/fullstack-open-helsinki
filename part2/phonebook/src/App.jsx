@@ -18,11 +18,11 @@ const App = () => {
   const addPerson = (e) => {
     e.preventDefault();
 
-    const personExist = persons.some(
+    const person = persons.find(
       (person) => person.name.toLowerCase() === newName.toLowerCase(),
     );
-    if (personExist) {
-      alert(`${newName} is already added to phonebook`);
+    if (person) {
+      updatePerson(person);
       return;
     }
 
@@ -37,6 +37,18 @@ const App = () => {
       setNewName("");
       setNewNumber("");
     });
+  };
+
+  const updatePerson = (person) => {
+    personServices
+      .update(person.id, { ...person, number: newNumber })
+      .then((updatedPerson) => {
+        setPersons(
+          persons.map((p) => (p.id !== person.id ? p : updatedPerson)),
+        );
+        setNewName("");
+        setNewNumber("");
+      });
   };
 
   const deletePerson = (e) => {

@@ -7,8 +7,7 @@ const Persons = ({ persons, query, deletePerson }) => {
     )
     .map((person) => (
       <div key={person.id}>
-        <span>{person.name}</span>
-        {person.number + " "}
+        <span>{person.name}</span> {" " + person.number + " "}
         <button id={person.id} onClick={deletePerson}>
           delete
         </button>
