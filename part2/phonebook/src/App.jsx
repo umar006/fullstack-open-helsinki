@@ -40,6 +40,13 @@ const App = () => {
     });
   };
 
+  const deletePerson = (e) => {
+    const idToDelete = Number(e.target.id);
+    personServices.remove(idToDelete).then(() => {
+      setPersons(persons.filter((person) => person.id !== idToDelete));
+    });
+  };
+
   const handlePersonChange = (e) => {
     setNewName(e.target.value);
   };
@@ -65,7 +72,7 @@ const App = () => {
         onChangeNumber={handleNumberChange}
       />
       <h2>Numbers</h2>
-      <Persons persons={persons} query={query} />
+      <Persons persons={persons} query={query} deletePerson={deletePerson} />
     </div>
   );
 };

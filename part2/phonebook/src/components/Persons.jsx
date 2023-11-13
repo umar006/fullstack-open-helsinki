@@ -1,4 +1,4 @@
-const Persons = ({ persons, query }) => {
+const Persons = ({ persons, query, deletePerson }) => {
   const filterPhonebooks = persons
     .filter((person) =>
       person.name
@@ -7,7 +7,10 @@ const Persons = ({ persons, query }) => {
     )
     .map((person) => (
       <div key={person.id}>
-        {person.name} {person.number}
+        {person.name} {person.number + " "}
+        <button id={person.id} onClick={deletePerson}>
+          delete
+        </button>
       </div>
     ));
 
