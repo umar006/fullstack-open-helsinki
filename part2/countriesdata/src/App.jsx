@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useState } from "react";
 import countryServices from "./services/countryServices";
+import CountryList from "./components/Country";
 
 function App() {
   const [countries, setCountries] = useState([]);
@@ -12,10 +13,6 @@ function App() {
     });
   }, []);
 
-  const searchCountries = countries
-    .filter((country) => country.name.common.toLowerCase().includes(query))
-    .map((country) => <div key={country.ccn3}>{country.name.common}</div>);
-
   const handleQueryChange = (e) => {
     setQuery(e.target.value);
   };
@@ -23,7 +20,7 @@ function App() {
   return (
     <div>
       country: <input value={query} onChange={handleQueryChange} />
-      {searchCountries}
+      <CountryList countries={countries} query={query} />
     </div>
   );
 }
