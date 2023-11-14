@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 const CountryDetail = ({ country }) => {
   return (
     <div>
@@ -16,7 +18,19 @@ const CountryDetail = ({ country }) => {
 };
 
 const Country = ({ country }) => {
-  return <div>{country.name.common}</div>;
+  const [show, setShow] = useState(false);
+
+  const handleShow = () => {
+    setShow(!show);
+  };
+
+  return (
+    <div>
+      {country.name.common}
+      <button onClick={handleShow}>{show ? "close" : "show"}</button>
+      {show ? <CountryDetail country={country} /> : null}
+    </div>
+  );
 };
 
 const CountryList = ({ countries, query }) => {
