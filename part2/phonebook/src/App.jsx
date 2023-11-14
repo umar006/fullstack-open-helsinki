@@ -12,6 +12,7 @@ const App = () => {
   const [newNumber, setNewNumber] = useState("");
   const [query, setQuery] = useState("");
   const [successMessage, setSuccessMessage] = useState(null);
+  const [errorMessage, setErrorMessage] = useState(null);
 
   useEffect(() => {
     personServices.getAll().then((persons) => setPersons(persons));
@@ -83,7 +84,9 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
-      <Notification message={successMessage} />
+      <Notification
+        message={{ success: successMessage, error: errorMessage }}
+      />
       <Filter query={query} onChange={handleFilterChange} />
       <h2>Add a new</h2>
       <PersonForm
