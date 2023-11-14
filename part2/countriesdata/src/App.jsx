@@ -1,16 +1,14 @@
-import axios from "axios";
 import { useEffect } from "react";
 import { useState } from "react";
-
-const baseUrl = "https://studies.cs.helsinki.fi/restcountries/api";
+import countryServices from "./services/countryServices";
 
 function App() {
   const [countries, setCountries] = useState([]);
   const [query, setQuery] = useState("");
 
   useEffect(() => {
-    axios.get(baseUrl + "/all").then((res) => {
-      setCountries(res.data);
+    countryServices.getAll().then((res) => {
+      setCountries(res);
     });
   }, []);
 
