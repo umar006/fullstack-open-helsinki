@@ -3,9 +3,15 @@ const Country = ({ country }) => {
 };
 
 const CountryList = ({ countries, query }) => {
-  return countries
+  const searchedCountries = countries
     .filter((country) => country.name.common.toLowerCase().includes(query))
     .map((country) => <Country key={Number(country.ccn3)} country={country} />);
+
+  if (searchedCountries.length > 10) {
+    return <div>Too many matches, specify another filter</div>;
+  }
+
+  return searchedCountries;
 };
 
 export default CountryList;
