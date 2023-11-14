@@ -55,6 +55,12 @@ const App = () => {
         );
         setNewName("");
         setNewNumber("");
+      })
+      .catch(() => {
+        setErrorMessage(
+          `Information of ${person.name} has already been removed from server`,
+        );
+        setPersons(persons.filter((p) => p.id !== person.id));
       });
   };
 
