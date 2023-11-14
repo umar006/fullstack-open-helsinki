@@ -39,6 +39,9 @@ const App = () => {
       setNewName("");
       setNewNumber("");
       setSuccessMessage(`Added ${newPerson.name}`);
+      setTimeout(() => {
+        setSuccessMessage(null);
+      }, 5000);
     });
   };
 
