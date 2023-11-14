@@ -2,6 +2,7 @@ import { useState } from "react";
 import Filter from "./components/Filter";
 import PersonForm from "./components/PersonForm";
 import Persons from "./components/Persons";
+import Notification from "./components/Notification";
 import { useEffect } from "react";
 import personServices from "./services/personServices";
 
@@ -10,6 +11,7 @@ const App = () => {
   const [newName, setNewName] = useState("");
   const [newNumber, setNewNumber] = useState("");
   const [query, setQuery] = useState("");
+  const [successMessage, setSuccessMessage] = useState(null);
 
   useEffect(() => {
     personServices.getAll().then((persons) => setPersons(persons));
@@ -36,6 +38,7 @@ const App = () => {
       setPersons(persons.concat(person));
       setNewName("");
       setNewNumber("");
+      setSuccessMessage(`Added ${newPerson.name}`);
     });
   };
 
@@ -77,6 +80,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification message={successMessage} />
       <Filter query={query} onChange={handleFilterChange} />
       <h2>Add a new</h2>
       <PersonForm
