@@ -73,9 +73,20 @@ const App = () => {
     const isDelete = window.confirm(`Delete ${personToDelete.name}?`);
     if (!isDelete) return;
 
-    personServices.remove(idToDelete).then(() => {
-      setPersons(persons.filter((person) => person.id !== idToDelete));
-    });
+    personServices
+      .remove(idToDelete)
+      .then(() => {
+        setPersons(persons.filter((person) => person.id !== idToDelete));
+      })
+      .catch(() => {
+        setErrorMessage(
+          `Information of ${personToDelete.name} has already been removed from server`,
+        );
+        setTimeout(() => {
+          setErrorMessage(null);
+        }, 5000);
+        setPersons(persons.filter((p) => p.id !== personToDelete.id));
+      });
   };
 
   const handlePersonChange = (e) => {
