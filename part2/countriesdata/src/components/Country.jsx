@@ -1,4 +1,5 @@
 import { useState } from "react";
+import apiKey from "../services/openWeatherServices";
 
 const CountryDetail = ({ country }) => {
   return (
@@ -40,16 +41,12 @@ const CountryList = ({ countries, query }) => {
       if (countries.length === 1)
         return <CountryDetail key={Number(country.ccn3)} country={country} />;
 
-      if (countries.length > 10) {
-        return (
-          <div key={Number(country.ccn3)}>
-            Too many matches, specify another filter
-          </div>
-        );
-      }
-
       return <Country key={Number(country.ccn3)} country={country} />;
     });
+
+  if (searchedCountries.length > 10) {
+    return <div>Too many matches, specify another filter</div>;
+  }
 
   return searchedCountries;
 };
