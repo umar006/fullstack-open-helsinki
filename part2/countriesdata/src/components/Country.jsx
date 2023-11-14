@@ -1,5 +1,35 @@
 import { useState } from "react";
-import apiKey from "../services/openWeatherServices";
+import openWeatherServices from "../services/openWeatherServices";
+import { useEffect } from "react";
+
+const Weather = ({ country }) => {
+  const [weather, setWeather] = useState(null);
+
+  useEffect(() => {
+    openWeatherServices
+      .get(country.capitalInfo.latlng)
+      .then((res) => setWeather(res));
+  }, [country]);
+
+  if (!weather) return null;
+
+  const weatherIcons = weather.weather.map((w) => (
+    <img
+      key={w.id}
+      src={`https://openweathermap.org/img/wn/${w.icon}@2x.png`}
+      alt={w.description}
+    />
+  ));
+
+  return (
+    <div>
+      <h2>Weather in {country.capital}</h2>
+      <p>temperature {weather.main.temp} Celcius</p>
+      {weatherIcons}
+      <p>wind {weather.wind.speed} m/s</p>
+    </div>
+  );
+};
 
 const CountryDetail = ({ country }) => {
   return (
@@ -14,6 +44,7 @@ const CountryDetail = ({ country }) => {
         ))}
       </ul>
       <img src={country.flags.png} alt={country.flags.alt} />
+      <Weather country={country} />
     </div>
   );
 };
@@ -35,18 +66,20 @@ const Country = ({ country }) => {
 };
 
 const CountryList = ({ countries, query }) => {
-  const searchedCountries = countries
-    .filter((country) => country.name.common.toLowerCase().includes(query))
-    .map((country, _, countries) => {
-      if (countries.length === 1)
-        return <CountryDetail key={Number(country.ccn3)} country={country} />;
-
-      return <Country key={Number(country.ccn3)} country={country} />;
-    });
+  let searchedCountries = countries.filter((country) =>
+    country.name.common.toLowerCase().includes(query),
+  );
 
   if (searchedCountries.length > 10) {
     return <div>Too many matches, specify another filter</div>;
   }
+
+  searchedCountries = searchedCountries.map((country, _, countries) => {
+    if (countries.length === 1)
+      return <CountryDetail key={Number(country.ccn3)} country={country} />;
+
+    return <Country key={Number(country.ccn3)} country={country} />;
+  });
 
   return searchedCountries;
 };
