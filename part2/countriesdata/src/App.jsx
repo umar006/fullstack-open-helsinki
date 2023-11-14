@@ -1,5 +1,17 @@
+import { useState } from "react";
+
 function App() {
-  return <></>;
+  const [query, setQuery] = useState("");
+
+  const handleQueryChange = (e) => {
+    setQuery(e.target.value);
+  };
+
+  return (
+    <div>
+      country: <input value={query} onChange={handleQueryChange} />
+    </div>
+  );
 }
 
 export default App;
