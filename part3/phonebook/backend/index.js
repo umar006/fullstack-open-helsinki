@@ -2,6 +2,8 @@ import express from "express";
 
 const app = express();
 
+app.use(express.json());
+
 let persons = [
   {
     id: 1,
@@ -27,6 +29,21 @@ let persons = [
 
 app.get("/api/persons", (request, response) => {
   response.json(persons);
+});
+
+app.post("/api/persons", (request, response) => {
+  const generateId = Math.floor(Math.random() * 1000000);
+
+  const person = request.body;
+  const newPerson = {
+    id: generateId,
+    name: person.name,
+    number: person.number,
+  };
+
+  persons.push(newPerson);
+
+  response.json(newPerson);
 });
 
 app.get("/api/persons/:id", (request, response) => {
