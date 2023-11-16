@@ -33,6 +33,11 @@ app.get("/api/persons/:id", (request, response) => {
   const personId = Number(request.params.id);
   const person = persons.find((person) => person.id === personId);
 
+  if (!person) {
+    response.status(404).end();
+    return;
+  }
+
   response.json(person);
 });
 
