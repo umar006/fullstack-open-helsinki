@@ -35,6 +35,24 @@ app.post("/api/persons", (request, response) => {
   const generateId = Math.floor(Math.random() * 1000000);
 
   const person = request.body;
+  const errors = [];
+  if (!person.name || !person.name.length) {
+    errors.push({ error: "name is required" });
+  }
+  if (!person.number || !person.number.length) {
+    errors.push({ error: "number is required" });
+  }
+  if (errors.length) {
+    response.status(400).json(errors);
+    return;
+  }
+
+  const personExist = persons.some((p) => p.name === person.name);
+  if (personExist) {
+    response.status(422).json({ error: "name already exist" });
+    return;
+  }
+
   const newPerson = {
     id: generateId,
     name: person.name,
