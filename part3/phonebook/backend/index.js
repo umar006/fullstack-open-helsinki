@@ -2,7 +2,7 @@ import express from "express";
 
 const app = express();
 
-const persons = [
+let persons = [
   {
     id: 1,
     name: "Arto Hellas",
@@ -39,6 +39,13 @@ app.get("/api/persons/:id", (request, response) => {
   }
 
   response.json(person);
+});
+
+app.delete("/api/persons/:id", (request, response) => {
+  const personId = Number(request.params.id);
+  persons = persons.filter((person) => person.id !== personId);
+
+  response.status(204).end();
 });
 
 app.get("/info", (request, response) => {
