@@ -42,14 +42,14 @@ app.post("/api/persons", (request, response) => {
   if (!person.number || !person.number.length) {
     errors.push({ error: "number is required" });
   }
-  if (errors.length) {
-    response.status(400).json(errors);
-    return;
-  }
 
   const personExist = persons.some((p) => p.name === person.name);
   if (personExist) {
-    response.status(422).json({ error: "name already exist" });
+    errors.push({ error: "name already exist" });
+  }
+
+  if (errors.length) {
+    response.status(400).json(errors);
     return;
   }
 
