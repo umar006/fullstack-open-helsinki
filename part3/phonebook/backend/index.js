@@ -1,4 +1,5 @@
 import express from "express";
+import morgan from "morgan";
 
 const app = express();
 
@@ -26,6 +27,24 @@ let persons = [
     number: "39-23-6423122",
   },
 ];
+
+app.use(
+  morgan(
+    function (tokens, req, res) {
+      return [
+        tokens.method(req, res),
+        tokens.url(req, res),
+        tokens.status(req, res),
+        tokens.res(req, res, "content-length"),
+        "-",
+        tokens["response-time"](req, res),
+        "ms",
+        JSON.stringify(req.body),
+      ].join(" ");
+    },
+    { skip: (req, res) => req.method !== "POST" },
+  ),
+);
 
 app.get("/api/persons", (request, response) => {
   response.json(persons);
@@ -61,7 +80,7 @@ app.post("/api/persons", (request, response) => {
 
   persons.push(newPerson);
 
-  response.json(newPerson);
+  response.status(201).json(newPerson);
 });
 
 app.get("/api/persons/:id", (request, response) => {
