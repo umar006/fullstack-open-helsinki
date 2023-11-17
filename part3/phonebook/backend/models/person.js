@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+const mongoose = require("mongoose");
 
 const uri = process.env.MONGODB_URI;
 
@@ -26,4 +26,4 @@ personSchema.set("toJSON", {
 
 const Person = mongoose.model("Person", personSchema);
 
-export default Person;
+exports.module = Person;
