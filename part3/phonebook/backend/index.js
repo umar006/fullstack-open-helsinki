@@ -93,6 +93,12 @@ app.get("/info", (request, response) => {
   response.send(htmlInfo);
 });
 
+const unknownEndpoint = (request, response) => {
+  response.status(404).send({ error: "unknown endpoint" });
+};
+
+app.use(unknownEndpoint);
+
 const errorHandler = (error, request, response, next) => {
   console.error(error.message);
 
