@@ -36,8 +36,6 @@ app.get("/api/persons", (request, response) => {
 });
 
 app.post("/api/persons", (request, response) => {
-  const generateId = Math.floor(Math.random() * 1000000);
-
   const person = request.body;
   const errors = [];
   if (!person.name || !person.name.length) {
@@ -47,25 +45,19 @@ app.post("/api/persons", (request, response) => {
     errors.push({ error: "number is required" });
   }
 
-  const personExist = persons.some((p) => p.name === person.name);
-  if (personExist) {
-    errors.push({ error: "name already exist" });
-  }
-
   if (errors.length) {
     response.status(400).json(errors);
     return;
   }
 
-  const newPerson = {
-    id: generateId,
+  const newPerson = new Person({
     name: person.name,
     number: person.number,
-  };
+  });
 
-  persons.push(newPerson);
-
-  response.status(201).json(newPerson);
+  newPerson.save().then((result) => {
+    response.status(201).json(result);
+  });
 });
 
 app.get("/api/persons/:id", (request, response) => {
