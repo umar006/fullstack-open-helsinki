@@ -96,15 +96,17 @@ app.delete("/api/persons/:id", (request, response, next) => {
 });
 
 app.get("/info", (request, response) => {
-  const countPersons = persons.length;
-  const requestDate = new Date();
+  Person.find().then((persons) => {
+    const countPersons = persons.length;
+    const requestDate = new Date();
 
-  const htmlInfo = `
+    const htmlInfo = `
         <p>Phonebook has info for ${countPersons} people</p>
         <p>${requestDate}</p>
     `;
 
-  response.send(htmlInfo);
+    response.send(htmlInfo);
+  });
 });
 
 const unknownEndpoint = (request, response) => {
