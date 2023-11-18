@@ -61,15 +61,13 @@ app.post("/api/persons", (request, response) => {
 });
 
 app.get("/api/persons/:id", (request, response) => {
-  const personId = Number(request.params.id);
-  const person = persons.find((person) => person.id === personId);
+  const personId = request.params.id;
 
-  if (!person) {
-    response.status(404).end();
-    return;
-  }
-
-  response.json(person);
+  Person.findById(personId)
+    .then((person) => {
+      response.json(person);
+    })
+    .catch((err) => next(err));
 });
 
 app.put("/api/persons/:id", (request, response, next) => {
