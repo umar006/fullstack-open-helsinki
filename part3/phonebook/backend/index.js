@@ -72,11 +72,13 @@ app.get("/api/persons/:id", (request, response) => {
   response.json(person);
 });
 
-app.delete("/api/persons/:id", (request, response) => {
-  const personId = Number(request.params.id);
-  persons = persons.filter((person) => person.id !== personId);
-
-  response.status(204).end();
+app.delete("/api/persons/:id", (request, response, next) => {
+  const personId = request.params.id;
+  Person.findByIdAndDelete(personId)
+    .then(() => {
+      response.status(204).end();
+    })
+    .catch((error) => next(error));
 });
 
 app.get("/info", (request, response) => {
