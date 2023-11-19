@@ -1,5 +1,4 @@
 const express = require("express");
-const morgan = require("morgan");
 const cors = require("cors");
 const middleware = require("./utils/middleware");
 require("dotenv").config();
@@ -8,28 +7,13 @@ const app = express();
 
 const Person = require("./models/person");
 const personRouter = require("./routes/routes");
+const logger = require("./utils/logger");
 
 app.use(cors());
 app.use(express.json());
 app.use(express.static("dist"));
 
-app.use(
-  morgan(
-    function (tokens, req, res) {
-      return [
-        tokens.method(req, res),
-        tokens.url(req, res),
-        tokens.status(req, res),
-        tokens.res(req, res, "content-length"),
-        "-",
-        tokens["response-time"](req, res),
-        "ms",
-        JSON.stringify(req.body),
-      ].join(" ");
-    },
-    { skip: (req, res) => req.method !== "POST" },
-  ),
-);
+app.use(logger.requestLogger);
 
 app.use("/api/persons", personRouter);
 
