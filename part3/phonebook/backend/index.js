@@ -63,7 +63,7 @@ app.post("/api/persons", (request, response, next) => {
     .catch((err) => next(err));
 });
 
-app.get("/api/persons/:id", (request, response) => {
+app.get("/api/persons/:id", (request, response, next) => {
   const personId = request.params.id;
 
   Person.findById(personId)
