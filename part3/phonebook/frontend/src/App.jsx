@@ -35,15 +35,23 @@ const App = () => {
       number: newNumber,
     };
 
-    personServices.create(newPerson).then((person) => {
-      setPersons(persons.concat(person));
-      setNewName("");
-      setNewNumber("");
-      setSuccessMessage(`Added ${newPerson.name}`);
-      setTimeout(() => {
-        setSuccessMessage(null);
-      }, 5000);
-    });
+    personServices
+      .create(newPerson)
+      .then((person) => {
+        setPersons(persons.concat(person));
+        setNewName("");
+        setNewNumber("");
+        setSuccessMessage(`Added ${newPerson.name}`);
+        setTimeout(() => {
+          setSuccessMessage(null);
+        }, 5000);
+      })
+      .catch((err) => {
+        setErrorMessage(err.response.data.error);
+        setTimeout(() => {
+          setErrorMessage(null);
+        }, 5000);
+      });
   };
 
   const updatePerson = (person) => {
