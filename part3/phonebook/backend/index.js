@@ -1,6 +1,7 @@
 const express = require("express");
 const morgan = require("morgan");
 const cors = require("cors");
+const middleware = require("./utils/middleware");
 require("dotenv").config();
 
 const app = express();
@@ -112,26 +113,8 @@ app.get("/info", (request, response) => {
   });
 });
 
-const unknownEndpoint = (request, response) => {
-  response.status(404).send({ error: "unknown endpoint" });
-};
-
-app.use(unknownEndpoint);
-
-const errorHandler = (error, request, response, next) => {
-  console.error(error.message);
-
-  if (error.name === "CastError") {
-    return response.status(400).send({ error: "malformatted id" });
-  }
-  if (error.name === "ValidationError") {
-    return response.status(400).send({ error: error.message });
-  }
-
-  next(error);
-};
-
-app.use(errorHandler);
+app.use(middleware.unknownEndpoint);
+app.use(middleware.errorHandler);
 
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
