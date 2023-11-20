@@ -26,6 +26,7 @@ test("there are three blogs", async () => {
   const response = await api.get("/api/blogs");
 
   expect(response.body).toHaveLength(3);
+  expect(response.body[0].id).toBeDefined();
 });
 
 test("a valid blog can be added", async () => {
