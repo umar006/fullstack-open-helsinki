@@ -23,4 +23,9 @@ describe("total likes", () => {
     const result = listHelper.totalLikes(listWithOneBlog);
     expect(result).toBe(5);
   });
+
+  test("of empty list is zero", () => {
+    const result = listHelper.totalLikes([]);
+    expect(result).toBe(0);
+  });
 });
