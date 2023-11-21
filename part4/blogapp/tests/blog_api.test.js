@@ -68,7 +68,7 @@ describe("addition new blog", () => {
     expect(response.body.likes).toBe(0);
   });
 
-  test("if author property is missing, return status code 400", async () => {
+  test("if title property is missing, return status code 400", async () => {
     const newBlog = {
       author: "Robert C. Martin",
     };
