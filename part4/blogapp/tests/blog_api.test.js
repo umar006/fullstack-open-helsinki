@@ -3,16 +3,16 @@ const supertest = require("supertest");
 const helper = require("./test_helper");
 const app = require("../app");
 const Blog = require("../models/blog");
+const User = require("../models/user");
 
 const api = supertest(app);
 
 beforeEach(async () => {
   await Blog.deleteMany();
+  await User.deleteMany();
 
-  for (let blog of helper.initialBlogs) {
-    let newBlog = new Blog(blog);
-    await newBlog.save();
-  }
+  await Blog.insertMany(helper.initialBlogs);
+  await User.insertMany(helper.initialUsers);
 });
 
 test("blogs are returned as json", async () => {
@@ -31,11 +31,13 @@ test("there are three blogs", async () => {
 
 describe("addition new blog", () => {
   test("a valid blog can be added", async () => {
+    const users = await helper.usersInDb();
+    const userMluukkai = users.find((user) => user.username === "mluukkai");
     const newBlog = {
       title: "Type wars",
       author: "Robert C. Martin",
       url: "http://blog.cleancoder.com/uncle-bob/2016/05/01/TypeWars.html",
-      likes: 2,
+      userId: userMluukkai.id,
     };
 
     await api
@@ -53,10 +55,13 @@ describe("addition new blog", () => {
   });
 
   test("if likes property is missing, value is zero", async () => {
+    const users = await helper.usersInDb();
+    const userMluukkai = users.find((user) => user.username === "mluukkai");
     const newBlog = {
       title: "Type wars",
       author: "Robert C. Martin",
       url: "http://blog.cleancoder.com/uncle-bob/2016/05/01/TypeWars.html",
+      userId: userMluukkai.id,
     };
 
     const response = await api
