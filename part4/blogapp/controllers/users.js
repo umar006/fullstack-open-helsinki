@@ -15,6 +15,19 @@ userRouter.get("/", async (request, response) => {
 userRouter.post("/", async (request, response) => {
   const { username, name, password } = request.body;
 
+  const errors = [];
+
+  if (!username) errors.push("username is required");
+  if (!password) errors.push("password is required");
+  if (username.length < 3) errors.push("username at least 3 characters long");
+  if (password.length < 3) errors.push("password at least 3 characters long");
+
+  if (errors.length) return response.status(400).json({ errors: errors });
+
+  const usernameExist = await User.exists({ username });
+  if (usernameExist)
+    return response.status(422).json({ error: "username already exists" });
+
   const saltRounds = 10;
   const passwordHash = await bcrypt.hash(password, saltRounds);
 
