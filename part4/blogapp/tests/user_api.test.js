@@ -11,6 +11,13 @@ beforeEach(async () => {
   await User.insertMany(helper.initialUsers);
 });
 
+describe("get user list", () => {
+  test("success get user list", async () => {
+    const response = await api.get("/api/users");
+    expect(response.body).toHaveLength(helper.initialUsers.length);
+  });
+});
+
 describe("create user", () => {
   test("success create user", async () => {
     const newUser = {
