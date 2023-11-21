@@ -38,6 +38,7 @@ blogRouter.put("/:id", async (request, response) => {
   const result = await Blog.findByIdAndUpdate(idToUpdate, blogToUpdate, {
     new: true,
   });
+  if (!result) response.status(404).end();
 
   response.json(result);
 });

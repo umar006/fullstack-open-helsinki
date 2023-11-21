@@ -114,6 +114,15 @@ describe("update a blog post", () => {
     );
     expect(updatedBlog.likes).toBe(blogToUpdate.likes);
   });
+
+  test("failed update one blog if id not found", async () => {
+    const idNotFound = await helper.nonExistingId();
+
+    await api
+      .put("/api/blogs/" + idNotFound)
+      .send({})
+      .expect(404);
+  });
 });
 
 afterAll(async () => {
