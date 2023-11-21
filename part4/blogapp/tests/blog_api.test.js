@@ -29,54 +29,56 @@ test("there are three blogs", async () => {
   expect(response.body[0].id).toBeDefined();
 });
 
-test("a valid blog can be added", async () => {
-  const newBlog = {
-    title: "Type wars",
-    author: "Robert C. Martin",
-    url: "http://blog.cleancoder.com/uncle-bob/2016/05/01/TypeWars.html",
-    likes: 2,
-  };
+describe("addition new blog", () => {
+  test("a valid blog can be added", async () => {
+    const newBlog = {
+      title: "Type wars",
+      author: "Robert C. Martin",
+      url: "http://blog.cleancoder.com/uncle-bob/2016/05/01/TypeWars.html",
+      likes: 2,
+    };
 
-  await api
-    .post("/api/blogs")
-    .send(newBlog)
-    .expect(201)
-    .expect("Content-Type", /application\/json/);
+    await api
+      .post("/api/blogs")
+      .send(newBlog)
+      .expect(201)
+      .expect("Content-Type", /application\/json/);
 
-  const response = await api.get("/api/blogs");
+    const response = await api.get("/api/blogs");
 
-  const contents = response.body.map((r) => r.title);
+    const contents = response.body.map((r) => r.title);
 
-  expect(response.body).toHaveLength(helper.initialBlogs.length + 1);
-  expect(contents).toContain("Type wars");
-});
+    expect(response.body).toHaveLength(helper.initialBlogs.length + 1);
+    expect(contents).toContain("Type wars");
+  });
 
-test("if likes property is missing, value is zero", async () => {
-  const newBlog = {
-    title: "Type wars",
-    author: "Robert C. Martin",
-    url: "http://blog.cleancoder.com/uncle-bob/2016/05/01/TypeWars.html",
-  };
+  test("if likes property is missing, value is zero", async () => {
+    const newBlog = {
+      title: "Type wars",
+      author: "Robert C. Martin",
+      url: "http://blog.cleancoder.com/uncle-bob/2016/05/01/TypeWars.html",
+    };
 
-  const response = await api
-    .post("/api/blogs")
-    .send(newBlog)
-    .expect(201)
-    .expect("Content-Type", /application\/json/);
+    const response = await api
+      .post("/api/blogs")
+      .send(newBlog)
+      .expect(201)
+      .expect("Content-Type", /application\/json/);
 
-  expect(response.body.likes).toBe(0);
-});
+    expect(response.body.likes).toBe(0);
+  });
 
-test("if author property is missing, return status code 400", async () => {
-  const newBlog = {
-    author: "Robert C. Martin",
-  };
+  test("if author property is missing, return status code 400", async () => {
+    const newBlog = {
+      author: "Robert C. Martin",
+    };
 
-  await api
-    .post("/api/blogs")
-    .send(newBlog)
-    .expect(400)
-    .expect("Content-Type", /application\/json/);
+    await api
+      .post("/api/blogs")
+      .send(newBlog)
+      .expect(400)
+      .expect("Content-Type", /application\/json/);
+  });
 });
 
 afterAll(async () => {
