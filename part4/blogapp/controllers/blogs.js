@@ -13,7 +13,7 @@ blogRouter.post("/", async (request, response) => {
   if (!body.url) errors.push("url is required");
   if (!body.title) errors.push("title is required");
 
-  if (errors.length) response.status(400).json(errors);
+  if (errors.length) return response.status(400).json(errors);
 
   const user = await User.findById(body.userId);
 
@@ -26,7 +26,7 @@ blogRouter.post("/", async (request, response) => {
 
   const result = await blog.save();
 
-  user.blogs = user.blogs.push(result._id);
+  user.blogs = user.blogs.concat(result._id);
   await user.save();
 
   response.status(201).json(result);
