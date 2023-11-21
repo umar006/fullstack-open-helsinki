@@ -67,6 +67,18 @@ test("if likes property is missing, value is zero", async () => {
   expect(response.body.likes).toBe(0);
 });
 
+test("if author property is missing, return status code 400", async () => {
+  const newBlog = {
+    author: "Robert C. Martin",
+  };
+
+  await api
+    .post("/api/blogs")
+    .send(newBlog)
+    .expect(400)
+    .expect("Content-Type", /application\/json/);
+});
+
 afterAll(async () => {
   await mongoose.connection.close();
 });

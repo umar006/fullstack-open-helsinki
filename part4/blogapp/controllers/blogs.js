@@ -7,6 +7,13 @@ blogRouter.get("/", async (request, response) => {
 });
 
 blogRouter.post("/", async (request, response) => {
+  const errors = [];
+  const body = request.body;
+  if (!body.url) errors.push("url is required");
+  if (!body.title) errors.push("title is required");
+
+  if (errors.length) response.status(400).json(errors);
+
   const blog = new Blog(request.body);
 
   const result = await blog.save();
