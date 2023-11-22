@@ -3,11 +3,22 @@ import { useState } from "react";
 import blogServices from "../services/blogServices";
 import BlogForm from "./BlogForm";
 
-const Blog = ({ blog }) => {
+const Blog = ({ blog, blogs, setBlogs }) => {
+  const handleDeleteBlog = async (event) => {
+    const idToDelete = event.target.id;
+
+    await blogServices.remove(idToDelete);
+
+    setBlogs(blogs.filter((blog) => blog.id !== idToDelete));
+  };
+
   return (
     <>
       <p>
-        {blog.title} {blog.author} <button>delete</button>
+        {blog.title} {blog.author}{" "}
+        <button id={blog.id} onClick={handleDeleteBlog}>
+          delete
+        </button>
       </p>
     </>
   );
@@ -25,7 +36,9 @@ const BlogList = ({ user, setUser }) => {
     fetchData();
   }, [user]);
 
-  const blogList = blogs.map((blog) => <Blog key={blog.id} blog={blog} />);
+  const blogList = blogs.map((blog) => (
+    <Blog key={blog.id} blog={blog} blogs={blogs} setBlogs={setBlogs} />
+  ));
 
   const handleLogout = () => {
     window.localStorage.removeItem("loggedBlogAppUser");
