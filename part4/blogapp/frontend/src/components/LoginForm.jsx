@@ -1,6 +1,7 @@
 import { useState } from "react";
 import loginServices from "../services/loginServices";
 import Notification from "./Notification";
+import blogServices from "../services/blogServices";
 
 const LoginForm = ({ setUser }) => {
   const [username, setUsername] = useState("");
@@ -13,6 +14,7 @@ const LoginForm = ({ setUser }) => {
     try {
       const user = await loginServices.login({ username, password });
 
+      blogServices.setToken(user.token);
       setUser(user);
       setUsername("");
       setPassword("");
