@@ -12,7 +12,7 @@ function App() {
       </>
     );
 
-  return <BlogList user={user} />;
+  return <BlogList user={user} setUser={setUser} />;
 }
 
 export default App;

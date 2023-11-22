@@ -10,7 +10,7 @@ const Blog = ({ blog }) => {
   );
 };
 
-const BlogList = ({ user }) => {
+const BlogList = ({ user, setUser }) => {
   const [blogs, setBlogs] = useState([]);
 
   useEffect(() => {
@@ -24,10 +24,18 @@ const BlogList = ({ user }) => {
 
   const blogList = blogs.map((blog) => <Blog key={blog.id} blog={blog} />);
 
+  const handleLogout = () => {
+    window.localStorage.removeItem("loggedBlogAppUser");
+    setUser(null);
+  };
+
   return (
     <>
       <h1>Blog List</h1>
-      <h3>{user.name} logged in</h3>
+      <h3>
+        {user.name} {"logged in "}
+        <button onClick={handleLogout}>logout</button>
+      </h3>
       {blogList}
     </>
   );
