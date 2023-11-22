@@ -22,7 +22,7 @@ blogRouter.post("/", async (request, response) => {
   if (!body.url) errors.push("url is required");
   if (!body.title) errors.push("title is required");
 
-  if (errors.length) return response.status(400).json(errors);
+  if (errors.length) return response.status(400).json({ errors });
 
   const blog = new Blog({
     title: body.title,
