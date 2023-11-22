@@ -33,7 +33,8 @@ const initialUsers = [
     _id: "655c4390b13c51f101d87946",
     username: "mluukkai",
     name: "Matti Luukkainen",
-    passwordHash: "salainen",
+    passwordHash:
+      "$2b$10$SsMIhkG70DCF4XBSEK301.WLLobxTLBYmPYJWTcvuNhjHV1otj2Q6",
     blogs: [
       "5a422a851b54a676234d17f7",
       "5a422b3a1b54a676234d17f9",
@@ -44,7 +45,8 @@ const initialUsers = [
     _id: "655cbf1c7625024b0ced4347",
     username: "root",
     name: "Superuser",
-    passwordHash: "salainen",
+    passwordHash:
+      "$2b$10$SsMIhkG70DCF4XBSEK301.WLLobxTLBYmPYJWTcvuNhjHV1otj2Q6",
     blogs: [],
   },
 ];
