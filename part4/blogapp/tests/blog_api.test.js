@@ -139,14 +139,14 @@ describe("update a blog post", () => {
     expect(updatedBlog.likes).toBe(blogToUpdate.likes);
   });
 
-  test("failed update one blog if id not found", async () => {
+  test("failed update one blog if user not authorized", async () => {
     const idNotFound = await helper.nonExistingId();
 
     await api
       .put("/api/blogs/" + idNotFound)
       .set(headers)
       .send({})
-      .expect(404);
+      .expect(403);
   });
 });
 
