@@ -5,9 +5,11 @@ import BlogForm from "./BlogForm";
 
 const Blog = ({ blog }) => {
   return (
-    <p>
-      {blog.title} {blog.author}
-    </p>
+    <>
+      <p>
+        {blog.title} {blog.author} <button>delete</button>
+      </p>
+    </>
   );
 };
 
