@@ -6,6 +6,8 @@ import BlogForm from "./BlogForm";
 const Blog = ({ blog, blogs, setBlogs }) => {
   const handleDeleteBlog = async (event) => {
     const idToDelete = event.target.id;
+    const confirmDelete = window.confirm(`Delete ${blog.title}?`);
+    if (!confirmDelete) return;
 
     await blogServices.remove(idToDelete);
 
