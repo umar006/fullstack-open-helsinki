@@ -1,8 +1,19 @@
 import { useState } from "react";
+import loginServices from "../services/loginServices";
 
-const LoginForm = () => {
+const LoginForm = ({ setUser }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+
+  const handleLogin = async (event) => {
+    event.preventDefault();
+
+    const user = await loginServices.login({ username, password });
+
+    setUser(user);
+    setUsername("");
+    setPassword("");
+  };
 
   const handleUsernameChange = (event) => {
     setUsername(event.target.value);
@@ -15,7 +26,7 @@ const LoginForm = () => {
   return (
     <>
       <h1>log in to application</h1>
-      <form>
+      <form onSubmit={handleLogin}>
         <div>
           username <input value={username} onChange={handleUsernameChange} />
         </div>
