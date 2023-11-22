@@ -40,7 +40,17 @@ blogRouter.post("/", async (request, response) => {
 });
 
 blogRouter.delete("/:id", async (request, response) => {
-  await Blog.findByIdAndDelete(request.params.id);
+  const user = request.user;
+  const blogToDelete = await Blog.findOne({
+    _id: request.params.id,
+    user: user.id,
+  });
+  if (!blogToDelete) {
+    return response.status(403).json({ error: "user invalid" });
+  }
+
+  await blogToDelete.deleteOne();
+
   response.status(204).end();
 });
 
