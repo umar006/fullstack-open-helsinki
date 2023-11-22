@@ -4,14 +4,24 @@ const SuccessNotification = ({ message }) => {
   return <div className="success">{message}</div>;
 };
 
-const ErrorNotification = ({ message }) => {
-  if (!message) return null;
+const ErrorNotification = ({ messages }) => {
+  if (!messages) return null;
 
-  return <div className="error">{message}</div>;
+  if (Array.isArray(messages)) {
+    return (
+      <div className="error">
+        {messages.map((message, idx) => (
+          <p key={idx}>{message}</p>
+        ))}
+      </div>
+    );
+  }
+
+  return <div className="error">{messages}</div>;
 };
 
 const Notification = ({ success, error }) => {
-  if (error) return <ErrorNotification message={error} />;
+  if (error) return <ErrorNotification messages={error} />;
 
   return <SuccessNotification message={success} />;
 };
