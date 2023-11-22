@@ -1,18 +1,27 @@
 import { useState } from "react";
 import loginServices from "../services/loginServices";
+import Notification from "./Notification";
 
 const LoginForm = ({ setUser }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState(null);
 
   const handleLogin = async (event) => {
     event.preventDefault();
 
-    const user = await loginServices.login({ username, password });
+    try {
+      const user = await loginServices.login({ username, password });
 
-    setUser(user);
-    setUsername("");
-    setPassword("");
+      setUser(user);
+      setUsername("");
+      setPassword("");
+    } catch (err) {
+      setErrorMessage(err.response.data.error);
+      setTimeout(() => {
+        setErrorMessage(null);
+      }, 5000);
+    }
   };
 
   const handleUsernameChange = (event) => {
@@ -26,6 +35,7 @@ const LoginForm = ({ setUser }) => {
   return (
     <>
       <h1>log in to application</h1>
+      <Notification error={errorMessage} />
       <form onSubmit={handleLogin}>
         <div>
           username <input value={username} onChange={handleUsernameChange} />
