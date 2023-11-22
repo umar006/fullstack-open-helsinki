@@ -1,5 +1,6 @@
 import { useState } from "react";
 import LoginForm from "./components/LoginForm";
+import BlogList from "./components/BlogList";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -11,7 +12,7 @@ function App() {
       </>
     );
 
-  return <h1>{user.name} logged in</h1>;
+  return <BlogList user={user} />;
 }
 
 export default App;
