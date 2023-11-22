@@ -7,6 +7,17 @@ const User = require("../models/user");
 
 const api = supertest(app);
 
+let headers = {};
+
+beforeAll(async () => {
+  const response = await api.post("/api/login").send({
+    username: "mluukkai",
+    password: "salainen",
+  });
+
+  headers.Authorization = "Bearer " + response.body.token;
+});
+
 beforeEach(async () => {
   await Blog.deleteMany();
   await User.deleteMany();
@@ -18,12 +29,13 @@ beforeEach(async () => {
 test("blogs are returned as json", async () => {
   await api
     .get("/api/blogs")
+    .set(headers)
     .expect(200)
     .expect("Content-Type", /application\/json/);
 });
 
 test("there are three blogs", async () => {
-  const response = await api.get("/api/blogs");
+  const response = await api.get("/api/blogs").set(headers);
 
   expect(response.body).toHaveLength(3);
   expect(response.body[0].id).toBeDefined();
@@ -43,11 +55,12 @@ describe("addition new blog", () => {
     await api
       .post("/api/blogs")
       .send(newBlog)
+      .set(headers)
+
       .expect(201)
       .expect("Content-Type", /application\/json/);
 
-    const response = await api.get("/api/blogs");
-
+    const response = await api.get("/api/blogs").set(headers);
     const contents = response.body.map((r) => r.title);
 
     expect(response.body).toHaveLength(helper.initialBlogs.length + 1);
@@ -66,6 +79,7 @@ describe("addition new blog", () => {
 
     const response = await api
       .post("/api/blogs")
+      .set(headers)
       .send(newBlog)
       .expect(201)
       .expect("Content-Type", /application\/json/);
@@ -80,6 +94,7 @@ describe("addition new blog", () => {
 
     await api
       .post("/api/blogs")
+      .set(headers)
       .send(newBlog)
       .expect(400)
       .expect("Content-Type", /application\/json/);
@@ -91,7 +106,10 @@ describe("deletion of a blog post", () => {
     const blogsAtStart = await helper.blogsInDb();
     const blogToDelete = blogsAtStart[0];
 
-    await api.delete("/api/blogs/" + blogToDelete.id).expect(204);
+    await api
+      .delete("/api/blogs/" + blogToDelete.id)
+      .set(headers)
+      .expect(204);
 
     const blogsAtEnd = await helper.blogsInDb();
 
@@ -110,6 +128,7 @@ describe("update a blog post", () => {
 
     await api
       .put("/api/blogs/" + blogToUpdate.id)
+      .set(headers)
       .send(blogToUpdate)
       .expect(200);
 
@@ -125,6 +144,7 @@ describe("update a blog post", () => {
 
     await api
       .put("/api/blogs/" + idNotFound)
+      .set(headers)
       .send({})
       .expect(404);
   });
