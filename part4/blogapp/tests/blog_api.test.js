@@ -41,6 +41,10 @@ test("there are three blogs", async () => {
   expect(response.body[0].id).toBeDefined();
 });
 
+test("cannot get blog list when not logged in", async () => {
+  await api.get("/api/blogs").expect(401);
+});
+
 describe("addition new blog", () => {
   test("a valid blog can be added", async () => {
     const users = await helper.usersInDb();
@@ -99,6 +103,10 @@ describe("addition new blog", () => {
       .expect(400)
       .expect("Content-Type", /application\/json/);
   });
+
+  test("cannot create new blog when not logged in", async () => {
+    await api.post("/api/blogs").expect(401);
+  });
 });
 
 describe("deletion of a blog post", () => {
@@ -117,6 +125,10 @@ describe("deletion of a blog post", () => {
 
     const blogTitles = blogsAtEnd.map((blog) => blog.title);
     expect(blogTitles).not.toContain(blogToDelete.title);
+  });
+
+  test("cannot delete a blog when not logged in", async () => {
+    await api.delete("/api/blogs/" + "fail").expect(401);
   });
 });
 
@@ -147,6 +159,13 @@ describe("update a blog post", () => {
       .set(headers)
       .send({})
       .expect(403);
+  });
+
+  test("cannot update a blog when not logged in", async () => {
+    await api
+      .put("/api/blogs/" + "fail")
+      .send({})
+      .expect(401);
   });
 });
 
