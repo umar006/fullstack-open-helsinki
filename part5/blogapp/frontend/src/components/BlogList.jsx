@@ -3,6 +3,7 @@ import { useState } from "react";
 import blogServices from "../services/blogServices";
 import BlogForm from "./BlogForm";
 import Togglable from "./Togglable";
+import "./BlogList.css";
 
 const Blog = ({ blog, blogs, setBlogs }) => {
   const handleDeleteBlog = async (event) => {
@@ -17,7 +18,7 @@ const Blog = ({ blog, blogs, setBlogs }) => {
 
   return (
     <>
-      <div>
+      <div className="blog">
         {blog.title} {blog.author}{" "}
         <button id={blog.id} onClick={handleDeleteBlog}>
           delete
