@@ -28,6 +28,7 @@ const Blog = ({ blog, blogs, setBlogs }) => {
 
 const BlogList = () => {
   const [blogs, setBlogs] = useState([]);
+  const [blogFormVisible, setBlogFormVisible] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -42,9 +43,18 @@ const BlogList = () => {
     <Blog key={blog.id} blog={blog} blogs={blogs} setBlogs={setBlogs} />
   ));
 
+  const hideWhenVisible = { display: blogFormVisible ? "none" : "" };
+  const showWhenNotVisible = { display: blogFormVisible ? "" : "none" };
+
   return (
     <>
-      <BlogForm blogs={blogs} setBlogs={setBlogs} />
+      <div style={hideWhenVisible}>
+        <button onClick={() => setBlogFormVisible(true)}>create</button>
+      </div>
+      <div style={showWhenNotVisible}>
+        <BlogForm blogs={blogs} setBlogs={setBlogs} />
+        <button onClick={() => setBlogFormVisible(false)}>cancel</button>
+      </div>
       {blogList}
     </>
   );
