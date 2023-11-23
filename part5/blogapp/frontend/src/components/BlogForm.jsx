@@ -16,6 +16,9 @@ const BlogForm = ({ blogs, setBlogs }) => {
       const createdBlog = await blogServices.create({ title, author, url });
 
       setBlogs(blogs.concat(createdBlog));
+      setTitle("");
+      setAuthor("");
+      setUrl("");
       setSuccessMessage(`a new blog ${title} by ${author} added`);
       setTimeout(() => {
         setSuccessMessage(null);
