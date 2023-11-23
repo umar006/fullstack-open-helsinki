@@ -2,7 +2,7 @@ import { useState } from "react";
 import Notification from "./Notification";
 import blogServices from "../services/blogServices";
 
-const BlogForm = ({ blogs, setBlogs }) => {
+const BlogForm = ({ blogs, setBlogs, blogFormRef }) => {
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
   const [url, setUrl] = useState("");
@@ -13,6 +13,7 @@ const BlogForm = ({ blogs, setBlogs }) => {
     event.preventDefault();
 
     try {
+      blogFormRef.current.toggleVisibility();
       const createdBlog = await blogServices.create({ title, author, url });
 
       setBlogs(blogs.concat(createdBlog));

@@ -1,5 +1,4 @@
-import { useEffect } from "react";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import blogServices from "../services/blogServices";
 import BlogForm from "./BlogForm";
 import Togglable from "./Togglable";
@@ -37,6 +36,7 @@ const Blog = ({ blog, blogs, setBlogs }) => {
 
 const BlogList = () => {
   const [blogs, setBlogs] = useState([]);
+  const blogFormRef = useRef();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -53,8 +53,12 @@ const BlogList = () => {
 
   return (
     <>
-      <Togglable buttonLabelShow="new blog" buttonLabelHide="cancel">
-        <BlogForm blogs={blogs} setBlogs={setBlogs} />
+      <Togglable
+        ref={blogFormRef}
+        buttonLabelShow="new blog"
+        buttonLabelHide="cancel"
+      >
+        <BlogForm blogs={blogs} setBlogs={setBlogs} blogFormRef={blogFormRef} />
       </Togglable>
       {blogList}
     </>
