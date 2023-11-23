@@ -23,7 +23,7 @@ const Blog = ({ blog, blogs, setBlogs }) => {
         <button id={blog.id} onClick={handleDeleteBlog}>
           delete
         </button>{" "}
-        <Togglable buttonLabel="view">
+        <Togglable buttonLabelShow="view" buttonLabelHide="hide">
           <div>
             <p>{blog.url}</p>
             <p>{blog.likes}</p>
@@ -53,7 +53,7 @@ const BlogList = () => {
 
   return (
     <>
-      <Togglable buttonLabel="new blog">
+      <Togglable buttonLabelShow="new blog" buttonLabelHide="cancel">
         <BlogForm blogs={blogs} setBlogs={setBlogs} />
       </Togglable>
       {blogList}
