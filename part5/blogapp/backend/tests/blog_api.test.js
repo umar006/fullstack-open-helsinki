@@ -179,6 +179,13 @@ describe("detail blog", () => {
 
     expect(response.body.id).toBe(idToFind);
   });
+
+  test("cannot get detail blog when not logged in", async () => {
+    await api
+      .put("/api/blogs/" + "fail")
+      .send({})
+      .expect(401);
+  });
 });
 
 afterAll(async () => {
