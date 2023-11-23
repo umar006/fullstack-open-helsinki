@@ -17,12 +17,19 @@ const Blog = ({ blog, blogs, setBlogs }) => {
 
   return (
     <>
-      <p>
+      <div>
         {blog.title} {blog.author}{" "}
         <button id={blog.id} onClick={handleDeleteBlog}>
           delete
-        </button>
-      </p>
+        </button>{" "}
+        <Togglable buttonLabel="view">
+          <div>
+            <p>{blog.url}</p>
+            <p>{blog.likes}</p>
+            <p>{blog.user.name}</p>{" "}
+          </div>
+        </Togglable>
+      </div>
     </>
   );
 };
