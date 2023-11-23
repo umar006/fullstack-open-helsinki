@@ -169,6 +169,18 @@ describe("update a blog post", () => {
   });
 });
 
+describe("detail blog", () => {
+  test("success get detail blog", async () => {
+    const idToFind = helper.initialBlogs[0]._id;
+    const response = await api
+      .get("/api/blogs/" + idToFind)
+      .set(headers)
+      .expect(200);
+
+    expect(response.body.id).toBe(idToFind);
+  });
+});
+
 afterAll(async () => {
   await mongoose.connection.close();
 });
