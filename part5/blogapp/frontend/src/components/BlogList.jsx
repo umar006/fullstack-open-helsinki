@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 import blogServices from "../services/blogServices";
 import BlogForm from "./BlogForm";
+import Togglable from "./Togglable";
 
 const Blog = ({ blog, blogs, setBlogs }) => {
   const handleDeleteBlog = async (event) => {
@@ -28,7 +29,6 @@ const Blog = ({ blog, blogs, setBlogs }) => {
 
 const BlogList = () => {
   const [blogs, setBlogs] = useState([]);
-  const [blogFormVisible, setBlogFormVisible] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -43,18 +43,11 @@ const BlogList = () => {
     <Blog key={blog.id} blog={blog} blogs={blogs} setBlogs={setBlogs} />
   ));
 
-  const hideWhenVisible = { display: blogFormVisible ? "none" : "" };
-  const showWhenNotVisible = { display: blogFormVisible ? "" : "none" };
-
   return (
     <>
-      <div style={hideWhenVisible}>
-        <button onClick={() => setBlogFormVisible(true)}>create</button>
-      </div>
-      <div style={showWhenNotVisible}>
+      <Togglable buttonLabel="new blog">
         <BlogForm blogs={blogs} setBlogs={setBlogs} />
-        <button onClick={() => setBlogFormVisible(false)}>cancel</button>
-      </div>
+      </Togglable>
       {blogList}
     </>
   );
