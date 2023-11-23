@@ -39,6 +39,12 @@ blogRouter.post("/", async (request, response) => {
   response.status(201).json(result);
 });
 
+blogRouter.get("/:id", async (request, response) => {
+  const idToFind = request.params.id;
+  const blog = await Blog.findById(idToFind).populate("user", { name: 1 });
+  response.json(blog);
+});
+
 blogRouter.delete("/:id", async (request, response) => {
   const user = request.user;
   const blogToDelete = await Blog.findOne({
