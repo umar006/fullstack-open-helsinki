@@ -26,34 +26,24 @@ const Blog = ({ blog, blogs, setBlogs }) => {
   );
 };
 
-const BlogList = ({ user, setUser }) => {
+const BlogList = () => {
   const [blogs, setBlogs] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await blogServices.getAll(user);
+      const response = await blogServices.getAll();
       setBlogs(response);
     };
 
     fetchData();
-  }, [user]);
+  }, []);
 
   const blogList = blogs.map((blog) => (
     <Blog key={blog.id} blog={blog} blogs={blogs} setBlogs={setBlogs} />
   ));
 
-  const handleLogout = () => {
-    window.localStorage.removeItem("loggedBlogAppUser");
-    setUser(null);
-  };
-
   return (
     <>
-      <h1>Blog List</h1>
-      <h3>
-        {user.name} {"logged in "}
-        <button onClick={handleLogout}>logout</button>
-      </h3>
       <BlogForm blogs={blogs} setBlogs={setBlogs} />
       {blogList}
     </>
