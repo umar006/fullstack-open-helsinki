@@ -4,12 +4,14 @@ import BlogForm from "./BlogForm";
 import Togglable from "./Togglable";
 import "./BlogList.css";
 
-const Blog = ({ blog, blogs, setBlogs }) => {
+const Blog = ({ user, blog, blogs, setBlogs }) => {
   const [likes, setLikes] = useState(blog.likes);
 
   const handleDeleteBlog = async (event) => {
     const idToDelete = event.target.id;
-    const confirmDelete = window.confirm(`Delete ${blog.title}?`);
+    const confirmDelete = window.confirm(
+      `Delete ${blog.title} by ${blog.author}`,
+    );
     if (!confirmDelete) return;
 
     await blogServices.remove(idToDelete);
@@ -30,13 +32,17 @@ const Blog = ({ blog, blogs, setBlogs }) => {
     setLikes(updateLike);
   };
 
+  const isOwnedByUser = user.username === blog.user.username;
+  const userCanDelete = isOwnedByUser ? (
+    <button id={blog.id} onClick={handleDeleteBlog}>
+      {" delete "}
+    </button>
+  ) : null;
+
   return (
     <>
       <div className="blog">
-        {blog.title} {blog.author}{" "}
-        <button id={blog.id} onClick={handleDeleteBlog}>
-          delete
-        </button>{" "}
+        {blog.title} {blog.author} {userCanDelete}
         <Togglable buttonLabelShow="view" buttonLabelHide="hide">
           <div>
             <p>{blog.url}</p>
@@ -51,7 +57,7 @@ const Blog = ({ blog, blogs, setBlogs }) => {
   );
 };
 
-const BlogList = () => {
+const BlogList = ({ user }) => {
   const [blogs, setBlogs] = useState([]);
   const blogFormRef = useRef();
 
@@ -67,7 +73,13 @@ const BlogList = () => {
   const blogList = blogs
     .sort((blog1, blog2) => blog2.likes - blog1.likes)
     .map((blog) => (
-      <Blog key={blog.id} blog={blog} blogs={blogs} setBlogs={setBlogs} />
+      <Blog
+        key={blog.id}
+        user={user}
+        blog={blog}
+        blogs={blogs}
+        setBlogs={setBlogs}
+      />
     ));
 
   return (
