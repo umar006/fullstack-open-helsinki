@@ -5,6 +5,8 @@ import Togglable from "./Togglable";
 import "./BlogList.css";
 
 const Blog = ({ blog, blogs, setBlogs }) => {
+  const [likes, setLikes] = useState(blog.likes);
+
   const handleDeleteBlog = async (event) => {
     const idToDelete = event.target.id;
     const confirmDelete = window.confirm(`Delete ${blog.title}?`);
@@ -13,6 +15,19 @@ const Blog = ({ blog, blogs, setBlogs }) => {
     await blogServices.remove(idToDelete);
 
     setBlogs(blogs.filter((blog) => blog.id !== idToDelete));
+  };
+
+  const handleUpdateLikeBlog = async () => {
+    const idToUpdate = blog.id;
+    const updateLike = likes + 1;
+    const updatedBlog = {
+      ...blog,
+      likes: updateLike,
+    };
+
+    await blogServices.update(idToUpdate, updatedBlog);
+
+    setLikes(updateLike);
   };
 
   return (
@@ -26,7 +41,7 @@ const Blog = ({ blog, blogs, setBlogs }) => {
           <div>
             <p>{blog.url}</p>
             <p>
-              {blog.likes} <button>like</button>
+              {likes} <button onClick={handleUpdateLikeBlog}>like</button>
             </p>
             <p>{blog.user.name}</p>{" "}
           </div>
