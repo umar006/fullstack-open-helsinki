@@ -1,4 +1,3 @@
-/* eslint-disable react/display-name */
 import { useImperativeHandle } from "react";
 import { useState, forwardRef } from "react";
 
@@ -27,5 +26,7 @@ const Togglable = forwardRef((props, refs) => {
     </>
   );
 });
+
+Togglable.displayName = "Togglable";
 
 export default Togglable;
