@@ -2,6 +2,9 @@ import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import userEvent from "@testing-library/user-event";
 import Blog from "./Blog";
+import blogServices from "../services/blogServices";
+
+jest.mock("../services/blogServices");
 
 test("display render blog title and author", () => {
   const blog = {
@@ -54,4 +57,29 @@ test("blog url and likes should rendered after click event", async () => {
 
   expect(blogUrl).toBeInTheDocument();
   expect(blogLikes).toBeInTheDocument();
+});
+
+test("if like button clicked twice, event handler should called twice", async () => {
+  const blog = {
+    title: "testTitle",
+    author: "testAuthor",
+    url: "testUrl",
+    likes: 99,
+    user: {},
+  };
+
+  const { container, getByText } = render(<Blog blog={blog} user={{}} />);
+  const btnShow = getByText("view");
+
+  await userEvent.click(btnShow);
+
+  const div = container.querySelector(".togglableContent");
+  expect(div).not.toHaveStyle("display: none");
+
+  const btnLikes = getByText("like");
+
+  await userEvent.click(btnLikes);
+  await userEvent.click(btnLikes);
+
+  expect(blogServices.update).toHaveBeenCalledTimes(2);
 });
