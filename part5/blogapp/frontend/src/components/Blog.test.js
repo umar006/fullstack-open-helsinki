@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import Blog from "./Blog";
 
-test("renders content", () => {
+test("display render blog title and author", () => {
   const blog = {
     title: "testTitle",
     author: "testAuthor",
