@@ -1,6 +1,6 @@
 import { useState } from "react";
-import Notification from "./Notification";
 import blogServices from "../services/blogServices";
+import Notification from "./Notification";
 
 const BlogForm = ({ blogs, setBlogs, blogFormRef }) => {
   const [title, setTitle] = useState("");
@@ -42,6 +42,7 @@ const BlogForm = ({ blogs, setBlogs, blogFormRef }) => {
           <input
             value={title}
             onChange={(event) => setTitle(event.target.value)}
+            placeholder="title"
           />
         </div>
         <div>
@@ -49,11 +50,16 @@ const BlogForm = ({ blogs, setBlogs, blogFormRef }) => {
           <input
             value={author}
             onChange={(event) => setAuthor(event.target.value)}
+            placeholder="author"
           />
         </div>
         <div>
           url{" "}
-          <input value={url} onChange={(event) => setUrl(event.target.value)} />
+          <input
+            value={url}
+            onChange={(event) => setUrl(event.target.value)}
+            placeholder="url"
+          />
         </div>
         <button type="submit">create</button>
       </form>
