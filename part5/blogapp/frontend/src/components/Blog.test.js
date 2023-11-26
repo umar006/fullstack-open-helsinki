@@ -2,7 +2,6 @@ import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import userEvent from "@testing-library/user-event";
 import Blog from "./Blog";
-import Togglable from "./Togglable";
 
 test("display render blog title and author", () => {
   const blog = {
@@ -31,4 +30,28 @@ test("blog url should not rendered", () => {
   const div = container.querySelector(".togglableContent");
 
   expect(div).toHaveStyle("display: none");
+});
+
+test("blog url and likes should rendered after click event", async () => {
+  const blog = {
+    title: "testTitle",
+    author: "testAuthor",
+    url: "testUrl",
+    likes: 99,
+    user: {},
+  };
+
+  const { container, getByText } = render(<Blog blog={blog} user={{}} />);
+  const btnShow = getByText("view");
+
+  await userEvent.click(btnShow);
+
+  const div = container.querySelector(".togglableContent");
+  expect(div).not.toHaveStyle("display: none");
+
+  const blogUrl = getByText("testUrl");
+  const blogLikes = getByText("99");
+
+  expect(blogUrl).toBeInTheDocument();
+  expect(blogLikes).toBeInTheDocument();
 });
