@@ -26,6 +26,11 @@ app.use(express.json());
 app.use("/api/login", loginRouter);
 app.use("/api/users", userRouter);
 
+if (config.NODE_ENV === "test") {
+  const testRouter = require("./controllers/tests");
+  app.use("/api/tests", testRouter);
+}
+
 app.use(middleware.tokenExtractor);
 app.use(middleware.userExtractor);
 

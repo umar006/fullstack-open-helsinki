@@ -1,5 +1,12 @@
 describe("Blog app", function () {
   beforeEach(function () {
+    cy.request("POST", "http://localhost:3001/api/tests/reset");
+    const user = {
+      username: "test",
+      password: "test",
+      name: "Test Test",
+    };
+    cy.request("POST", "http://localhost:3001/api/users", user);
     cy.visit("http://localhost:5173");
   });
 
@@ -9,18 +16,18 @@ describe("Blog app", function () {
 
   it("user can login", function () {
     cy.contains("login");
-    cy.get("#username").type("mluukkai");
-    cy.get("#password").type("salainen");
+    cy.get("#username").type("test");
+    cy.get("#password").type("test");
     cy.get("#btn-login").click();
 
-    cy.contains("Matti Luukkainen logged in");
+    cy.contains("Test Test logged in");
   });
 
   describe("when user logged in", function () {
     beforeEach(function () {
       cy.contains("login");
-      cy.get("#username").type("mluukkai");
-      cy.get("#password").type("salainen");
+      cy.get("#username").type("test");
+      cy.get("#password").type("test");
       cy.get("#btn-login").click();
     });
 
