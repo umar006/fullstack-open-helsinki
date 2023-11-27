@@ -41,5 +41,24 @@ describe("Blog app", function () {
 
       cy.contains("test from cypress");
     });
+
+    describe("and a blog exists", function () {
+      beforeEach(function () {
+        cy.contains("new blog").click();
+
+        cy.get("#blog-title").type("test from cypress");
+        cy.get("#blog-author").type("test author");
+        cy.get("#blog-url").type("test url");
+        cy.get("#btn-create-blog").click();
+      });
+
+      it("can view blog detail", function () {
+        cy.contains("view").click();
+        cy.get(".blog > .togglableContent")
+          .should("not.have.css", "display", "none")
+          .should("contain", "test url")
+          .and("contain", "Test Test");
+      });
+    });
   });
 });
