@@ -51,18 +51,26 @@ const LoginForm = ({ setUser }) => {
       <Notification error={errorMessage} />
       <form onSubmit={handleLogin}>
         <div>
-          username <input value={username} onChange={handleUsernameChange} />
+          username{" "}
+          <input
+            id="username"
+            value={username}
+            onChange={handleUsernameChange}
+          />
         </div>
         <div>
           password{" "}
           <input
+            id="password"
             type="password"
             value={password}
             onChange={handlePasswordChange}
           />
         </div>
         <div>
-          <button type="submit">login</button>
+          <button type="submit" id="btn-login">
+            login
+          </button>
         </div>
       </form>
     </>

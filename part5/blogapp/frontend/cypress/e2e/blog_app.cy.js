@@ -9,7 +9,12 @@ describe("Blog app", function() {
 
 
   it("user can login", function() {
-    cy.contains("log in to application")
+    cy.contains("login")
+    cy.get("#username").type("mluukkai")
+    cy.get("#password").type("salainen")
+    cy.get("#btn-login").click()
+
+    cy.contains('Matti Luukkainen logged in')
   });
 });
 
