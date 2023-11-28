@@ -115,6 +115,23 @@ describe("Blog app", function () {
           .contains("delete")
           .should("not.exist");
       });
+
+      it("sort by likes descending", function () {
+        cy.get(".blog").then((blogs) => {
+          for (let blog of blogs) {
+            cy.wrap(blog).contains("view").click();
+          }
+        });
+
+        cy.get(".blog").contains("test from cypress1").contains("like").click();
+        cy.get(".blog").contains("test from cypress2").contains("like").click();
+        cy.get(".blog").contains("test from cypress2").contains("like").click();
+        cy.get(".blog").contains("test from cypress2").contains("like").click();
+        cy.get(".blog").contains("test from cypress3").contains("like").click();
+        cy.get(".blog").contains("test from cypress3").contains("like").click();
+
+        cy.get(".blog").eq(0).should("contain", "test from cypress2");
+      });
     });
   });
 });
