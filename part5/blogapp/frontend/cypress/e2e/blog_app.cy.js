@@ -68,6 +68,14 @@ describe("Blog app", function () {
 
         cy.get("#btn-like-blog").parent().find("span").contains("2");
       });
+
+      it("can delete a blog", function () {
+        cy.get(".blog > button").contains("delete").click();
+
+        cy.get(".blog").then((blog) => {
+          cy.wrap(blog[0]).should("not.exist");
+        });
+      });
     });
   });
 });
