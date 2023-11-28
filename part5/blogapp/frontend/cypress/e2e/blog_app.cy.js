@@ -58,7 +58,7 @@ describe("Blog app", function () {
       cy.contains("test from cypress");
     });
 
-    describe("and a blog exists", function () {
+    describe("and blogs exists", function () {
       beforeEach(function () {
         cy.createBlog({
           title: "test from cypress1",
@@ -96,7 +96,7 @@ describe("Blog app", function () {
           .contains("test from cypress2")
           .contains("like")
           .parent()
-          .get("span")
+          .find("span")
           .should("contain", "2");
       });
 
