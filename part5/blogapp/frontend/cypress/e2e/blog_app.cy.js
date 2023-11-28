@@ -107,6 +107,14 @@ describe("Blog app", function () {
           .click();
         cy.get(".blog").contains("test from cypress2").should("not.exist");
       });
+
+      it("only the creator can delete blog", function () {
+        cy.login({ username: "test2", password: "test2" });
+        cy.get(".blog")
+          .contains("test from cypress2")
+          .contains("delete")
+          .should("not.exist");
+      });
     });
   });
 });
