@@ -1,13 +1,13 @@
 describe("Blog app", function () {
   beforeEach(function () {
-    cy.request("POST", "http://localhost:3001/api/tests/reset");
+    cy.request("POST", `${Cypress.env("BACKEND")}/tests/reset`);
     const user = {
       username: "test",
       password: "test",
       name: "Test Test",
     };
-    cy.request("POST", "http://localhost:3001/api/users", user);
-    cy.visit("http://localhost:5173");
+    cy.request("POST", `${Cypress.env("BACKEND")}/users`, user);
+    cy.visit("");
   });
 
   it("login page can be opened", function () {
@@ -25,10 +25,7 @@ describe("Blog app", function () {
 
   describe("when user logged in", function () {
     beforeEach(function () {
-      cy.contains("login");
-      cy.get("#username").type("test");
-      cy.get("#password").type("test");
-      cy.get("#btn-login").click();
+      cy.login({ username: "test", password: "test" });
     });
 
     it("can create new blog", function () {
@@ -63,6 +60,7 @@ describe("Blog app", function () {
       it("can give likes", function () {
         cy.contains("view").click();
 
+        cy.get("#btn-like-blog").click();
         cy.get("#btn-like-blog").click();
         cy.get("#btn-like-blog").click();
 
