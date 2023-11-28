@@ -14,22 +14,24 @@ describe("Blog app", function () {
     cy.contains("log in to application");
   });
 
-  it("user can login", function () {
-    cy.contains("login");
-    cy.get("#username").type("test");
-    cy.get("#password").type("test");
-    cy.get("#btn-login").click();
+  describe("Login", function () {
+    it("user can login", function () {
+      cy.contains("login");
+      cy.get("#username").type("test");
+      cy.get("#password").type("test");
+      cy.get("#btn-login").click();
 
-    cy.contains("Test Test logged in");
-  });
+      cy.contains("Test Test logged in");
+    });
 
-  it("invalid username or password", function () {
-    cy.contains("login");
-    cy.get("#username").type("fail");
-    cy.get("#password").type("fail");
-    cy.get("#btn-login").click();
+    it("invalid username or password", function () {
+      cy.contains("login");
+      cy.get("#username").type("fail");
+      cy.get("#password").type("fail");
+      cy.get("#btn-login").click();
 
-    cy.get(".error").should("exist");
+      cy.get(".error").should("exist");
+    });
   });
 
   describe("when user logged in", function () {
