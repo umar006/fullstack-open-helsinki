@@ -28,6 +28,14 @@ const Blog = ({ user, blog, blogs, setBlogs }) => {
     await blogServices.update(idToUpdate, updatedBlog);
 
     setLikes(updateLike);
+    setBlogs(
+      blogs
+        .map((blog) => {
+          if (blog.id === idToUpdate) blog.likes = updateLike;
+          return blog;
+        })
+        .sort((a, b) => b.likes - a.likes),
+    );
   };
 
   const isOwnedByUser = user.username === blog.user.username;
