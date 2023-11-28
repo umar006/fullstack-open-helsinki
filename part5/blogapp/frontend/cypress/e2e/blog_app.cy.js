@@ -23,6 +23,15 @@ describe("Blog app", function () {
     cy.contains("Test Test logged in");
   });
 
+  it("invalid username or password", function () {
+    cy.contains("login");
+    cy.get("#username").type("fail");
+    cy.get("#password").type("fail");
+    cy.get("#btn-login").click();
+
+    cy.get(".error").should("exist");
+  });
+
   describe("when user logged in", function () {
     beforeEach(function () {
       cy.login({ username: "test", password: "test" });
