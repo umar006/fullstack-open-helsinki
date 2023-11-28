@@ -52,12 +52,11 @@ describe("Blog app", function () {
 
     describe("and a blog exists", function () {
       beforeEach(function () {
-        cy.contains("new blog").click();
-
-        cy.get("#blog-title").type("test from cypress");
-        cy.get("#blog-author").type("test author");
-        cy.get("#blog-url").type("test url");
-        cy.get("#btn-create-blog").click();
+        cy.createBlog({
+          title: "test from cypress",
+          author: "test author",
+          url: "test url",
+        });
       });
 
       it("can view blog detail", function () {
