@@ -59,6 +59,15 @@ describe("Blog app", function () {
           .should("contain", "test url")
           .and("contain", "Test Test");
       });
+
+      it("can give likes", function () {
+        cy.contains("view").click();
+
+        cy.get("#btn-like-blog").click();
+        cy.get("#btn-like-blog").click();
+
+        cy.get("#btn-like-blog").parent().find("span").contains("2");
+      });
     });
   });
 });

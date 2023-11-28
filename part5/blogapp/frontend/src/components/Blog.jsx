@@ -45,7 +45,7 @@ const Blog = ({ user, blog, blogs, setBlogs }) => {
           <div>
             <p>{blog.url}</p>
             <p>
-              {likes}{" "}
+              <span>{likes} </span>
               <button id="btn-like-blog" onClick={handleUpdateLikeBlog}>
                 like
               </button>
