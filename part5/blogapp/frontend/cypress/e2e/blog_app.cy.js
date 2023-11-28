@@ -7,6 +7,12 @@ describe("Blog app", function () {
       name: "Test Test",
     };
     cy.request("POST", `${Cypress.env("BACKEND")}/users`, user);
+    const user2 = {
+      username: "test2",
+      password: "test2",
+      name: "Test2 Test2",
+    };
+    cy.request("POST", `${Cypress.env("BACKEND")}/users`, user2);
     cy.visit("");
   });
 
@@ -55,36 +61,51 @@ describe("Blog app", function () {
     describe("and a blog exists", function () {
       beforeEach(function () {
         cy.createBlog({
-          title: "test from cypress",
-          author: "test author",
-          url: "test url",
+          title: "test from cypress1",
+          author: "test author1",
+          url: "test url1",
+        });
+        cy.createBlog({
+          title: "test from cypress2",
+          author: "test author2",
+          url: "test url2",
+        });
+        cy.createBlog({
+          title: "test from cypress3",
+          author: "test author3",
+          url: "test url3",
         });
       });
 
       it("can view blog detail", function () {
-        cy.contains("view").click();
-        cy.get(".blog > .togglableContent")
+        cy.contains("test from cypress2").contains("view").click();
+        cy.get(".blog")
+          .contains("test from cypress2")
           .should("not.have.css", "display", "none")
-          .should("contain", "test url")
+          .should("contain", "test url2")
           .and("contain", "Test Test");
       });
 
       it("can give likes", function () {
-        cy.contains("view").click();
+        cy.get(".blog").contains("test from cypress2").contains("view").click();
 
-        cy.get("#btn-like-blog").click();
-        cy.get("#btn-like-blog").click();
-        cy.get("#btn-like-blog").click();
+        cy.get(".blog").contains("test from cypress2").contains("like").click();
+        cy.get(".blog").contains("test from cypress2").contains("like").click();
 
-        cy.get("#btn-like-blog").parent().find("span").contains("2");
+        cy.get(".blog")
+          .contains("test from cypress2")
+          .contains("like")
+          .parent()
+          .get("span")
+          .should("contain", "2");
       });
 
       it("can delete a blog", function () {
-        cy.get(".blog > button").contains("delete").click();
-
-        cy.get(".blog").then((blog) => {
-          cy.wrap(blog[0]).should("not.exist");
-        });
+        cy.get(".blog")
+          .contains("test from cypress2")
+          .contains("delete")
+          .click();
+        cy.get(".blog").contains("test from cypress2").should("not.exist");
       });
     });
   });
