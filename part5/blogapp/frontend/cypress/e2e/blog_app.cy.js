@@ -30,7 +30,9 @@ describe("Blog app", function () {
       cy.get("#password").type("fail");
       cy.get("#btn-login").click();
 
-      cy.get(".error").should("exist");
+      cy.get(".error")
+        .should("exist")
+        .and("have.css", "color", "rgb(255, 0, 0)");
     });
   });
 
