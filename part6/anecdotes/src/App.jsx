@@ -1,3 +1,5 @@
+import { useSelector } from "react-redux";
+
 const Anecdote = ({ anecdote }) => {
   return (
     <div>
@@ -21,14 +23,10 @@ const Anecdotes = ({ anecdotes }) => {
   );
 };
 
-const App = ({ store }) => {
-  const anecdotes = store.getState();
+const App = () => {
+  const anecdotes = useSelector((state) => state);
 
-  return (
-    <div>
-      <Anecdotes anecdotes={anecdotes} />
-    </div>
-  );
+  return <Anecdotes anecdotes={anecdotes} />;
 };
 
 export default App;
