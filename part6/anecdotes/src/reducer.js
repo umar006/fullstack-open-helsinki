@@ -55,4 +55,8 @@ const anecdoteReducer = (state = initialState, action) => {
   }
 };
 
+export const giveAnecdoteVote = (anecdoteId) => {
+  return { type: "GIVE_VOTE", payload: { id: anecdoteId } };
+};
+
 export default anecdoteReducer;
