@@ -1,3 +1,4 @@
+import deepFreeze from "deep-freeze";
 import counterReducer from "./reducer";
 
 describe("unicafe counterReducer", () => {
@@ -15,5 +16,17 @@ describe("unicafe counterReducer", () => {
     const newState = counterReducer(undefined, action);
 
     expect(newState).toEqual(initialState);
+  });
+
+  test("good is incremented by 1", () => {
+    const state = initialState;
+    const action = {
+      type: "GOOD",
+    };
+
+    deepFreeze(state);
+    const newState = counterReducer(state, action);
+
+    expect(newState).toEqual({ good: 1, ok: 0, bad: 0 });
   });
 });
