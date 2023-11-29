@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 const Button = ({ text, onClick }) => {
   return <button onClick={onClick}>{text}</button>;
 };
@@ -16,7 +14,7 @@ const StatisticLine = ({ text, value }) => {
 const Statistics = (props) => {
   const {
     good,
-    neutral,
+    ok,
     bad,
     totalFeedback,
     avgFeedback,
@@ -30,7 +28,7 @@ const Statistics = (props) => {
       <table>
         <tbody>
           <StatisticLine text="good" value={good} />
-          <StatisticLine text="neutral" value={neutral} />
+          <StatisticLine text="ok" value={ok} />
           <StatisticLine text="bad" value={bad} />
           <StatisticLine text="all" value={totalFeedback} />
           <StatisticLine text="average" value={avgFeedback} />
@@ -44,33 +42,35 @@ const Statistics = (props) => {
   }
 };
 
-const App = () => {
-  const [good, setGood] = useState(0);
-  const [neutral, setNeutral] = useState(0);
-  const [bad, setBad] = useState(0);
+const App = ({ store }) => {
+  const dataStore = store.getState();
+  const good = dataStore.good;
+  const ok = dataStore.ok;
+  const bad = dataStore.bad;
 
   const handleIncrementGood = () => {
-    const newGood = good + 1;
-    setGood(newGood);
+    store.dispatch({ type: "GOOD" });
   };
 
   const handleIncrementNeutral = () => {
-    const newNeutral = neutral + 1;
-    setNeutral(newNeutral);
+    store.dispatch({ type: "OK" });
   };
 
   const handleIncrementBad = () => {
-    const newBad = bad + 1;
-    setBad(newBad);
+    store.dispatch({ type: "BAD" });
   };
 
-  const totalFeedback = good + neutral + bad;
+  const handleReset = () => {
+    store.dispatch({ type: "RESET" });
+  };
+
+  const totalFeedback = good + ok + bad;
   const avgFeedback = totalFeedback / 3;
   const positiveFeedbackInPercentage = (good / totalFeedback) * 100 || 0;
 
   const data = {
     good,
-    neutral,
+    ok,
     bad,
     totalFeedback,
     avgFeedback,
@@ -81,8 +81,9 @@ const App = () => {
     <div>
       <h2>give feedback</h2>
       <Button text="good" onClick={handleIncrementGood} />
-      <Button text="neutral" onClick={handleIncrementNeutral} />
+      <Button text="ok" onClick={handleIncrementNeutral} />
       <Button text="bad" onClick={handleIncrementBad} />
+      <Button text="reset" onClick={handleReset} />
       <h2>statistics</h2>
       <Statistics data={data} />
     </div>
