@@ -1,16 +1,12 @@
-import { useSelector } from "react-redux";
-import Anecdotes from "./Anecdotes";
-import AnecdoteForm from "./AnecdoteForm";
+import Anecdotes from "./components/Anecdotes";
+import AnecdoteForm from "./components/AnecdoteForm";
 
 const App = () => {
-  const anecdotes = useSelector((state) =>
-    state.sort((a, b) => b.votes - a.votes),
-  );
-
   return (
     <>
+      <h1>Anecdotes</h1>
       <AnecdoteForm />
-      <Anecdotes anecdotes={anecdotes} />
+      <Anecdotes />
     </>
   );
 };
