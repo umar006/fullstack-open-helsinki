@@ -20,15 +20,15 @@ const Anecdote = ({ anecdote }) => {
 };
 
 const Anecdotes = () => {
-  const anecdotes = useSelector(({ anecdotes, filter }) =>
-    anecdotes
-      .sort((a, b) => b.votes - a.votes)
+  const anecdotes = useSelector(({ anecdotes, filter }) => {
+    return anecdotes
       .filter((anecdote) => {
         const content = anecdote.content.toLowerCase();
         filter = filter.toLowerCase();
         return content.includes(filter);
-      }),
-  );
+      })
+      .sort((a, b) => b.votes - a.votes);
+  });
 
   return (
     <>
