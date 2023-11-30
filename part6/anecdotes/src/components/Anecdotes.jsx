@@ -20,8 +20,14 @@ const Anecdote = ({ anecdote }) => {
 };
 
 const Anecdotes = () => {
-  const anecdotes = useSelector(({ anecdotes }) =>
-    anecdotes.sort((a, b) => b.votes - a.votes),
+  const anecdotes = useSelector(({ anecdotes, filter }) =>
+    anecdotes
+      .sort((a, b) => b.votes - a.votes)
+      .filter((anecdote) => {
+        const content = anecdote.content.toLowerCase();
+        filter = filter.toLowerCase();
+        return content.includes(filter);
+      }),
   );
 
   return (
