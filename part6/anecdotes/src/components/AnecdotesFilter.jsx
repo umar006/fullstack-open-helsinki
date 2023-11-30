@@ -1,10 +1,11 @@
 import { useDispatch } from "react-redux";
+import { applyFilter } from "../reducers/filterReducer";
 
 const AnecdotesFilter = () => {
   const dispatch = useDispatch();
 
   const handleFilter = (e) => {
-    dispatch({ type: "SET_FILTER", payload: e.target.value });
+    dispatch(applyFilter(e.target.value));
   };
 
   return (

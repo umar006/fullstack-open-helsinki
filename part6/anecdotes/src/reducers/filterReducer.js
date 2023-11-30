@@ -7,4 +7,11 @@ const filterReducer = (state = "", action) => {
   }
 };
 
+export const applyFilter = (query) => {
+  return {
+    type: "SET_FILTER",
+    payload: query,
+  };
+};
+
 export default filterReducer;
