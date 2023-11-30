@@ -8,9 +8,9 @@ import {
 const Anecdote = ({ anecdote }) => {
   const dispatch = useDispatch();
 
-  const handleGiveVote = (anecdoteId) => {
-    dispatch(giveAnecdoteVote(anecdoteId));
-    dispatch(showNotification(`you voted '${anecdote.content}`));
+  const handleGiveVote = (anecdote) => {
+    dispatch(giveAnecdoteVote(anecdote));
+    dispatch(showNotification(`you voted '${anecdote.content}'`));
     setTimeout(() => dispatch(removeNotification()), 5000);
   };
 
@@ -19,7 +19,7 @@ const Anecdote = ({ anecdote }) => {
       <span>{anecdote.content}</span>
       <div>
         <span>has {anecdote.votes} </span>
-        <button onClick={() => handleGiveVote(anecdote.id)}>vote</button>
+        <button onClick={() => handleGiveVote(anecdote)}>vote</button>
       </div>
     </div>
   );
