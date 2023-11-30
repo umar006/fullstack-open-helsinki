@@ -8,7 +8,6 @@ const notificationSlice = createSlice({
       return action.payload;
     },
     removeNotification(state, action) {
-      console.log("masuk");
       return null;
     },
   },
