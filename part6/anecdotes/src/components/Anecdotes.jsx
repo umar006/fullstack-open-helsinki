@@ -20,8 +20,8 @@ const Anecdote = ({ anecdote }) => {
 };
 
 const Anecdotes = () => {
-  const anecdotes = useSelector((state) =>
-    state.sort((a, b) => b.votes - a.votes),
+  const anecdotes = useSelector(({ anecdotes }) =>
+    anecdotes.sort((a, b) => b.votes - a.votes),
   );
 
   return (
