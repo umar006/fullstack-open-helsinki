@@ -1,10 +1,15 @@
+import { useMutation } from "@tanstack/react-query";
+import anecdoteServices from "../services/anecdoteServices";
+
 const AnecdoteForm = () => {
+  const mutation = useMutation({ mutationFn: anecdoteServices.create });
+
   const handleAddAnecdote = (e) => {
     e.preventDefault();
 
     const content = e.target.anecdote.value;
     e.target.anecdote.value = "";
-    console.log("Add new anecdote...", content);
+    mutation.mutate(content);
   };
 
   return (
