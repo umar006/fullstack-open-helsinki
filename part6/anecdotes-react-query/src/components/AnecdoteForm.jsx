@@ -21,6 +21,15 @@ const AnecdoteForm = () => {
         notificationDispatch({ type: "SET", payload: null });
       }, 5000);
     },
+    onError: (err) => {
+      notificationDispatch({
+        type: "SET",
+        payload: err.message,
+      });
+      setTimeout(() => {
+        notificationDispatch({ type: "SET", payload: null });
+      }, 5000);
+    },
   });
 
   const handleAddAnecdote = (e) => {
