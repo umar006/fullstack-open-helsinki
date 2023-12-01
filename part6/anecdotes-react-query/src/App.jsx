@@ -6,7 +6,7 @@ import anecdoteServices from "./services/anecdoteServices";
 function App() {
   const result = useQuery({
     queryKey: ["anecdote"],
-    queryFn: anecdoteServices.getAll(),
+    queryFn: anecdoteServices.getAll,
   });
 
   if (result.isLoading) {
@@ -26,13 +26,7 @@ function App() {
     console.log("vote", anecdote);
   };
 
-  const anecdotes = [
-    {
-      content: "If it hurts, do it more often",
-      id: "47145",
-      votes: 0,
-    },
-  ];
+  const anecdotes = result.data;
 
   return (
     <>
