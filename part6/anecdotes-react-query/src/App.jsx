@@ -1,9 +1,16 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useReducer } from "react";
 import AnecdoteForm from "./components/AnecdoteForm";
 import Notification from "./components/Notification";
+import notificationReducer from "./reducers/notificationReducer";
 import anecdoteServices from "./services/anecdoteServices";
 
 function App() {
+  const [notification, notificationDispatch] = useReducer(
+    notificationReducer,
+    null,
+  );
+
   const result = useQuery({
     queryKey: ["anecdotes"],
     queryFn: anecdoteServices.getAll,
@@ -40,8 +47,8 @@ function App() {
     <>
       <h1>Anecdotes App + React Query</h1>
 
-      <Notification />
       <AnecdoteForm />
+      <Notification message={notification} />
 
       {anecdotes.map((anecdote) => (
         <div key={anecdote.id}>

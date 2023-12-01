@@ -1,4 +1,4 @@
-const Notification = () => {
+const Notification = ({ message }) => {
   const style = {
     border: "solid",
     padding: 10,
@@ -6,9 +6,7 @@ const Notification = () => {
     marginBottom: 25,
   };
 
-  const notification = null;
-
-  const notify = !notification ? null : <div style={style}>{notification}</div>;
+  const notify = !message ? null : <div style={style}>{message}</div>;
 
   return notify;
 };
