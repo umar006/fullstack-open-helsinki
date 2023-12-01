@@ -5,7 +5,7 @@ import anecdoteServices from "./services/anecdoteServices";
 
 function App() {
   const result = useQuery({
-    queryKey: ["anecdote"],
+    queryKey: ["anecdotes"],
     queryFn: anecdoteServices.getAll,
   });
 
