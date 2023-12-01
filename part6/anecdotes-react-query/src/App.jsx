@@ -19,8 +19,16 @@ function App() {
   const queryClient = useQueryClient();
   const mutation = useMutation({
     mutationFn: anecdoteServices.vote,
-    onSuccess: () => {
+    onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ["anecdotes"] });
+
+      notificationDispatch({
+        type: "SET",
+        payload: `anecdote '${data.content}' voted`,
+      });
+      setTimeout(() => {
+        notificationDispatch({ type: "SET", payload: null });
+      }, 5000);
     },
   });
 
@@ -47,8 +55,8 @@ function App() {
     <>
       <h1>Anecdotes App + React Query</h1>
 
-      <AnecdoteForm />
       <Notification message={notification} />
+      <AnecdoteForm notificationDispatch={notificationDispatch} />
 
       {anecdotes.map((anecdote) => (
         <div key={anecdote.id}>
