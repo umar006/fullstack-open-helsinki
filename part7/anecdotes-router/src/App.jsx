@@ -5,10 +5,12 @@ import AnecdoteDetail from "./components/AnecdoteDetail";
 import AnecdoteForm from "./components/AnecdoteForm";
 import Anecdotes from "./components/Anecdotes";
 import Footer from "./components/Footer";
+import Notification from "./components/Notification";
 import anecdoteServices from "./services/anecdoteServices";
 
 function App() {
   const [anecdotes, setAnecdotes] = useState([]);
+  const [notification, setNotification] = useState(null);
 
   useEffect(() => {
     const fetchAnecdotes = async () => {
@@ -31,6 +33,7 @@ function App() {
   return (
     <>
       <h1>Software anecdotes</h1>
+
       <div>
         <Link style={padding} to={"/"}>
           anecdotes
@@ -42,6 +45,9 @@ function App() {
           about
         </Link>
       </div>
+
+      <Notification message={notification} />
+
       <Routes>
         <Route
           path="/"
@@ -56,11 +62,16 @@ function App() {
         <Route
           path="/create"
           element={
-            <AnecdoteForm anecdotes={anecdotes} setAnecdotes={setAnecdotes} />
+            <AnecdoteForm
+              anecdotes={anecdotes}
+              setAnecdotes={setAnecdotes}
+              setNotification={setNotification}
+            />
           }
         />
         <Route path="/about" element={<About />} />
       </Routes>
+
       <Footer />
     </>
   );

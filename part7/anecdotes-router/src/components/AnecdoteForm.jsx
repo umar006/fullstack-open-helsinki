@@ -1,6 +1,6 @@
 import anecdoteServices from "../services/anecdoteServices";
 
-const AnecdoteForm = ({ anecdotes, setAnecdotes }) => {
+const AnecdoteForm = ({ anecdotes, setAnecdotes, setNotification }) => {
   const handleCreateAnecdote = async (e) => {
     e.preventDefault();
 
@@ -18,6 +18,8 @@ const AnecdoteForm = ({ anecdotes, setAnecdotes }) => {
       votes: 0,
     });
     setAnecdotes(anecdotes.concat(newAnecdote));
+    setNotification("CREATED!");
+    setTimeout(() => setNotification(null), 5000);
   };
 
   return (
