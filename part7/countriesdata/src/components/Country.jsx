@@ -1,53 +1,5 @@
 import { useState } from "react";
-import openWeatherServices from "../services/openWeatherServices";
-import { useEffect } from "react";
-
-const Weather = ({ country }) => {
-  const [weather, setWeather] = useState(null);
-
-  useEffect(() => {
-    openWeatherServices
-      .get(country.capitalInfo.latlng)
-      .then((res) => setWeather(res));
-  }, [country]);
-
-  if (!weather) return null;
-
-  const weatherIcons = weather.weather.map((w) => (
-    <img
-      key={w.id}
-      src={`https://openweathermap.org/img/wn/${w.icon}@2x.png`}
-      alt={w.description}
-    />
-  ));
-
-  return (
-    <div>
-      <h2>Weather in {country.capital}</h2>
-      <p>temperature {weather.main.temp} Celcius</p>
-      {weatherIcons}
-      <p>wind {weather.wind.speed} m/s</p>
-    </div>
-  );
-};
-
-const CountryDetail = ({ country }) => {
-  return (
-    <div>
-      <h1>{country.name.common}</h1>
-      <p>capital {country.capital}</p>
-      <p>area {country.area}</p>
-      <p>languages:</p>
-      <ul>
-        {Object.keys(country.languages).map((language) => (
-          <li key={language}>{country.languages[language]}</li>
-        ))}
-      </ul>
-      <img src={country.flags.png} alt={country.flags.alt} />
-      <Weather country={country} />
-    </div>
-  );
-};
+import CountryDetail from "./CountryDetail";
 
 const Country = ({ country }) => {
   const [show, setShow] = useState(false);
