@@ -21,7 +21,7 @@ const AnecdoteForm = ({ anecdotes, setAnecdotes, setNotification }) => {
       votes: 0,
     });
     setAnecdotes(anecdotes.concat(newAnecdote));
-    setNotification("CREATED!");
+    setNotification(`anecdote '${content}' created!`);
     setTimeout(() => setNotification(null), 5000);
     navigate("/");
   };
