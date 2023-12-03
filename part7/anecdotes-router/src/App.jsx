@@ -1,10 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { Link, Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import About from "./components/About";
 import AnecdoteForm from "./components/AnecdoteForm";
 import Anecdotes from "./components/Anecdotes";
 import Footer from "./components/Footer";
-import { useEffect } from "react";
 import anecdoteServices from "./services/anecdoteServices";
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 
 function App() {
   const [anecdotes, setAnecdotes] = useState([]);
@@ -31,6 +31,9 @@ function App() {
           <Link style={padding} to={"/create"}>
             create new
           </Link>
+          <Link style={padding} to={"/about"}>
+            about
+          </Link>
         </div>
         <Routes>
           <Route
@@ -45,6 +48,7 @@ function App() {
               <AnecdoteForm anecdotes={anecdotes} setAnecdotes={setAnecdotes} />
             }
           />
+          <Route path="/about" element={<About />} />
         </Routes>
         <Footer />
       </Router>
