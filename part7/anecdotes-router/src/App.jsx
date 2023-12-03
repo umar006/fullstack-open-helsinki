@@ -4,6 +4,7 @@ import Anecdotes from "./components/Anecdotes";
 import Footer from "./components/Footer";
 import { useEffect } from "react";
 import anecdoteServices from "./services/anecdoteServices";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 
 function App() {
   const [anecdotes, setAnecdotes] = useState([]);
@@ -19,10 +20,22 @@ function App() {
 
   return (
     <>
-      <h1>Software anecdotes</h1>
-      <AnecdoteForm anecdotes={anecdotes} setAnecdotes={setAnecdotes} />
-      <Anecdotes anecdotes={anecdotes} setAnecdotes={setAnecdotes} />
-      <Footer />
+      <Router>
+        <h1>Software anecdotes</h1>
+        <div>
+          <Link to={"/"}>anecdotes</Link>
+        </div>
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <Anecdotes anecdotes={anecdotes} setAnecdotes={setAnecdotes} />
+            }
+          />
+        </Routes>
+        <AnecdoteForm anecdotes={anecdotes} setAnecdotes={setAnecdotes} />
+        <Footer />
+      </Router>
     </>
   );
 }
