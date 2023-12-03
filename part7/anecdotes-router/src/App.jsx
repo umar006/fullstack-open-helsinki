@@ -18,12 +18,19 @@ function App() {
     fetchAnecdotes();
   }, []);
 
+  const padding = { padding: 8 };
+
   return (
     <>
       <Router>
         <h1>Software anecdotes</h1>
         <div>
-          <Link to={"/"}>anecdotes</Link>
+          <Link style={padding} to={"/"}>
+            anecdotes
+          </Link>
+          <Link style={padding} to={"/create"}>
+            create new
+          </Link>
         </div>
         <Routes>
           <Route
@@ -32,8 +39,13 @@ function App() {
               <Anecdotes anecdotes={anecdotes} setAnecdotes={setAnecdotes} />
             }
           />
+          <Route
+            path="/create"
+            element={
+              <AnecdoteForm anecdotes={anecdotes} setAnecdotes={setAnecdotes} />
+            }
+          />
         </Routes>
-        <AnecdoteForm anecdotes={anecdotes} setAnecdotes={setAnecdotes} />
         <Footer />
       </Router>
     </>
