@@ -1,6 +1,9 @@
+import { useNavigate } from "react-router-dom";
 import anecdoteServices from "../services/anecdoteServices";
 
 const AnecdoteForm = ({ anecdotes, setAnecdotes, setNotification }) => {
+  const navigate = useNavigate();
+
   const handleCreateAnecdote = async (e) => {
     e.preventDefault();
 
@@ -20,6 +23,7 @@ const AnecdoteForm = ({ anecdotes, setAnecdotes, setNotification }) => {
     setAnecdotes(anecdotes.concat(newAnecdote));
     setNotification("CREATED!");
     setTimeout(() => setNotification(null), 5000);
+    navigate("/");
   };
 
   return (
