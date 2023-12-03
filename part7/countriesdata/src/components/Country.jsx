@@ -70,6 +70,10 @@ const CountryList = ({ countries, query }) => {
     country.name.common.toLowerCase().includes(query),
   );
 
+  if (searchedCountries.length === 0) {
+    return <div>Not found...</div>;
+  }
+
   if (searchedCountries.length > 10) {
     return <div>Too many matches, specify another filter</div>;
   }
