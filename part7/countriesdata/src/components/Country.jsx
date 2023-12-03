@@ -1,5 +1,6 @@
 import { useState } from "react";
 import CountryDetail from "./CountryDetail";
+import Weather from "./Weather";
 
 const Country = ({ country }) => {
   const [show, setShow] = useState(false);
@@ -32,7 +33,12 @@ const CountryList = ({ countries, query }) => {
 
   searchedCountries = searchedCountries.map((country, _, countries) => {
     if (countries.length === 1)
-      return <CountryDetail key={Number(country.ccn3)} country={country} />;
+      return (
+        <>
+          <CountryDetail key={Number(country.ccn3)} country={country} />
+          <Weather country={country} />
+        </>
+      );
 
     return <Country key={Number(country.ccn3)} country={country} />;
   });
