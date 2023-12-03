@@ -5,6 +5,7 @@ import AnecdoteForm from "./components/AnecdoteForm";
 import Anecdotes from "./components/Anecdotes";
 import Footer from "./components/Footer";
 import anecdoteServices from "./services/anecdoteServices";
+import AnecdoteDetail from "./components/AnecdoteDetail";
 
 function App() {
   const [anecdotes, setAnecdotes] = useState([]);
@@ -41,6 +42,10 @@ function App() {
             element={
               <Anecdotes anecdotes={anecdotes} setAnecdotes={setAnecdotes} />
             }
+          />
+          <Route
+            path="/anecdotes/:id"
+            element={<AnecdoteDetail anecdotes={anecdotes} />}
           />
           <Route
             path="/create"

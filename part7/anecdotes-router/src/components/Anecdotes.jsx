@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import anecdoteServices from "../services/anecdoteServices";
 
 const Anecdote = ({ anecdote, anecdotes, setAnecdotes }) => {
@@ -11,9 +12,7 @@ const Anecdote = ({ anecdote, anecdotes, setAnecdotes }) => {
 
   return (
     <>
-      <a href={anecdote.url} target="_blank" rel="noreferrer">
-        {anecdote.content}
-      </a>{" "}
+      <Link to={`/anecdotes/${anecdote.id}`}>{anecdote.content}</Link>
       <button onClick={handleDeleteAnecdote}>delete</button>
     </>
   );
