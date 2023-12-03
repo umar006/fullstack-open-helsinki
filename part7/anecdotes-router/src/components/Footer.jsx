@@ -1,5 +1,5 @@
 const Footer = () => (
-  <footer>
+  <footer style={{ paddingTop: 16 }}>
     Anecdote app for <a href="https://fullstackopen.com/">Full Stack Open</a>.
     See{" "}
     <a href="https://github.com/fullstack-hy2020/routed-anecdotes/blob/master/src/App.js">
