@@ -24,10 +24,16 @@ const AnecdoteForm = ({ anecdotes, setAnecdotes, setNotification }) => {
     navigate("/");
   };
 
+  const handleResetForm = async () => {
+    content.onReset();
+    author.onReset();
+    url.onReset();
+  };
+
   return (
     <div>
       <h2>Create a new anecdote</h2>
-      <form onSubmit={handleCreateAnecdote}>
+      <form onSubmit={handleCreateAnecdote} onReset={handleResetForm}>
         <div>
           content{" "}
           <input
@@ -49,6 +55,7 @@ const AnecdoteForm = ({ anecdotes, setAnecdotes, setNotification }) => {
           <input type={url.type} value={url.value} onChange={url.onChange} />
         </div>
         <button type="submit">create</button>
+        <button type="reset">reset</button>
       </form>
     </div>
   );

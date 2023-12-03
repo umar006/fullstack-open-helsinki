@@ -7,9 +7,14 @@ export const useField = (type) => {
     setState(e.target.value);
   };
 
+  const onReset = () => {
+    setState("");
+  };
+
   return {
     value,
     type,
     onChange,
+    onReset,
   };
 };
