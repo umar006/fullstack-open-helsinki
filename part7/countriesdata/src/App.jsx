@@ -1,26 +1,38 @@
-import { useEffect } from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import CountryDetail from "./components/CountryDetail";
+import Weather from "./components/Weather";
 import countryServices from "./services/countryServices";
-import CountryList from "./components/Country";
 
 function App() {
-  const [countries, setCountries] = useState([]);
+  const [country, setCountry] = useState(null);
   const [query, setQuery] = useState("");
 
   useEffect(() => {
-    countryServices.getAll().then((res) => {
-      setCountries(res);
-    });
-  }, []);
+    countryServices
+      .getOne(query)
+      .then((res) => {
+        setCountry(res);
+      })
+      .catch(() => setCountry(null));
+  }, [query]);
 
   const handleQueryChange = (e) => {
     setQuery(e.target.value);
   };
 
+  const countryDetail = !country ? (
+    <div>Not found...</div>
+  ) : (
+    <div>
+      <CountryDetail country={country} />
+      <Weather country={country} />
+    </div>
+  );
+
   return (
     <div>
       country: <input value={query} onChange={handleQueryChange} />
-      <CountryList countries={countries} query={query} />
+      {countryDetail}
     </div>
   );
 }
