@@ -1,20 +1,11 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import CountryDetail from "./components/CountryDetail";
 import Weather from "./components/Weather";
-import countryServices from "./services/countryServices";
+import { useCountry } from "./hooks";
 
 function App() {
-  const [country, setCountry] = useState(null);
   const [query, setQuery] = useState("");
-
-  useEffect(() => {
-    countryServices
-      .getOne(query)
-      .then((res) => {
-        setCountry(res);
-      })
-      .catch(() => setCountry(null));
-  }, [query]);
+  const country = useCountry(query).value;
 
   const handleQueryChange = (e) => {
     setQuery(e.target.value);
