@@ -1,13 +1,16 @@
 import { useState } from "react";
 import blogServices from "../services/blogServices";
-import Notification from "./Notification";
 
-const BlogForm = ({ blogs, setBlogs, blogFormRef }) => {
+const BlogForm = ({
+  blogs,
+  setBlogs,
+  blogFormRef,
+  setSuccessMessage,
+  setErrorMessage,
+}) => {
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
   const [url, setUrl] = useState("");
-  const [succesMessage, setSuccessMessage] = useState(null);
-  const [errorMessage, setErrorMessage] = useState(null);
 
   const handleCreateBlog = async (event) => {
     event.preventDefault();
@@ -34,7 +37,6 @@ const BlogForm = ({ blogs, setBlogs, blogFormRef }) => {
 
   return (
     <>
-      <Notification success={succesMessage} error={errorMessage} />
       <h2>create new</h2>
       <form onSubmit={handleCreateBlog}>
         <div>
