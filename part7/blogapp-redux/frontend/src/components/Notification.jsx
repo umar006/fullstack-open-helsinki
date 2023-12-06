@@ -20,8 +20,9 @@ const ErrorNotification = ({ messages }) => {
   return <div className="error">{messages}</div>;
 };
 
-const Notification = ({ success, error }) => {
-  if (error) return <ErrorNotification messages={error} />;
+const Notification = ({ notification, success, error }) => {
+  if (notification.error || error)
+    return <ErrorNotification messages={notification.message || error} />;
 
   return <SuccessNotification message={success} />;
 };
