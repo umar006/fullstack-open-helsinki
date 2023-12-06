@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { useSelector } from "react-redux";
 import blogServices from "../services/blogServices";
 import Blog from "./Blog";
 import BlogForm from "./BlogForm";
@@ -10,7 +11,7 @@ const BlogList = ({ user }) => {
   const [blogs, setBlogs] = useState([]);
   const blogFormRef = useRef();
   const [succesMessage, setSuccessMessage] = useState(null);
-  const [errorMessage, setErrorMessage] = useState(null);
+  const notification = useSelector((state) => state.notification);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -35,7 +36,7 @@ const BlogList = ({ user }) => {
 
   return (
     <>
-      <Notification success={succesMessage} error={errorMessage} />
+      <Notification notification={notification} success={succesMessage} />
       <Togglable
         ref={blogFormRef}
         buttonLabelShow="new blog"
@@ -46,7 +47,6 @@ const BlogList = ({ user }) => {
           setBlogs={setBlogs}
           blogFormRef={blogFormRef}
           setSuccessMessage={setSuccessMessage}
-          setErrorMessage={setErrorMessage}
         />
       </Togglable>
       {blogList}

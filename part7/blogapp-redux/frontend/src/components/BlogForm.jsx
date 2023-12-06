@@ -1,16 +1,13 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { setErrorNotification } from "../reducers/notificationReducer";
 import blogServices from "../services/blogServices";
 
-const BlogForm = ({
-  blogs,
-  setBlogs,
-  blogFormRef,
-  setSuccessMessage,
-  setErrorMessage,
-}) => {
+const BlogForm = ({ blogs, setBlogs, blogFormRef, setSuccessMessage }) => {
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
   const [url, setUrl] = useState("");
+  const dispatch = useDispatch();
 
   const handleCreateBlog = async (event) => {
     event.preventDefault();
@@ -28,9 +25,9 @@ const BlogForm = ({
         setSuccessMessage(null);
       }, 5000);
     } catch (err) {
-      setErrorMessage(err.response.data.errors);
+      dispatch(setErrorNotification(err.response.data.errors));
       setTimeout(() => {
-        setErrorMessage(null);
+        dispatch(setErrorNotification(err.response.data.errors));
       }, 5000);
     }
   };
