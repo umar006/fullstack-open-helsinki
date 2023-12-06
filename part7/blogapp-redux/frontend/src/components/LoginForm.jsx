@@ -1,13 +1,15 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setErrorNotification } from "../reducers/notificationReducer";
+import blogServices from "../services/blogServices";
 import loginServices from "../services/loginServices";
 import Notification from "./Notification";
-import blogServices from "../services/blogServices";
-import { useEffect } from "react";
 
 const LoginForm = ({ setUser }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [errorMessage, setErrorMessage] = useState(null);
+  const notification = useSelector((state) => state.notification);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem("loggedBlogAppUser");
@@ -30,9 +32,9 @@ const LoginForm = ({ setUser }) => {
       setUsername("");
       setPassword("");
     } catch (err) {
-      setErrorMessage(err.response.data.error);
+      dispatch(setErrorNotification(err.response.data.error));
       setTimeout(() => {
-        setErrorMessage(null);
+        dispatch(setErrorNotification(null));
       }, 5000);
     }
   };
@@ -48,7 +50,7 @@ const LoginForm = ({ setUser }) => {
   return (
     <>
       <h1>log in to application</h1>
-      <Notification error={errorMessage} />
+      <Notification notification={notification} />
       <form onSubmit={handleLogin}>
         <div>
           username{" "}
