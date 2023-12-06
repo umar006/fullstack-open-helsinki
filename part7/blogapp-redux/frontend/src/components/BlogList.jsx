@@ -10,7 +10,6 @@ import Togglable from "./Togglable";
 const BlogList = ({ user }) => {
   const [blogs, setBlogs] = useState([]);
   const blogFormRef = useRef();
-  const [succesMessage, setSuccessMessage] = useState(null);
   const notification = useSelector((state) => state.notification);
 
   useEffect(() => {
@@ -36,18 +35,13 @@ const BlogList = ({ user }) => {
 
   return (
     <>
-      <Notification notification={notification} success={succesMessage} />
+      <Notification notification={notification} />
       <Togglable
         ref={blogFormRef}
         buttonLabelShow="new blog"
         buttonLabelHide="cancel"
       >
-        <BlogForm
-          blogs={blogs}
-          setBlogs={setBlogs}
-          blogFormRef={blogFormRef}
-          setSuccessMessage={setSuccessMessage}
-        />
+        <BlogForm blogs={blogs} setBlogs={setBlogs} blogFormRef={blogFormRef} />
       </Togglable>
       {blogList}
     </>
