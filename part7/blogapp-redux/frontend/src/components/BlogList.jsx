@@ -45,11 +45,7 @@ const BlogList = ({ user }) => {
         buttonLabelShow="new blog"
         buttonLabelHide="cancel"
       >
-        <BlogForm
-          blogs={blogs}
-          setBlogs={setOldBlogs}
-          blogFormRef={blogFormRef}
-        />
+        <BlogForm blogFormRef={blogFormRef} />
       </Togglable>
       {blogList}
     </>

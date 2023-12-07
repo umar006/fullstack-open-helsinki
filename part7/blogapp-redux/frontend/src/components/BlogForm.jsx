@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
+import { createBlog } from "../reducers/blogReducer";
 import {
-    setErrorNotification,
-    setSuccessNotification,
+  setErrorNotification,
+  setSuccessNotification,
 } from "../reducers/notificationReducer";
 import blogServices from "../services/blogServices";
 
-const BlogForm = ({ blogs, setBlogs, blogFormRef }) => {
+const BlogForm = ({ blogFormRef }) => {
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
   const [url, setUrl] = useState("");
@@ -19,10 +20,10 @@ const BlogForm = ({ blogs, setBlogs, blogFormRef }) => {
       blogFormRef.current.toggleVisibility();
       const createdBlog = await blogServices.create({ title, author, url });
 
-      setBlogs(blogs.concat(createdBlog));
       setTitle("");
       setAuthor("");
       setUrl("");
+      dispatch(createBlog(createdBlog));
       dispatch(
         setSuccessNotification(`a new blog ${title} by ${author} added`),
       );
