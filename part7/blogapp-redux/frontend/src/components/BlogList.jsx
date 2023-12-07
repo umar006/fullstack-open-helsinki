@@ -8,9 +8,10 @@ import "./BlogList.css";
 import Notification from "./Notification";
 import Togglable from "./Togglable";
 
-const BlogList = ({ user }) => {
+const BlogList = () => {
   const blogFormRef = useRef();
   const blogs = useSelector((state) => state.blogs);
+  const user = useSelector((state) => state.login);
   const notification = useSelector((state) => state.notification);
   const dispatch = useDispatch();
 

@@ -1,20 +1,22 @@
-import { useState } from "react";
-import LoginForm from "./components/LoginForm";
+import { useDispatch, useSelector } from "react-redux";
 import BlogList from "./components/BlogList";
+import LoginForm from "./components/LoginForm";
+import { setUser } from "./reducers/loginReducer";
 
 function App() {
-  const [user, setUser] = useState(null);
+  const user = useSelector((state) => state.login);
+  const dispatch = useDispatch();
 
   if (!user)
     return (
       <>
-        <LoginForm setUser={setUser} />
+        <LoginForm />
       </>
     );
 
   const handleLogout = () => {
     window.localStorage.removeItem("loggedBlogAppUser");
-    setUser(null);
+    dispatch(setUser(null));
   };
 
   return (
@@ -24,7 +26,7 @@ function App() {
         {user.name} {"logged in "}
         <button onClick={handleLogout}>logout</button>
       </h3>
-      <BlogList user={user} setUser={setUser} />
+      <BlogList />
     </>
   );
 }
