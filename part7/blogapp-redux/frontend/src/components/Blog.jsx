@@ -1,9 +1,12 @@
 import { useState } from "react";
 import blogServices from "../services/blogServices";
 import Togglable from "./Togglable";
+import { useDispatch } from "react-redux";
+import { removeBlogById } from "../reducers/blogReducer";
 
 const Blog = ({ user, blog, blogs, setBlogs }) => {
   const [likes, setLikes] = useState(blog.likes);
+  const dispatch = useDispatch();
 
   const handleDeleteBlog = async () => {
     const idToDelete = blog.id;
@@ -14,7 +17,7 @@ const Blog = ({ user, blog, blogs, setBlogs }) => {
 
     await blogServices.remove(idToDelete);
 
-    setBlogs(blogs.filter((blog) => blog.id !== idToDelete));
+    dispatch(removeBlogById(idToDelete));
   };
 
   const handleUpdateLikeBlog = async () => {
