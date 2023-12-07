@@ -17,16 +17,6 @@ const BlogForm = ({ blogFormRef }) => {
     onSuccess: (newBlog) => {
       const blogs = queryClient.getQueryData(["blogs"]);
       queryClient.setQueryData(["blogs"], blogs.concat(newBlog));
-    },
-  });
-
-  const handleCreateBlog = async (event) => {
-    event.preventDefault();
-
-    try {
-      blogFormRef.current.toggleVisibility();
-
-      newBlogMutation.mutate({ title, author, url });
 
       setTitle("");
       setAuthor("");
@@ -36,12 +26,21 @@ const BlogForm = ({ blogFormRef }) => {
       setTimeout(() => {
         setSuccessMessage(null);
       }, 5000);
-    } catch (err) {
+    },
+    onError: (err) => {
       setErrorMessage(err.response.data.errors);
       setTimeout(() => {
         setErrorMessage(null);
       }, 5000);
-    }
+    },
+  });
+
+  const handleCreateBlog = async (event) => {
+    event.preventDefault();
+
+    blogFormRef.current.toggleVisibility();
+
+    newBlogMutation.mutate({ title, author, url });
   };
 
   return (
