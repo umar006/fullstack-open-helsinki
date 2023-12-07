@@ -1,12 +1,12 @@
 import { useState } from "react";
-import Togglable from "./Togglable";
 import blogServices from "../services/blogServices";
+import Togglable from "./Togglable";
 
 const Blog = ({ user, blog, blogs, setBlogs }) => {
   const [likes, setLikes] = useState(blog.likes);
 
-  const handleDeleteBlog = async (event) => {
-    const idToDelete = event.target.id;
+  const handleDeleteBlog = async () => {
+    const idToDelete = blog.id;
     const confirmDelete = window.confirm(
       `Delete ${blog.title} by ${blog.author}`,
     );
@@ -40,9 +40,7 @@ const Blog = ({ user, blog, blogs, setBlogs }) => {
 
   const isOwnedByUser = user.username === blog.user.username;
   const userCanDelete = isOwnedByUser ? (
-    <button id={blog.id} onClick={handleDeleteBlog}>
-      {" delete "}
-    </button>
+    <button onClick={handleDeleteBlog}>{" delete "}</button>
   ) : null;
 
   return (
