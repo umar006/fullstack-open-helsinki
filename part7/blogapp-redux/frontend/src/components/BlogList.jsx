@@ -23,9 +23,9 @@ const BlogList = ({ user }) => {
     fetchData();
   }, []);
 
-  const blogList = blogs
-    .map((blog) => <Blog key={blog.id} user={user} blog={blog} />)
-    .sort((blog1, blog2) => blog2.likes - blog1.likes);
+  const blogList = blogs.map((blog) => (
+    <Blog key={blog.id} user={user} blog={blog} />
+  ));
 
   return (
     <>
