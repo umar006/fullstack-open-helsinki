@@ -1,10 +1,10 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { likeBlogById, removeBlogById } from "../reducers/blogReducer";
 import blogServices from "../services/blogServices";
 import Togglable from "./Togglable";
-import { useDispatch } from "react-redux";
-import { removeBlogById } from "../reducers/blogReducer";
 
-const Blog = ({ user, blog, blogs, setBlogs }) => {
+const Blog = ({ user, blog }) => {
   const [likes, setLikes] = useState(blog.likes);
   const dispatch = useDispatch();
 
@@ -31,14 +31,7 @@ const Blog = ({ user, blog, blogs, setBlogs }) => {
     await blogServices.update(idToUpdate, updatedBlog);
 
     setLikes(updateLike);
-    setBlogs(
-      blogs
-        .map((blog) => {
-          if (blog.id === idToUpdate) blog.likes = updateLike;
-          return blog;
-        })
-        .sort((a, b) => b.likes - a.likes),
-    );
+    dispatch(likeBlogById(updatedBlog));
   };
 
   const isOwnedByUser = user.username === blog.user.username;
