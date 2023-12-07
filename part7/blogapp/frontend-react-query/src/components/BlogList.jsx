@@ -1,22 +1,23 @@
-import { useEffect, useRef, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { useRef, useState } from "react";
 import blogServices from "../services/blogServices";
 import Blog from "./Blog";
 import BlogForm from "./BlogForm";
-import Togglable from "./Togglable";
 import "./BlogList.css";
+import Togglable from "./Togglable";
 
 const BlogList = ({ user }) => {
-  const [blogs, setBlogs] = useState([]);
+  const [oldBlogs, setBlogs] = useState([]);
   const blogFormRef = useRef();
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const response = await blogServices.getAll();
-      setBlogs(response);
-    };
+  const result = useQuery({
+    queryKey: ["blogs"],
+    queryFn: blogServices.getAll,
+  });
 
-    fetchData();
-  }, []);
+  if (result.isLoading) return <div>sabar bro...</div>;
+
+  const blogs = result.data;
 
   const blogList = blogs
     .sort((blog1, blog2) => blog2.likes - blog1.likes)
