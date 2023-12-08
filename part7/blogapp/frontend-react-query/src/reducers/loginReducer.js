@@ -9,4 +9,11 @@ const loginReducer = (state, action) => {
   }
 };
 
+export const loginUser = (user) => {
+  return {
+    type: "LOGIN",
+    payload: user,
+  };
+};
+
 export default loginReducer;
