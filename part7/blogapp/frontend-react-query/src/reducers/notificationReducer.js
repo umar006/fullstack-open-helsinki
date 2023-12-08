@@ -7,6 +7,16 @@ const notificationReducer = (state, action) => {
   }
 };
 
+export const successMessage = (message) => {
+  return {
+    type: "SET",
+    payload: {
+      success: message,
+      error: null,
+    },
+  };
+};
+
 export const errorMessage = (message) => {
   return {
     type: "SET",
