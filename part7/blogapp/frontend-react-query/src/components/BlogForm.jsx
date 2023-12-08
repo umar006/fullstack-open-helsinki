@@ -1,14 +1,14 @@
-import { useState } from "react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useContext, useState } from "react";
+import NotificationContext from "../contexts/NotificationContext";
 import blogServices from "../services/blogServices";
 import Notification from "./Notification";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 const BlogForm = ({ blogFormRef }) => {
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
   const [url, setUrl] = useState("");
-  const [succesMessage, setSuccessMessage] = useState(null);
-  const [errorMessage, setErrorMessage] = useState(null);
+  const [msg, msgDispatch] = useContext(NotificationContext);
 
   const queryClient = useQueryClient();
 
@@ -22,15 +22,27 @@ const BlogForm = ({ blogFormRef }) => {
       setAuthor("");
       setUrl("");
 
-      setSuccessMessage(`a new blog ${title} by ${author} added`);
+      msgDispatch({
+        type: "SET",
+        payload: {
+          success: `a new blog ${title} by ${author} added`,
+          error: null,
+        },
+      });
       setTimeout(() => {
-        setSuccessMessage(null);
+        msgDispatch({ type: "SET", payload: null });
       }, 5000);
     },
     onError: (err) => {
-      setErrorMessage(err.response.data.errors);
+      msgDispatch({
+        type: "SET",
+        payload: {
+          error: err.response.data.errors,
+          success: null,
+        },
+      });
       setTimeout(() => {
-        setErrorMessage(null);
+        msgDispatch({ type: "SET", payload: null });
       }, 5000);
     },
   });
@@ -45,7 +57,7 @@ const BlogForm = ({ blogFormRef }) => {
 
   return (
     <>
-      <Notification success={succesMessage} error={errorMessage} />
+      <Notification message={msg} />
       <h2>create new</h2>
       <form onSubmit={handleCreateBlog}>
         <div>
