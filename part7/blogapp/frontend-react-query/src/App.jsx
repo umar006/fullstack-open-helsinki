@@ -2,6 +2,7 @@ import { useContext } from "react";
 import BlogList from "./components/BlogList";
 import LoginForm from "./components/LoginForm";
 import LoginContext from "./contexts/LoginContext";
+import { logoutUser } from "./reducers/loginReducer";
 
 function App() {
   const [login, loginDispatch] = useContext(LoginContext);
@@ -15,7 +16,7 @@ function App() {
 
   const handleLogout = () => {
     window.localStorage.removeItem("loggedBlogAppUser");
-    loginDispatch({ type: "LOGOUT" });
+    loginDispatch(logoutUser());
   };
 
   return (
