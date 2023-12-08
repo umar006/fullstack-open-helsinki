@@ -1,13 +1,16 @@
 import { useQuery } from "@tanstack/react-query";
-import { useRef, useState } from "react";
+import { useContext, useRef } from "react";
+import NotificationContext from "../contexts/NotificationContext";
 import blogServices from "../services/blogServices";
 import Blog from "./Blog";
 import BlogForm from "./BlogForm";
 import "./BlogList.css";
+import Notification from "./Notification";
 import Togglable from "./Togglable";
 
 const BlogList = ({ user }) => {
   const blogFormRef = useRef();
+  const [msg, _] = useContext(NotificationContext);
 
   const result = useQuery({
     queryKey: ["blogs"],
@@ -24,6 +27,7 @@ const BlogList = ({ user }) => {
 
   return (
     <>
+      <Notification message={msg} />
       <Togglable
         ref={blogFormRef}
         buttonLabelShow="new blog"

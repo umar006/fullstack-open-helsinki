@@ -2,13 +2,12 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useContext, useState } from "react";
 import NotificationContext from "../contexts/NotificationContext";
 import blogServices from "../services/blogServices";
-import Notification from "./Notification";
 
 const BlogForm = ({ blogFormRef }) => {
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
   const [url, setUrl] = useState("");
-  const [msg, msgDispatch] = useContext(NotificationContext);
+  const [_, msgDispatch] = useContext(NotificationContext);
 
   const queryClient = useQueryClient();
 
@@ -57,7 +56,6 @@ const BlogForm = ({ blogFormRef }) => {
 
   return (
     <>
-      <Notification message={msg} />
       <h2>create new</h2>
       <form onSubmit={handleCreateBlog}>
         <div>
