@@ -1,8 +1,8 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useContext, useState } from "react";
 import NotificationContext from "../contexts/NotificationContext";
+import { errorMessage, nullMessage } from "../reducers/notificationReducer";
 import blogServices from "../services/blogServices";
-import { errorMessage } from "../reducers/notificationReducer";
 
 const BlogForm = ({ blogFormRef }) => {
   const [title, setTitle] = useState("");
@@ -30,13 +30,13 @@ const BlogForm = ({ blogFormRef }) => {
         },
       });
       setTimeout(() => {
-        notifDispatch({ type: "SET", payload: null });
+        notifDispatch(nullMessage());
       }, 5000);
     },
     onError: (err) => {
       notifDispatch(errorMessage(err.response.data.errors));
       setTimeout(() => {
-        notifDispatch({ type: "SET", payload: null });
+        notifDispatch(nullMessage());
       }, 5000);
     },
   });

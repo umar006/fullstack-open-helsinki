@@ -4,7 +4,7 @@ import blogServices from "../services/blogServices";
 import loginServices from "../services/loginServices";
 import Notification from "./Notification";
 import LoginContext from "../contexts/LoginContext";
-import { errorMessage } from "../reducers/notificationReducer";
+import { errorMessage, nullMessage } from "../reducers/notificationReducer";
 
 const LoginForm = () => {
   const [username, setUsername] = useState("");
@@ -37,7 +37,7 @@ const LoginForm = () => {
     } catch (err) {
       notifDispatch(errorMessage(err.response.data.error));
       setTimeout(() => {
-        notifDispatch({ type: "SET", payload: null });
+        notifDispatch(nullMessage());
       }, 5000);
     }
   };
