@@ -1,9 +1,12 @@
+import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
-import Togglable from "./Togglable";
 import blogServices from "../services/blogServices";
+import Togglable from "./Togglable";
 
 const Blog = ({ user, blog, blogs, setBlogs }) => {
   const [likes, setLikes] = useState(blog.likes);
+
+  const deleteBlogMutation = useMutation({ mutationFn: blogServices.remove });
 
   const handleDeleteBlog = async (event) => {
     const idToDelete = event.target.id;
@@ -12,9 +15,7 @@ const Blog = ({ user, blog, blogs, setBlogs }) => {
     );
     if (!confirmDelete) return;
 
-    await blogServices.remove(idToDelete);
-
-    setBlogs(blogs.filter((blog) => blog.id !== idToDelete));
+    deleteBlogMutation.mutate(idToDelete);
   };
 
   const handleUpdateLikeBlog = async () => {
