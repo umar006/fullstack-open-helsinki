@@ -11,7 +11,7 @@ const LoginForm = () => {
   const [password, setPassword] = useState("");
 
   const [_, loginDispatch] = useContext(LoginContext);
-  const [msg, msgDispatch] = useContext(NotificationContext);
+  const [notif, notifDispatch] = useContext(NotificationContext);
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem("loggedBlogAppUser");
@@ -35,9 +35,9 @@ const LoginForm = () => {
       setUsername("");
       setPassword("");
     } catch (err) {
-      msgDispatch(errorMessage(err.response.data.error));
+      notifDispatch(errorMessage(err.response.data.error));
       setTimeout(() => {
-        msgDispatch({ type: "SET", payload: null });
+        notifDispatch({ type: "SET", payload: null });
       }, 5000);
     }
   };
@@ -53,7 +53,7 @@ const LoginForm = () => {
   return (
     <>
       <h1>log in to application</h1>
-      <Notification message={msg} />
+      <Notification message={notif} />
       <form onSubmit={handleLogin}>
         <div>
           username{" "}
