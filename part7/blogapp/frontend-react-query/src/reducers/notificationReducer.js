@@ -17,4 +17,11 @@ export const errorMessage = (message) => {
   };
 };
 
+export const nullMessage = () => {
+  return {
+    type: "SET",
+    payload: null,
+  };
+};
+
 export default notificationReducer;
