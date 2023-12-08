@@ -2,12 +2,13 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useContext, useState } from "react";
 import NotificationContext from "../contexts/NotificationContext";
 import blogServices from "../services/blogServices";
+import { errorMessage } from "../reducers/notificationReducer";
 
 const BlogForm = ({ blogFormRef }) => {
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
   const [url, setUrl] = useState("");
-  const [_, msgDispatch] = useContext(NotificationContext);
+  const [_, notifDispatch] = useContext(NotificationContext);
 
   const queryClient = useQueryClient();
 
@@ -21,7 +22,7 @@ const BlogForm = ({ blogFormRef }) => {
       setAuthor("");
       setUrl("");
 
-      msgDispatch({
+      notifDispatch({
         type: "SET",
         payload: {
           success: `a new blog ${title} by ${author} added`,
@@ -29,19 +30,13 @@ const BlogForm = ({ blogFormRef }) => {
         },
       });
       setTimeout(() => {
-        msgDispatch({ type: "SET", payload: null });
+        notifDispatch({ type: "SET", payload: null });
       }, 5000);
     },
     onError: (err) => {
-      msgDispatch({
-        type: "SET",
-        payload: {
-          error: err.response.data.errors,
-          success: null,
-        },
-      });
+      notifDispatch(errorMessage(err.response.data.errors));
       setTimeout(() => {
-        msgDispatch({ type: "SET", payload: null });
+        notifDispatch({ type: "SET", payload: null });
       }, 5000);
     },
   });
