@@ -8,7 +8,7 @@ const LoginForm = ({ setUser }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const [errMsg, errMsgDispatch] = useContext(NotificationContext);
+  const [msg, msgDispatch] = useContext(NotificationContext);
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem("loggedBlogAppUser");
@@ -31,9 +31,15 @@ const LoginForm = ({ setUser }) => {
       setUsername("");
       setPassword("");
     } catch (err) {
-      errMsgDispatch({ type: "SET", payload: err.response.data.error });
+      msgDispatch({
+        type: "SET",
+        payload: {
+          error: err.response.data.error,
+          success: null,
+        },
+      });
       setTimeout(() => {
-        errMsgDispatch({ type: "SET", payload: null });
+        msgDispatch({ type: "SET", payload: null });
       }, 5000);
     }
   };
@@ -49,7 +55,7 @@ const LoginForm = ({ setUser }) => {
   return (
     <>
       <h1>log in to application</h1>
-      <Notification error={errMsg} />
+      <Notification message={msg} />
       <form onSubmit={handleLogin}>
         <div>
           username{" "}
