@@ -1,5 +1,5 @@
-import { useEffect, useReducer, useState } from "react";
-import notificationReducer from "../reducers/notificationReducer";
+import { useContext, useEffect, useState } from "react";
+import NotificationContext from "../contexts/NotificationContext";
 import blogServices from "../services/blogServices";
 import loginServices from "../services/loginServices";
 import Notification from "./Notification";
@@ -8,7 +8,7 @@ const LoginForm = ({ setUser }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const [errMsg, errMsgDispatch] = useReducer(notificationReducer, null);
+  const [errMsg, errMsgDispatch] = useContext(NotificationContext);
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem("loggedBlogAppUser");
