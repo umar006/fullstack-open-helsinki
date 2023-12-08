@@ -1,30 +1,31 @@
-import { useState } from "react";
-import LoginForm from "./components/LoginForm";
+import { useContext } from "react";
 import BlogList from "./components/BlogList";
+import LoginForm from "./components/LoginForm";
+import LoginContext from "./contexts/LoginContext";
 
 function App() {
-  const [user, setUser] = useState(null);
+  const [login, loginDispatch] = useContext(LoginContext);
 
-  if (!user)
+  if (!login)
     return (
       <>
-        <LoginForm setUser={setUser} />
+        <LoginForm />
       </>
     );
 
   const handleLogout = () => {
     window.localStorage.removeItem("loggedBlogAppUser");
-    setUser(null);
+    loginDispatch({ type: "LOGOUT" });
   };
 
   return (
     <>
       <h1>Blogs</h1>
       <h3>
-        {user.name} {"logged in "}
+        {login.name} {"logged in "}
         <button onClick={handleLogout}>logout</button>
       </h3>
-      <BlogList user={user} setUser={setUser} />
+      <BlogList user={login} />
     </>
   );
 }

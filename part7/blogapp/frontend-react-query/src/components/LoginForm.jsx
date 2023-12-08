@@ -3,21 +3,23 @@ import NotificationContext from "../contexts/NotificationContext";
 import blogServices from "../services/blogServices";
 import loginServices from "../services/loginServices";
 import Notification from "./Notification";
+import LoginContext from "../contexts/LoginContext";
 
-const LoginForm = ({ setUser }) => {
+const LoginForm = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
+  const [_, loginDispatch] = useContext(LoginContext);
   const [msg, msgDispatch] = useContext(NotificationContext);
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem("loggedBlogAppUser");
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON);
-      setUser(user);
+      loginDispatch({ type: "LOGIN", payload: user });
       blogServices.setToken(user.token);
     }
-  }, [setUser]);
+  }, []);
 
   const handleLogin = async (event) => {
     event.preventDefault();
@@ -27,7 +29,8 @@ const LoginForm = ({ setUser }) => {
 
       window.localStorage.setItem("loggedBlogAppUser", JSON.stringify(user));
       blogServices.setToken(user.token);
-      setUser(user);
+      loginDispatch({ type: "LOGIN", payload: user });
+
       setUsername("");
       setPassword("");
     } catch (err) {
