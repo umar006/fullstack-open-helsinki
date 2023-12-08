@@ -19,6 +19,11 @@ const Blog = ({ user, blog, blogs, setBlogs }) => {
     },
   });
 
+  const likeBlogMutation = useMutation({
+    mutationFn: (updatedBlog) =>
+      blogServices.update(updatedBlog.id, updatedBlog),
+  });
+
   const handleDeleteBlog = async (event) => {
     const idToDelete = event.target.id;
     const confirmDelete = window.confirm(
@@ -30,24 +35,15 @@ const Blog = ({ user, blog, blogs, setBlogs }) => {
   };
 
   const handleUpdateLikeBlog = async () => {
-    const idToUpdate = blog.id;
     const updateLike = likes + 1;
     const updatedBlog = {
       ...blog,
       likes: updateLike,
     };
 
-    await blogServices.update(idToUpdate, updatedBlog);
+    likeBlogMutation.mutate(updatedBlog);
 
     setLikes(updateLike);
-    setBlogs(
-      blogs
-        .map((blog) => {
-          if (blog.id === idToUpdate) blog.likes = updateLike;
-          return blog;
-        })
-        .sort((a, b) => b.likes - a.likes),
-    );
   };
 
   const isOwnedByUser = user.username === blog.user.username;
