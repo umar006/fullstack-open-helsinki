@@ -5,6 +5,7 @@ import loginServices from "../services/loginServices";
 import Notification from "./Notification";
 import LoginContext from "../contexts/LoginContext";
 import { errorMessage, nullMessage } from "../reducers/notificationReducer";
+import { loginUser } from "../reducers/loginReducer";
 
 const LoginForm = () => {
   const [username, setUsername] = useState("");
@@ -17,7 +18,7 @@ const LoginForm = () => {
     const loggedUserJSON = window.localStorage.getItem("loggedBlogAppUser");
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON);
-      loginDispatch({ type: "LOGIN", payload: user });
+      loginDispatch(loginUser(user));
       blogServices.setToken(user.token);
     }
   }, []);
@@ -30,7 +31,7 @@ const LoginForm = () => {
 
       window.localStorage.setItem("loggedBlogAppUser", JSON.stringify(user));
       blogServices.setToken(user.token);
-      loginDispatch({ type: "LOGIN", payload: user });
+      loginDispatch(loginUser(user));
 
       setUsername("");
       setPassword("");
