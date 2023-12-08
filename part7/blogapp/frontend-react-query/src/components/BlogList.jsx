@@ -7,7 +7,6 @@ import "./BlogList.css";
 import Togglable from "./Togglable";
 
 const BlogList = ({ user }) => {
-  const [oldBlogs, setBlogs] = useState([]);
   const blogFormRef = useRef();
 
   const result = useQuery({
@@ -21,15 +20,7 @@ const BlogList = ({ user }) => {
 
   const blogList = blogs
     .sort((blog1, blog2) => blog2.likes - blog1.likes)
-    .map((blog) => (
-      <Blog
-        key={blog.id}
-        user={user}
-        blog={blog}
-        blogs={blogs}
-        setBlogs={setBlogs}
-      />
-    ));
+    .map((blog) => <Blog key={blog.id} user={user} blog={blog} />);
 
   return (
     <>

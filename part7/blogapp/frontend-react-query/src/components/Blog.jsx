@@ -3,7 +3,7 @@ import { useState } from "react";
 import blogServices from "../services/blogServices";
 import Togglable from "./Togglable";
 
-const Blog = ({ user, blog, blogs, setBlogs }) => {
+const Blog = ({ user, blog }) => {
   const [likes, setLikes] = useState(blog.likes);
 
   const queryClient = useQueryClient();
