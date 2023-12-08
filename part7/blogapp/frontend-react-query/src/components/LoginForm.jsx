@@ -4,6 +4,7 @@ import blogServices from "../services/blogServices";
 import loginServices from "../services/loginServices";
 import Notification from "./Notification";
 import LoginContext from "../contexts/LoginContext";
+import { errorMessage } from "../reducers/notificationReducer";
 
 const LoginForm = () => {
   const [username, setUsername] = useState("");
@@ -34,13 +35,7 @@ const LoginForm = () => {
       setUsername("");
       setPassword("");
     } catch (err) {
-      msgDispatch({
-        type: "SET",
-        payload: {
-          error: err.response.data.error,
-          success: null,
-        },
-      });
+      msgDispatch(errorMessage(err.response.data.error));
       setTimeout(() => {
         msgDispatch({ type: "SET", payload: null });
       }, 5000);
