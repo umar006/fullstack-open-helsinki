@@ -1,12 +1,8 @@
 const SuccessNotification = ({ message }) => {
-  if (!message) return null;
-
   return <div className="success">{message}</div>;
 };
 
 const ErrorNotification = ({ messages }) => {
-  if (!messages) return null;
-
   if (Array.isArray(messages)) {
     return (
       <div className="error">
@@ -20,10 +16,12 @@ const ErrorNotification = ({ messages }) => {
   return <div className="error">{messages}</div>;
 };
 
-const Notification = ({ success, error }) => {
-  if (error) return <ErrorNotification messages={error} />;
+const Notification = ({ message }) => {
+  if (!message || !(message.error || message.success)) return null;
 
-  return <SuccessNotification message={success} />;
+  if (message.error) return <ErrorNotification messages={message.error} />;
+
+  return <SuccessNotification message={message.success} />;
 };
 
 export default Notification;
