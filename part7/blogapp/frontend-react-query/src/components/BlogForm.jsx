@@ -1,7 +1,11 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useContext, useState } from "react";
 import NotificationContext from "../contexts/NotificationContext";
-import { errorMessage, nullMessage } from "../reducers/notificationReducer";
+import {
+  errorMessage,
+  nullMessage,
+  successMessage,
+} from "../reducers/notificationReducer";
 import blogServices from "../services/blogServices";
 
 const BlogForm = ({ blogFormRef }) => {
@@ -22,13 +26,7 @@ const BlogForm = ({ blogFormRef }) => {
       setAuthor("");
       setUrl("");
 
-      notifDispatch({
-        type: "SET",
-        payload: {
-          success: `a new blog ${title} by ${author} added`,
-          error: null,
-        },
-      });
+      notifDispatch(successMessage(`a new blog ${title} by ${author} added`));
       setTimeout(() => {
         notifDispatch(nullMessage());
       }, 5000);
