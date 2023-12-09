@@ -22,6 +22,12 @@ blogSchema.set("toJSON", {
   },
 });
 
+blogSchema.pre("deleteOne", { document: true }, async function () {
+  await this.model("User")
+    .findById(this.user)
+    .updateOne({ $pull: { blogs: this._id } });
+});
+
 const Blog = mongoose.model("Blog", blogSchema);
 
 module.exports = Blog;
