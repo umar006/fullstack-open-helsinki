@@ -2,6 +2,7 @@ import { useContext } from "react";
 import { Link, Route, Routes } from "react-router-dom";
 import BlogList from "./components/BlogList";
 import LoginForm from "./components/LoginForm";
+import UserDetail from "./components/UserDetail";
 import UserList from "./components/UserList";
 import LoginContext from "./contexts/LoginContext";
 import { logoutUser } from "./reducers/loginReducer";
@@ -42,6 +43,7 @@ function App() {
       </h3>
       <Routes>
         <Route path="/users" element={<UserList />} />
+        <Route path="/users/:id" element={<UserDetail />} />
         <Route path="/blogs" element={<BlogList user={login} />} />
       </Routes>
     </>
