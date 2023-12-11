@@ -83,6 +83,16 @@ blogRouter.put("/:id", async (request, response) => {
   response.json(result);
 });
 
+blogRouter.get("/:blogId/comments", async (request, response) => {
+  const blogId = request.params.blogId;
+  const comments = await Comment.find({ blog: blogId }).populate("user", {
+    name: 1,
+    username: 1,
+  });
+
+  response.json(comments);
+});
+
 blogRouter.post("/:blogId/comments", async (request, response) => {
   const blogId = request.params.blogId;
   const user = request.user;
