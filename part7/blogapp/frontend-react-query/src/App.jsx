@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import BlogList from "./components/BlogList";
 import LoginForm from "./components/LoginForm";
+import UserList from "./components/UserList";
 import LoginContext from "./contexts/LoginContext";
 import { logoutUser } from "./reducers/loginReducer";
 
@@ -27,6 +28,7 @@ function App() {
         <button onClick={handleLogout}>logout</button>
       </h3>
       <BlogList user={login} />
+      <UserList />
     </>
   );
 }
