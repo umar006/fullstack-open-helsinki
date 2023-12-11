@@ -1,11 +1,9 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useState } from "react";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useParams } from "react-router-dom";
 import blogServices from "../services/blogServices";
-import Togglable from "./Togglable";
 
-const Blog = ({ user, blog }) => {
-  const [likes, setLikes] = useState(blog.likes);
-
+const Blog = ({ user }) => {
+  const blogId = useParams().id;
   const queryClient = useQueryClient();
 
   const deleteBlogMutation = useMutation({
@@ -22,6 +20,9 @@ const Blog = ({ user, blog }) => {
   const likeBlogMutation = useMutation({
     mutationFn: (updatedBlog) =>
       blogServices.update(updatedBlog.id, updatedBlog),
+    onSuccess: (_, updatedBlog) => {
+      queryClient.setQueryData(["blogs", blogId], updatedBlog);
+    },
   });
 
   const handleDeleteBlog = async (event) => {
@@ -35,16 +36,23 @@ const Blog = ({ user, blog }) => {
   };
 
   const handleUpdateLikeBlog = async () => {
-    const updateLike = likes + 1;
+    const updateLike = blog.likes + 1;
     const updatedBlog = {
       ...blog,
       likes: updateLike,
     };
 
     likeBlogMutation.mutate(updatedBlog);
-
-    setLikes(updateLike);
   };
+
+  const result = useQuery({
+    queryKey: ["blogs", blogId],
+    queryFn: () => blogServices.getOne(blogId),
+  });
+
+  if (result.isLoading) return <div>Sabar bro...</div>;
+
+  const blog = result.data;
 
   const isOwnedByUser = user.username === blog.user.username;
   const userCanDelete = isOwnedByUser ? (
@@ -57,18 +65,16 @@ const Blog = ({ user, blog }) => {
     <>
       <div className="blog">
         {blog.title} {blog.author} {userCanDelete}
-        <Togglable buttonLabelShow="view" buttonLabelHide="hide">
-          <div>
-            <p>{blog.url}</p>
-            <p>
-              <span>{likes} </span>
-              <button id="btn-like-blog" onClick={handleUpdateLikeBlog}>
-                like
-              </button>
-            </p>
-            <p>{blog.user.name}</p>{" "}
-          </div>
-        </Togglable>
+        <div>
+          <p>{blog.url}</p>
+          <p>
+            <span>{blog.likes} </span>
+            <button id="btn-like-blog" onClick={handleUpdateLikeBlog}>
+              like
+            </button>
+          </p>
+          <p>{blog.user.name}</p>{" "}
+        </div>
       </div>
     </>
   );
