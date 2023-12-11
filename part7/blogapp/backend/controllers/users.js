@@ -9,7 +9,19 @@ userRouter.get("/", async (request, response) => {
     author: 1,
     url: 1,
   });
+
   response.json(users);
+});
+
+userRouter.get("/:id", async (request, response) => {
+  const idToFind = request.params.id;
+  const user = await User.findById(idToFind).populate("blogs", {
+    title: 1,
+    author: 1,
+    url: 1,
+  });
+
+  response.json(user);
 });
 
 userRouter.post("/", async (request, response) => {
