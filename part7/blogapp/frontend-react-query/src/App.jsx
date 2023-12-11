@@ -1,4 +1,5 @@
 import { useContext } from "react";
+import { Link, Route, Routes } from "react-router-dom";
 import BlogList from "./components/BlogList";
 import LoginForm from "./components/LoginForm";
 import UserList from "./components/UserList";
@@ -20,15 +21,29 @@ function App() {
     loginDispatch(logoutUser());
   };
 
+  const style = {
+    paddingRight: 10,
+  };
+
   return (
     <>
+      <nav>
+        <Link style={style} to={"/blogs"}>
+          blogs
+        </Link>
+        <Link style={style} to={"/users"}>
+          users
+        </Link>
+      </nav>
       <h1>Blogs</h1>
       <h3>
         {login.name} {"logged in "}
         <button onClick={handleLogout}>logout</button>
       </h3>
-      <BlogList user={login} />
-      <UserList />
+      <Routes>
+        <Route path="/users" element={<UserList />} />
+        <Route path="/blogs" element={<BlogList user={login} />} />
+      </Routes>
     </>
   );
 }
