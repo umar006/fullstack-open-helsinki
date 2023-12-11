@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import { Link, Route, Routes } from "react-router-dom";
+import Blog from "./components/Blog";
 import BlogList from "./components/BlogList";
 import LoginForm from "./components/LoginForm";
 import UserDetail from "./components/UserDetail";
@@ -45,6 +46,7 @@ function App() {
         <Route path="/users" element={<UserList />} />
         <Route path="/users/:id" element={<UserDetail />} />
         <Route path="/blogs" element={<BlogList user={login} />} />
+        <Route path="/blogs/:id" element={<Blog user={login} />} />
       </Routes>
     </>
   );
