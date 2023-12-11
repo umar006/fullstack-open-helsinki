@@ -2,6 +2,7 @@ const jwt = require("jsonwebtoken");
 const config = require("../utils/config");
 const blogRouter = require("express").Router();
 const Blog = require("../models/blog");
+const Comment = require("../models/comment");
 
 blogRouter.get("/", async (request, response) => {
   const blogs = await Blog.find({}).populate("user", { username: 1, name: 1 });
@@ -80,6 +81,28 @@ blogRouter.put("/:id", async (request, response) => {
   const result = await blogToUpdate.updateOne(updatedBlog, { new: true });
 
   response.json(result);
+});
+
+blogRouter.post("/:blogId/comments", async (request, response) => {
+  const blogId = request.params.blogId;
+  const user = request.user;
+
+  const body = request.body;
+
+  const errors = [];
+  if (!body.comment) errors.push("comment is required");
+
+  if (errors.length) return response.status(400).json({ errors });
+
+  const comment = new Comment({
+    ...body,
+    blog: blogId,
+    user: user.id,
+  });
+
+  const result = await comment.save();
+
+  response.status(201).json(result);
 });
 
 module.exports = blogRouter;
