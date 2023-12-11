@@ -15,6 +15,9 @@ const Blog = ({ user }) => {
         blogs.filter((blog) => blog.id !== deletedBlogId),
       );
     },
+    onError: (e) => {
+      console.error(e);
+    },
   });
 
   const likeBlogMutation = useMutation({
@@ -22,6 +25,9 @@ const Blog = ({ user }) => {
       blogServices.update(updatedBlog.id, updatedBlog),
     onSuccess: (_, updatedBlog) => {
       queryClient.setQueryData(["blogs", blogId], updatedBlog);
+    },
+    onError: (e) => {
+      console.error(e);
     },
   });
 
