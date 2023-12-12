@@ -56,6 +56,18 @@ const getAllComments = async (blogId) => {
   return response.data;
 };
 
+const createComment = async (blogId, newComment) => {
+  const response = await axios.post(
+    `${baseUrl}/${blogId}/comments`,
+    newComment,
+    {
+      headers: { Authorization: token },
+    },
+  );
+
+  return response.data;
+};
+
 export default {
   getAll,
   getOne,
@@ -63,5 +75,6 @@ export default {
   update,
   remove,
   getAllComments,
+  createComment,
   setToken,
 };
