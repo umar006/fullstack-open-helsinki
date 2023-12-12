@@ -48,4 +48,20 @@ const remove = async (blogId) => {
   });
 };
 
-export default { getAll, getOne, create, update, remove, setToken };
+const getAllComments = async (blogId) => {
+  const response = await axios.get(`${baseUrl}/${blogId}/comments`, {
+    headers: { Authorization: token },
+  });
+
+  return response.data;
+};
+
+export default {
+  getAll,
+  getOne,
+  create,
+  update,
+  remove,
+  getAllComments,
+  setToken,
+};
