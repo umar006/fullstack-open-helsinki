@@ -43,7 +43,10 @@ blogRouter.post("/", async (request, response) => {
 
 blogRouter.get("/:id", async (request, response) => {
   const idToFind = request.params.id;
-  const blog = await Blog.findById(idToFind).populate("user", { name: 1 });
+  const blog = await Blog.findById(idToFind).populate("user", {
+    name: 1,
+    username: 1,
+  });
   response.json(blog);
 });
 
