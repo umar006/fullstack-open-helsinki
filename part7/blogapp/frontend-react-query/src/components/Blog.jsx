@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
 import blogServices from "../services/blogServices";
+import CommentList from "./CommentList";
 
 const Blog = ({ user }) => {
   const blogId = useParams().id;
@@ -82,6 +83,7 @@ const Blog = ({ user }) => {
           <p>{blog.user.name}</p>{" "}
         </div>
       </div>
+      <CommentList />
     </>
   );
 };
