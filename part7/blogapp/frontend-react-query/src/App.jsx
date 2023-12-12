@@ -30,10 +30,10 @@ function App() {
   return (
     <>
       <nav>
-        <Link style={style} to={"/blogs"}>
+        <Link style={style} to={"blogs"}>
           blogs
         </Link>
-        <Link style={style} to={"/users"}>
+        <Link style={style} to={"users"}>
           users
         </Link>
       </nav>
@@ -43,10 +43,14 @@ function App() {
         <button onClick={handleLogout}>logout</button>
       </h3>
       <Routes>
-        <Route path="/users" element={<UserList />} />
-        <Route path="/users/:id" element={<UserDetail />} />
-        <Route path="/blogs" element={<BlogList user={login} />} />
-        <Route path="/blogs/:id" element={<Blog user={login} />} />
+        <Route path="users">
+          <Route index element={<UserList />} />
+          <Route path=":id" element={<UserDetail />} />
+        </Route>
+        <Route path="blogs">
+          <Route index element={<BlogList user={login} />} />
+          <Route path=":id" element={<Blog user={login} />} />
+        </Route>
       </Routes>
     </>
   );
