@@ -71,7 +71,10 @@ const Blog = ({ user }) => {
   return (
     <>
       <div className="blog">
-        {blog.title} {blog.author} {userCanDelete}
+        <h2>
+          {blog.title} {blog.author}
+        </h2>{" "}
+        {userCanDelete}
         <div>
           <p>{blog.url}</p>
           <p>
