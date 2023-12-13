@@ -63,7 +63,11 @@ const Blog = ({ user }) => {
 
   const isOwnedByUser = user.username === blog.user.username;
   const userCanDelete = isOwnedByUser ? (
-    <button id={blog.id} onClick={handleDeleteBlog}>
+    <button
+      id={blog.id}
+      onClick={handleDeleteBlog}
+      className="bg-red-600 text-white px-2 py-2 text-md font-medium"
+    >
       {" delete "}
     </button>
   ) : null;
@@ -71,19 +75,27 @@ const Blog = ({ user }) => {
   return (
     <>
       <div className="blog">
-        <h2>
+        <h2 className="font-bold text-xl">
           {blog.title} {blog.author}
         </h2>{" "}
         {userCanDelete}
         <div>
-          <p>{blog.url}</p>
-          <p>
-            <span>{blog.likes} </span>
-            <button id="btn-like-blog" onClick={handleUpdateLikeBlog}>
+          <div className="mt-5">
+            <a href={blog.url} className="text-blue-500">
+              {blog.url}
+            </a>
+          </div>
+          <p className="py-4">
+            <span className="text-lg font-medium">{blog.likes} </span>
+            <button
+              id="btn-like-blog"
+              onClick={handleUpdateLikeBlog}
+              className="bg-sky-500 py-2 px-4 text-white font-medium ml-2"
+            >
               like
             </button>
           </p>
-          <p>{blog.user.name}</p>{" "}
+          <p className="font-semibold text-lg">{blog.user.name}</p>{" "}
         </div>
       </div>
       <CommentList />

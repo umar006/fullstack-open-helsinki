@@ -49,7 +49,7 @@ const BlogForm = ({ blogFormRef }) => {
 
   return (
     <>
-      <h2>create new</h2>
+      <h2 className="my-4 font-bold text-xl text-sky-500">create new</h2>
       <form onSubmit={handleCreateBlog}>
         <div>
           title{" "}
@@ -58,6 +58,11 @@ const BlogForm = ({ blogFormRef }) => {
             value={title}
             onChange={(event) => setTitle(event.target.value)}
             placeholder="title"
+            className="mt-1 px-3 py-2 bg-white border border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400
+      focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500
+      invalid:border-pink-500 invalid:text-pink-600
+      focus:invalid:border-pink-500 focus:invalid:ring-pink-500
+    "
           />
         </div>
         <div>
@@ -67,6 +72,11 @@ const BlogForm = ({ blogFormRef }) => {
             value={author}
             onChange={(event) => setAuthor(event.target.value)}
             placeholder="author"
+            className="mt-1 px-3 py-2 bg-white border border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400
+      focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500
+      invalid:border-pink-500 invalid:text-pink-600
+      focus:invalid:border-pink-500 focus:invalid:ring-pink-500
+    "
           />
         </div>
         <div>
@@ -76,9 +86,18 @@ const BlogForm = ({ blogFormRef }) => {
             value={url}
             onChange={(event) => setUrl(event.target.value)}
             placeholder="url"
+            className="mt-1 px-3 py-2 bg-white border border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400
+      focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500
+      invalid:border-pink-500 invalid:text-pink-600
+      focus:invalid:border-pink-500 focus:invalid:ring-pink-500
+    "
           />
         </div>
-        <button type="submit" id="btn-create-blog">
+        <button
+          type="submit"
+          id="btn-create-blog"
+          className="px-4 py-2 bg-sky-500 my-4 text-slate-100 font-medium"
+        >
           create
         </button>
       </form>
