@@ -1,0 +1,6 @@
+[submodule "part11/full-stack-open-pokedex"]
+	path = part11/full-stack-open-pokedex
+	url = git@github.com:umar006/full-stack-open-pokedex.git
+[submodule "part12/full-stack-open-containers"]
+	path = part12/full-stack-open-containers
+	url = git@github.com:umar006/full-stack-open-containers.git
