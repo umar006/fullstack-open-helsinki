@@ -8,6 +8,17 @@ services:
       context: ./frontend
       dockerfile: dev.Dockerfile
     ports:
-      - 5000:5173
+      - 5173:5173
     volumes:
       - ./frontend:/usr/src/app
+
+  backend:
+    image: blogapp-backend-dev
+    container_name: blogapp-backend-dev
+    build:
+      context: ./backend
+      dockerfile: dev.Dockerfile
+    ports:
+      - 3001:3001
+    volumes:
+      - ./backend:/usr/src/app
