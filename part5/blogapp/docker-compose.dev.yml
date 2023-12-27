@@ -1,0 +1,13 @@
+version: "3"
+
+services:
+  frontend:
+    image: blogapp-frontend-dev
+    container_name: blogapp-frontend-dev
+    build:
+      context: ./frontend
+      dockerfile: dev.Dockerfile
+    ports:
+      - 5000:5173
+    volumes:
+      - ./frontend:/usr/src/app
