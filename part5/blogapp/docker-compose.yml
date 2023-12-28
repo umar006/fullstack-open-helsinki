@@ -1,0 +1,11 @@
+version: "3"
+
+services:
+  frontend:
+    image: blogapp-frontend-prod
+    container_name: blogapp-frontend-prod
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - 5173:3000
