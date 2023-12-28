@@ -5,15 +5,9 @@ RUN corepack enable
 COPY . /usr/src/app
 WORKDIR /usr/src/app
 
-FROM base AS prod-deps
-RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --prod --frozen-lockfile
-
 FROM base AS build
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
 RUN pnpm run build
 
-FROM base
-COPY --from=prod-deps /usr/src/app/node_modules /usr/src/app/node_modules
-COPY --from=build /usr/src/app/dist /usr/src/app/dist
-RUN pnpm add serve -g
-CMD [ "serve", "dist" ]
+FROM nginx:alpine
+COPY --from=build /usr/src/app/dist /usr/share/nginx/html
