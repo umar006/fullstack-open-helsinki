@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import BlogList from "./components/BlogList";
+import { Outlet } from "react-router-dom";
 import LoginForm from "./components/LoginForm";
 import { setUser } from "./reducers/loginReducer";
 
@@ -26,7 +26,7 @@ function App() {
         {user.name} {"logged in "}
         <button onClick={handleLogout}>logout</button>
       </h3>
-      <BlogList />
+      <Outlet />
     </>
   );
 }
