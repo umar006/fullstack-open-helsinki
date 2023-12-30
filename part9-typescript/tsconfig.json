@@ -1,5 +1,13 @@
 {
   "compilerOptions": {
-    "noImplicitAny": true
+    "target": "esnext",
+    "strict": true,
+    "noImplicitAny": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "esModuleInterop": true,
+    "moduleResolution": "nodenext"
   }
 }
