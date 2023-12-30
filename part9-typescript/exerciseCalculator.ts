@@ -36,4 +36,7 @@ const calculateExercises = (
   };
 };
 
-console.log(calculateExercises([3, 1, 2, 4.5, 0, 3, 1], 2));
+const exerciseHours = process.argv[2].split(",").map(Number);
+const target = Number(process.argv[3]);
+
+console.log(calculateExercises(exerciseHours, target));
