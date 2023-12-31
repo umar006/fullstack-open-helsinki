@@ -36,6 +36,12 @@ app.post("/exercises", (req, res) => {
     return;
   }
 
+  const isDailyExerArray = Array.isArray(daily_exercises);
+  const isTargetStr = typeof target === "string";
+  if (!isDailyExerArray || isTargetStr) {
+    res.status(400).send({ error: "malformatted parameters" });
+  }
+
   const exercisesResult = calculateExercises(daily_exercises, target);
 
   res.send(exercisesResult);
