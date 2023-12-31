@@ -20,10 +20,10 @@ const calculateExercises = (
     }, 0) / 7;
   const success = average > target;
   const rating = Math.ceil(average);
-  let ratingDescription: string;
+
+  let ratingDescription = "good";
   if (rating <= 1) ratingDescription = "bad";
   else if (rating === 2) ratingDescription = "not bad";
-  else if (rating > 2) ratingDescription = "good";
 
   return {
     periodLength,
@@ -36,7 +36,4 @@ const calculateExercises = (
   };
 };
 
-const exerciseHours = process.argv[2].split(",").map(Number);
-const target = Number(process.argv[3]);
-
-console.log(calculateExercises(exerciseHours, target));
+export default calculateExercises;
