@@ -4,7 +4,7 @@ module.exports = {
     "plugin:@typescript-eslint/recommended",
     "plugin:@typescript-eslint/recommended-requiring-type-checking"
   ],
-  "plugins": ["@typescript-eslint"],
+  "plugins": ["@typescript-eslint", "@stylistic"],
   "env": {
     "node": true,
     "es6": true
@@ -19,7 +19,8 @@ module.exports = {
       "error",
       { "argsIgnorePattern": "^_" }
     ],
-    "no-case-declarations": "off"
+    "no-case-declarations": "off",
+    "@stylistic/object-curly-spacing": ["error", "always"],
   },
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
