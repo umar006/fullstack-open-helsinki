@@ -31,6 +31,11 @@ app.get("/bmi", (req, res) => {
 app.post("/exercises", (req, res) => {
   const { daily_exercises, target } = req.body;
 
+  if (!daily_exercises || !target) {
+    res.status(400).send({ error: "parameters missing" });
+    return;
+  }
+
   const exercisesResult = calculateExercises(daily_exercises, target);
 
   res.send(exercisesResult);
