@@ -29,12 +29,16 @@ const isString = (text: unknown): text is string => {
   return typeof text === "string" || text instanceof String;
 };
 
+const isEmptyString = (text: string): boolean => {
+  return text.length === 0;
+};
+
 const isDate = (date: string): boolean => {
   return Boolean(Date.parse(date));
 };
 
 const parsePatientName = (name: unknown): string => {
-  if (!isString(name)) {
+  if (!isString(name) || isEmptyString(name)) {
     throw new Error("Incorrect patient name");
   }
 
@@ -42,7 +46,7 @@ const parsePatientName = (name: unknown): string => {
 };
 
 const parsePatientDateOfBirth = (date: unknown): string => {
-  if (!isString(date) || !isDate(date)) {
+  if (!isString(date) || isEmptyString(date) || !isDate(date)) {
     throw new Error("Incorrect patient date of birth");
   }
 
@@ -54,7 +58,7 @@ const isGender = (gender: string): gender is Gender => {
 };
 
 const parsePatientGender = (gender: unknown): Gender => {
-  if (!isString(gender) || !isGender(gender)) {
+  if (!isString(gender) || isEmptyString(gender) || !isGender(gender)) {
     throw new Error("Incorrect patient gender");
   }
 
@@ -62,7 +66,7 @@ const parsePatientGender = (gender: unknown): Gender => {
 };
 
 const parsePatientSsn = (ssn: unknown): string => {
-  if (!isString(ssn)) {
+  if (!isString(ssn) || isEmptyString(ssn)) {
     throw new Error("Incorrect patient ssn");
   }
 
@@ -70,7 +74,7 @@ const parsePatientSsn = (ssn: unknown): string => {
 };
 
 const parsePatientOccupation = (occupation: unknown): string => {
-  if (!isString(occupation)) {
+  if (!isString(occupation) || isEmptyString(occupation)) {
     throw new Error("Incorrect patient occupation");
   }
 
