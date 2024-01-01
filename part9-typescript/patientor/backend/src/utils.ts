@@ -19,7 +19,7 @@ export const toNewPatient = (data: unknown): NewPatient => {
     dateOfBirth: parsePatientDateOfBirth(data.dateOfBirth),
     gender: parsePatientGender(data.gender),
     ssn: parsePatientSsn(data.ssn),
-    occupation: data.occupation,
+    occupation: parsePatientOccupation(data.occupation),
   };
 
   return newPatient;
@@ -67,4 +67,12 @@ const parsePatientSsn = (ssn: unknown): string => {
   }
 
   return ssn;
+};
+
+const parsePatientOccupation = (occupation: unknown): string => {
+  if (!isString(occupation)) {
+    throw new Error("Incorrect patient occupation");
+  }
+
+  return occupation;
 };
