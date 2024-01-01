@@ -9,11 +9,19 @@ patientRouter.get("/", (_req, res) => {
 });
 
 patientRouter.post("/", (req, res) => {
-  const newPatient = toNewPatient(req.body);
+  try {
+    const newPatient = toNewPatient(req.body);
 
-  const addedPatient = patientServices.create(newPatient);
+    const addedPatient = patientServices.create(newPatient);
 
-  res.send(addedPatient);
+    res.send(addedPatient);
+  } catch(error: unknown) {
+    let errorMessage = "Something went wrong.";
+    if (error instanceof Error) {
+      errorMessage += " Error: " + error.message;
+    }
+    res.status(400).send(errorMessage);
+  }
 });
 
 export default patientRouter;
