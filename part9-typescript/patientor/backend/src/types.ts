@@ -6,6 +6,8 @@ export interface DiagnosisData {
 
 export type Gender = "male" | "female" | "other";
 
+export type NonSensitivePatient = Omit<Patient, "ssn">;
+
 export interface Patient {
   id: string;
   name: string;
