@@ -18,7 +18,7 @@ export const toNewPatient = (data: unknown): NewPatient => {
     name: parsePatientName(data.name),
     dateOfBirth: parsePatientDateOfBirth(data.dateOfBirth),
     gender: parsePatientGender(data.gender),
-    ssn: data.ssn,
+    ssn: parsePatientSsn(data.ssn),
     occupation: data.occupation,
   };
 
@@ -59,4 +59,12 @@ const parsePatientGender = (gender: unknown): Gender => {
   }
 
   return gender;
+};
+
+const parsePatientSsn = (ssn: unknown): string => {
+  if (!isString(ssn)) {
+    throw new Error("Incorrect patient ssn");
+  }
+
+  return ssn;
 };
