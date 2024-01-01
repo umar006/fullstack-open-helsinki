@@ -4,7 +4,15 @@ export interface DiagnosisData {
   latin?: string;
 }
 
-export type Gender = "male" | "female" | "other";
+export const GENDER = {
+  Male: "male",
+  Female: "female",
+  Other: "other",
+} as const;
+
+type GenderKey = keyof typeof GENDER;
+
+export type Gender = (typeof GENDER)[GenderKey];
 
 export type NonSensitivePatient = Omit<Patient, "ssn">;
 

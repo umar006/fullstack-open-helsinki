@@ -1,4 +1,4 @@
-import { NewPatient } from "./types";
+import { GENDER, Gender, NewPatient } from "./types";
 
 export const toNewPatient = (data: unknown): NewPatient => {
   if (!data || typeof data !== "object") {
@@ -17,7 +17,7 @@ export const toNewPatient = (data: unknown): NewPatient => {
   const newPatient: NewPatient = {
     name: parsePatientName(data.name),
     dateOfBirth: parsePatientDateOfBirth(data.dateOfBirth),
-    gender: data.gender,
+    gender: parsePatientGender(data.gender),
     ssn: data.ssn,
     occupation: data.occupation,
   };
@@ -47,4 +47,16 @@ const parsePatientDateOfBirth = (date: unknown): string => {
   }
 
   return date;
+};
+
+const isGender = (gender: string): gender is Gender => {
+  return Object.values(GENDER).map(toString).includes(gender);
+};
+
+const parsePatientGender = (gender: unknown): Gender => {
+  if (!isString(gender) || !isGender(gender)) {
+    throw new Error("Incorrect patient gender");
+  }
+
+  return gender;
 };
