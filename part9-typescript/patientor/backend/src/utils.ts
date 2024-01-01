@@ -50,7 +50,7 @@ const parsePatientDateOfBirth = (date: unknown): string => {
 };
 
 const isGender = (gender: string): gender is Gender => {
-  return Object.values(GENDER).map(toString).includes(gender);
+  return Object.values(GENDER).map((gender) => gender.toString()).includes(gender);
 };
 
 const parsePatientGender = (gender: unknown): Gender => {
