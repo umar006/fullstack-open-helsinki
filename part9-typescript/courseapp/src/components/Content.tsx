@@ -1,3 +1,30 @@
+interface CoursePartBase {
+  id: number;
+  name: string;
+  exerciseCount: number;
+}
+
+interface CoursePartBasic extends CoursePartBase {
+  description: string;
+  kind: "basic";
+}
+
+interface CoursePartGroup extends CoursePartBase {
+  groupProjectCount: number;
+  kind: "group";
+}
+
+interface CoursePartBackground extends CoursePartBase {
+  backgroundMaterial: string;
+  description: string;
+  kind: "background";
+}
+
+export type CoursePart =
+  | CoursePartBasic
+  | CoursePartGroup
+  | CoursePartBackground;
+
 interface Content {
   id: number;
   name: string;
@@ -5,7 +32,7 @@ interface Content {
 }
 
 interface ContentProps {
-  content: Content[];
+  content: CoursePart[];
 }
 
 const Content = ({ content }: ContentProps): JSX.Element => {

@@ -1,29 +1,33 @@
-import Content from "./components/Content";
+import Content, { type CoursePart } from "./components/Content";
 import Header from "./components/Header";
 import Total from "./components/Total";
 
 function App() {
   const courseName = "Half Stack application development";
-  const courseParts = [
+  const courseParts: CoursePart[] = [
     {
+      id: 1,
       name: "Fundamentals",
       exerciseCount: 10,
       description: "This is an awesome course part",
       kind: "basic",
     },
     {
+      id: 2,
       name: "Using props to pass data",
       exerciseCount: 7,
       groupProjectCount: 3,
       kind: "group",
     },
     {
+      id: 3,
       name: "Basics of type Narrowing",
       exerciseCount: 7,
       description: "How to go from unknown to string",
       kind: "basic",
     },
     {
+      id: 4,
       name: "Deeper type usage",
       exerciseCount: 14,
       description: "Confusing description",
@@ -32,6 +36,7 @@ function App() {
       kind: "background",
     },
     {
+      id: 5,
       name: "TypeScript in frontend",
       exerciseCount: 10,
       description: "a hard part",
