@@ -52,7 +52,7 @@ function App() {
   return (
     <div>
       <Header name={courseName} />
-      <Content content={courseParts} />
+      <Content contents={courseParts} />
       <Total total={totalExercises} />
     </div>
   );
