@@ -1,5 +1,13 @@
+import Header from "./components/Header";
+
 function App() {
-  return <h1>Hello, World!</h1>;
+  const courseName = "Half Stack application development";
+
+  return (
+    <div>
+      <Header name={courseName} />
+    </div>
+  );
 }
 
 export default App;
