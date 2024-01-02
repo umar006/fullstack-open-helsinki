@@ -22,10 +22,16 @@ interface CoursePartBackground extends CoursePartBaseDescription {
   kind: "background";
 }
 
+interface CoursePartSpecial extends CoursePartBaseDescription {
+  requirements: string[];
+  kind: "special";
+}
+
 export type CoursePart =
   | CoursePartBasic
   | CoursePartGroup
-  | CoursePartBackground;
+  | CoursePartBackground
+  | CoursePartSpecial;
 
 interface ContentProps {
   contents: CoursePart[];
@@ -62,6 +68,13 @@ const Part = ({ content }: PartProps): JSX.Element => {
         <p>
           {content.name} | {content.kind} | {content.exerciseCount} |{" "}
           {content.description} | {content.backgroundMaterial}
+        </p>
+      );
+    case "special":
+      return (
+        <p>
+          {content.name} | {content.kind} | {content.exerciseCount} |{" "}
+          {content.requirements.join(", ")} | {content.description}
         </p>
       );
     default:

@@ -42,6 +42,14 @@ function App() {
       description: "a hard part",
       kind: "basic",
     },
+    {
+      id: 6,
+      name: "Backend development",
+      exerciseCount: 21,
+      description: "Typing the backend",
+      requirements: ["nodejs", "jest"],
+      kind: "special",
+    },
   ];
 
   const totalExercises = courseParts.reduce(
