@@ -1,23 +1,30 @@
 import { useEffect, useState } from "react";
-import { Diary } from "./types";
 import diaryServices from "./services/diaryServices";
+import Diary from "./components/Diary";
 
 function App() {
   const [diaries, setDiaries] = useState<Diary[]>([]);
 
   useEffect(() => {
     const fetchDiaries = async () => {
-      const diariesList = await diaryServices.getAll();
+      const diaryList = await diaryServices.getAll();
 
-      setDiaries(diariesList);
+      setDiaries(diaryList);
     };
 
     fetchDiaries().catch((e) => console.error(e));
   }, []);
 
-  console.log(diaries);
+  const diaryList = diaries.map((diary) => (
+    <Diary key={diary.id} diary={diary} />
+  ));
 
-  return <h1>Hello bro</h1>;
+  return (
+    <div>
+      <h2>Diary entries</h2>
+      {diaryList}
+    </div>
+  );
 }
 
 export default App;
