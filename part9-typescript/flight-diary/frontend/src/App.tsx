@@ -25,7 +25,7 @@ function App() {
     <Diary key={diary.id} diary={diary} />
   ));
 
-  const addDiary = async (event: React.SyntheticEvent) => {
+  const addDiary = (event: React.SyntheticEvent) => {
     event.preventDefault();
 
     const date = dateRef.current?.value;
@@ -56,9 +56,14 @@ function App() {
       weather,
       comment,
     };
-    const addedDiary = await diaryServices.create(newDiary);
-
-    setDiaries((currVal) => currVal.concat(addedDiary));
+    diaryServices
+      .create(newDiary)
+      .then((addedDiary) => {
+        setDiaries((currVal) => currVal.concat(addedDiary));
+      })
+      .catch((error: unknown) => {
+        if (error instanceof Error) console.error(error.message);
+      });
   };
 
   return (
