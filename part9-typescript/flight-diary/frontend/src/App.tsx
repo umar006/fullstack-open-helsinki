@@ -5,8 +5,8 @@ import Diary from "./components/Diary";
 function App() {
   const [diaries, setDiaries] = useState<Diary[]>([]);
 
-  const [date, setDate] = useState("");
-  const [visibility, setVisibility] = useState("");
+  const dateRef = useRef<ElementRef<"input">>(null);
+  const visibilityRef = useRef<ElementRef<"select">>(null);
   const weatherRef = useRef<ElementRef<"select">>(null);
   const commentRef = useRef<ElementRef<"input">>(null);
 
@@ -24,12 +24,6 @@ function App() {
     <Diary key={diary.id} diary={diary} />
   ));
 
-  const handleDate = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setDate(event.target.value);
-  };
-
-  const handleVisibility = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setVisibility(event.target.value);
   };
 
   return (
@@ -37,10 +31,10 @@ function App() {
       <h2>Add new entry</h2>
       <form>
         <label htmlFor="date">date </label>
-        <input value={date} onChange={handleDate} name="date" type="date" />
+        <input ref={dateRef} name="date" type="date" />
         <br />
         <label htmlFor="visibility">visibility </label>
-        <select onChange={handleVisibility} name="visibility">
+        <select ref={visibilityRef} name="visibility">
           <option value="">Choose a visibility</option>
           <option value="great">Great</option>
           <option value="good">Good</option>
