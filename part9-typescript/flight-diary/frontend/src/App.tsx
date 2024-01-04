@@ -5,6 +5,7 @@ import Diary from "./components/Diary";
 function App() {
   const [diaries, setDiaries] = useState<Diary[]>([]);
 
+  const [date, setDate] = useState("");
   useEffect(() => {
     const fetchDiaries = async () => {
       const diaryList = await diaryServices.getAll();
@@ -19,12 +20,16 @@ function App() {
     <Diary key={diary.id} diary={diary} />
   ));
 
+  const handleDate = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setDate(event.target.value);
+  };
+
   return (
     <div>
       <h2>Add new entry</h2>
       <form>
         <label htmlFor="date">date </label>
-        <input name="date" type="date" />
+        <input value={date} onChange={handleDate} name="date" type="date" />
         <br />
         <label htmlFor="visibility">visibility </label>
         <select name="visibility">
