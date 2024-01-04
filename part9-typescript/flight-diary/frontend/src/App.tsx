@@ -6,6 +6,7 @@ function App() {
   const [diaries, setDiaries] = useState<Diary[]>([]);
 
   const [date, setDate] = useState("");
+  const [visibility, setVisibility] = useState("");
   useEffect(() => {
     const fetchDiaries = async () => {
       const diaryList = await diaryServices.getAll();
@@ -24,6 +25,10 @@ function App() {
     setDate(event.target.value);
   };
 
+  const handleVisibility = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setVisibility(event.target.value);
+  };
+
   return (
     <div>
       <h2>Add new entry</h2>
@@ -32,7 +37,8 @@ function App() {
         <input value={date} onChange={handleDate} name="date" type="date" />
         <br />
         <label htmlFor="visibility">visibility </label>
-        <select name="visibility">
+        <select onChange={handleVisibility} name="visibility">
+          <option value="">Choose a visibility</option>
           <option value="great">Great</option>
           <option value="good">Good</option>
           <option value="ok">Ok</option>
