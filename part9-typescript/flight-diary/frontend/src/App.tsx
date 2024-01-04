@@ -8,6 +8,8 @@ function App() {
   const [date, setDate] = useState("");
   const [visibility, setVisibility] = useState("");
   const weatherRef = useRef<ElementRef<"select">>(null);
+  const commentRef = useRef<ElementRef<"input">>(null);
+
   useEffect(() => {
     const fetchDiaries = async () => {
       const diaryList = await diaryServices.getAll();
@@ -57,7 +59,7 @@ function App() {
         </select>
         <br />
         <label htmlFor="comment">comment </label>
-        <input name="comment" />
+        <input ref={commentRef} name="comment" />
         <br />
         <button>add</button>
       </form>
