@@ -31,6 +31,9 @@ function App() {
     const visibility = visibilityRef.current?.value;
     const weather = weatherRef.current?.value;
     const comment = commentRef.current?.value;
+    if (!date || !visibility || !weather || !comment) {
+      return;
+    }
 
     const newDiary = {
       date,
