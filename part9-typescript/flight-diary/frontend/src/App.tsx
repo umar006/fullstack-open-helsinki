@@ -1,6 +1,6 @@
 import { ElementRef, useEffect, useRef, useState } from "react";
-import diaryServices from "./services/diaryServices";
 import Diary from "./components/Diary";
+import diaryServices from "./services/diaryServices";
 
 function App() {
   const [diaries, setDiaries] = useState<Diary[]>([]);
@@ -24,12 +24,29 @@ function App() {
     <Diary key={diary.id} diary={diary} />
   ));
 
+  const addDiary = async (event: React.SyntheticEvent) => {
+    event.preventDefault();
+
+    const date = dateRef.current?.value;
+    const visibility = visibilityRef.current?.value;
+    const weather = weatherRef.current?.value;
+    const comment = commentRef.current?.value;
+
+    const newDiary = {
+      date,
+      visibility,
+      weather,
+      comment,
+    };
+    const addedDiary = await diaryServices.create(newDiary);
+
+    setDiaries((currVal) => currVal.concat(addedDiary));
   };
 
   return (
     <div>
       <h2>Add new entry</h2>
-      <form>
+      <form onSubmit={addDiary}>
         <label htmlFor="date">date </label>
         <input ref={dateRef} name="date" type="date" />
         <br />
