@@ -1,7 +1,7 @@
 import { ElementRef, useEffect, useRef, useState } from "react";
 import Diary from "./components/Diary";
 import diaryServices from "./services/diaryServices";
-import { VISIBILITY, Visibility, WEATHER, Weather } from "./types";
+import { isVisiblity, isWeather } from "./utils";
 
 function App() {
   const [diaries, setDiaries] = useState<Diary[]>([]);
@@ -36,16 +36,6 @@ function App() {
       return;
     }
 
-    const isVisiblity = (visibility: string): visibility is Visibility => {
-      return Object.values(VISIBILITY)
-        .map((visibility) => visibility.toString())
-        .includes(visibility);
-    };
-    const isWeather = (weather: string): weather is Weather => {
-      return Object.values(WEATHER)
-        .map((weather) => weather.toString())
-        .includes(weather);
-    };
     if (!isVisiblity(visibility) || !isWeather(weather)) {
       return;
     }
