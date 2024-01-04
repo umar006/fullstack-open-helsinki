@@ -1,4 +1,4 @@
-const WEATHER = {
+export const WEATHER = {
   Sunny: "sunny",
   Rainy: "rainy",
   Cloudy: "cloudy",
@@ -6,7 +6,7 @@ const WEATHER = {
   Windy: "windy",
 } as const;
 
-type Weather = (typeof WEATHER)[keyof typeof WEATHER];
+export type Weather = (typeof WEATHER)[keyof typeof WEATHER];
 
 export const VISIBILITY = {
   Great: "great",

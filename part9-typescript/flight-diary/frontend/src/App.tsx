@@ -1,7 +1,7 @@
 import { ElementRef, useEffect, useRef, useState } from "react";
 import Diary from "./components/Diary";
 import diaryServices from "./services/diaryServices";
-import { VISIBILITY, Visibility, WEATHER } from "./types";
+import { VISIBILITY, Visibility, WEATHER, Weather } from "./types";
 
 function App() {
   const [diaries, setDiaries] = useState<Diary[]>([]);
@@ -41,7 +41,12 @@ function App() {
         .map((visibility) => visibility.toString())
         .includes(visibility);
     };
-    if (!isVisiblity(visibility)) {
+    const isWeather = (weather: string): weather is Weather => {
+      return Object.values(WEATHER)
+        .map((weather) => weather.toString())
+        .includes(weather);
+    };
+    if (!isVisiblity(visibility) || !isWeather(weather)) {
       return;
     }
 
