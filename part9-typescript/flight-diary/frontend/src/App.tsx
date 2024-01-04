@@ -21,6 +21,33 @@ function App() {
 
   return (
     <div>
+      <h2>Add new entry</h2>
+      <form>
+        <label htmlFor="date">date </label>
+        <input name="date" type="date" />
+        <br />
+        <label htmlFor="visibility">visibility </label>
+        <select name="visibility">
+          <option value="great">Great</option>
+          <option value="good">Good</option>
+          <option value="ok">Ok</option>
+          <option value="poor">Poor</option>
+        </select>
+        <br />
+        <label htmlFor="weather">weather </label>
+        <select name="weather">
+          <option value="sunny">Sunny</option>
+          <option value="rainy">Rainy</option>
+          <option value="cloudy">Cloudy</option>
+          <option value="stormy">Stormy</option>
+          <option value="windy">Windy</option>
+        </select>
+        <br />
+        <label htmlFor="comment">comment </label>
+        <input name="comment" />
+        <br />
+        <button>add</button>
+      </form>
       <h2>Diary entries</h2>
       {diaryList}
     </div>
