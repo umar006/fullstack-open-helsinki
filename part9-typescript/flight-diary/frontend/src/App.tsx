@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { ElementRef, useEffect, useRef, useState } from "react";
 import diaryServices from "./services/diaryServices";
 import Diary from "./components/Diary";
 
@@ -7,6 +7,7 @@ function App() {
 
   const [date, setDate] = useState("");
   const [visibility, setVisibility] = useState("");
+  const weatherRef = useRef<ElementRef<"select">>(null);
   useEffect(() => {
     const fetchDiaries = async () => {
       const diaryList = await diaryServices.getAll();
@@ -46,7 +47,8 @@ function App() {
         </select>
         <br />
         <label htmlFor="weather">weather </label>
-        <select name="weather">
+        <select ref={weatherRef} name="weather">
+          <option value="">Choose a weather</option>
           <option value="sunny">Sunny</option>
           <option value="rainy">Rainy</option>
           <option value="cloudy">Cloudy</option>
