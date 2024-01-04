@@ -8,14 +8,14 @@ const WEATHER = {
 
 type Weather = (typeof WEATHER)[keyof typeof WEATHER];
 
-const VISIBILITY = {
+export const VISIBILITY = {
   Great: "great",
   Good: "good",
   Ok: "ok",
   Poor: "poor",
 } as const;
 
-type Visibility = (typeof VISIBILITY)[keyof typeof VISIBILITY];
+export type Visibility = (typeof VISIBILITY)[keyof typeof VISIBILITY];
 
 export interface Diary {
   id: number;
