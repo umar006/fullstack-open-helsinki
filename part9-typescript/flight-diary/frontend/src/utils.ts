@@ -43,6 +43,14 @@ const parseWeather = (weather: unknown): Weather => {
   return weather;
 };
 
+const parseComment = (comment: unknown): string => {
+  if (!isString(comment)) {
+    throw new Error("Incorrect comment");
+  }
+
+  return comment;
+};
+
 export const toNewDiary = (diary: unknown): NewDiary => {
   if (!diary || typeof diary !== "object") throw new Error("Missing diary");
 
@@ -58,7 +66,7 @@ export const toNewDiary = (diary: unknown): NewDiary => {
     date: parseDate(diary.date),
     visibility: parseVisibility(diary.visibility),
     weather: parseWeather(diary.weather),
-    comment: diary.comment,
+    comment: parseComment(diary.comment),
   };
 
   return newDiary;
