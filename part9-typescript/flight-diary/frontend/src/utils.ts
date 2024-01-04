@@ -46,7 +46,7 @@ export const toNewDiary = (diary: unknown): NewDiary => {
   }
 
   const newDiary: NewDiary = {
-    date: diary.date,
+    date: parseDate(diary.date),
     visibility: diary.visibility,
     weather: diary.weather,
     comment: diary.comment,
