@@ -1,7 +1,7 @@
 import { ElementRef, useEffect, useRef, useState } from "react";
 import Diary from "./components/Diary";
 import diaryServices from "./services/diaryServices";
-import { isVisiblity, isWeather } from "./utils";
+import { toNewDiary } from "./utils";
 
 function App() {
   const [diaries, setDiaries] = useState<Diary[]>([]);
@@ -32,20 +32,13 @@ function App() {
     const visibility = visibilityRef.current?.value;
     const weather = weatherRef.current?.value;
     const comment = commentRef.current?.value;
-    if (!date || !visibility || !weather || !comment) {
-      return;
-    }
 
-    if (!isVisiblity(visibility) || !isWeather(weather)) {
-      return;
-    }
-
-    const newDiary = {
+    const newDiary = toNewDiary({
       date,
       visibility,
       weather,
       comment,
-    };
+    });
     diaryServices
       .create(newDiary)
       .then((addedDiary) => {
