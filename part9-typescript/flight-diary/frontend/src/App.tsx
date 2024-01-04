@@ -33,20 +33,24 @@ function App() {
     const weather = weatherRef.current?.value;
     const comment = commentRef.current?.value;
 
-    const newDiary = toNewDiary({
-      date,
-      visibility,
-      weather,
-      comment,
-    });
-    diaryServices
-      .create(newDiary)
-      .then((addedDiary) => {
-        setDiaries((currVal) => currVal.concat(addedDiary));
-      })
-      .catch((error: unknown) => {
-        if (error instanceof Error) console.error(error.message);
+    try {
+      const newDiary = toNewDiary({
+        date,
+        visibility,
+        weather,
+        comment,
       });
+      diaryServices
+        .create(newDiary)
+        .then((addedDiary) => {
+          setDiaries((currVal) => currVal.concat(addedDiary));
+        })
+        .catch((error: unknown) => {
+          console.error(error);
+        });
+    } catch (error: unknown) {
+      console.error(error);
+    }
   };
 
   return (
