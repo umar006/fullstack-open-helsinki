@@ -9,6 +9,15 @@ const getAllNonSensitivePatients = (): NonSensitivePatient[] => {
   }));
 };
 
+const getOne = (patientId: string): Patient | undefined => {
+  const patient = patients.find((patient) => patient.id === patientId );
+  if (patient && !patient.entries) {
+    patient.entries = [];
+  }
+
+  return patient;
+};
+
 const create = (data: NewPatient): Patient => {
   const newPatient: Patient = {
     id: crypto.randomUUID(),
@@ -20,4 +29,4 @@ const create = (data: NewPatient): Patient => {
   return newPatient;
 };
 
-export default { getAllNonSensitivePatients, create };
+export default { getAllNonSensitivePatients, getOne, create };
