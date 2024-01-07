@@ -8,6 +8,7 @@ module.exports = {
     plugins: ['@typescript-eslint', '@stylistic'],
     rules: {
         '@stylistic/semi': ["error", "always"],
+        '@stylistic/array-type': ["error", "array-simple"],
         '@stylistic/array-bracket-spacing': ["error", "always"],
         '@stylistic/arrow-parens': ["error", "always"],
         '@stylistic/arrow-spacing': "error",
