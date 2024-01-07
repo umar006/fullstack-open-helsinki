@@ -36,6 +36,17 @@ interface EntryHospital extends EntryBase {
   discharge: Discharge;
 }
 
+interface SickLeave {
+  startDate: string;
+  endDate: string;
+}
+
+interface EntryOccupationalHealthCare extends EntryBase {
+  type: "OccupationalHealthcare",
+  employerName: string;
+  sickLeave?: SickLeave;
+}
+
 
 export interface Patient {
   id: string;
