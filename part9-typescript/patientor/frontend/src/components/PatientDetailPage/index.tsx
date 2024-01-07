@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import patientService from "../../services/patients";
 import { Patient } from "../../types";
+import PatientEntryList from "./PatientEntryList";
 
 const PatientDetailPage = () => {
   const [patient, setPatient] = useState<Patient | undefined>();
@@ -20,19 +21,6 @@ const PatientDetailPage = () => {
     return <h2>Patient Not Found</h2>;
   }
 
-  const entryList = patient.entries.map((entry) => (
-    <div key={entry.id}>
-      <p>
-        {entry.date} | {entry.description}
-      </p>
-      {entry.diagnosisCodes?.map((dc, idx) => (
-        <ul key={idx}>
-          <li>{dc}</li>
-        </ul>
-      ))}
-    </div>
-  ));
-
   return (
     <div>
       <h2>{patient.name}</h2>
@@ -40,7 +28,7 @@ const PatientDetailPage = () => {
       <p>occupation: {patient.occupation}</p>
 
       <h3>entries</h3>
-      {entryList}
+      <PatientEntryList patient={patient} />
     </div>
   );
 };
