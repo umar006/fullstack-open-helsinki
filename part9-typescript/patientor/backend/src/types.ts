@@ -47,6 +47,20 @@ interface EntryOccupationalHealthCare extends EntryBase {
   sickLeave?: SickLeave;
 }
 
+const HEALTH_CHECK_RATING = {
+  Healthy: 0,
+  LowRisk: 1,
+  HighRisk: 2,
+  CriticalRisk: 3,
+} as const;
+
+type HealthCheckRating = (typeof HEALTH_CHECK_RATING)[keyof typeof HEALTH_CHECK_RATING];
+
+interface EntryHealthCheck extends EntryBase {
+  type: "HealthCheck";
+  healthCheckRating: HealthCheckRating;
+}
+
 
 export interface Patient {
   id: string;
