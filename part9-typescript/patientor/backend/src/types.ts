@@ -18,8 +18,14 @@ export type NonSensitivePatient = Omit<Patient, "ssn" | "entries">;
 
 export type NewPatient = Omit<Patient, "id">;
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-export interface Entry {}
+interface EntryBase {
+  id: string;
+  description: string;
+  date: string;
+  specialist: string;
+  diagnosisCodes?: DiagnosisData["code"][];
+}
+
 
 export interface Patient {
   id: string;
