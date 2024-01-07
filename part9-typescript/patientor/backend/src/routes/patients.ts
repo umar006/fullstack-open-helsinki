@@ -14,7 +14,6 @@ patientRouter.get("/:id", (req, res) => {
   if (!patient) {
     res.status(422).send("Patient not found");
   }
-  console.log("route", patient);
 
   res.send(patient);
 });
