@@ -26,6 +26,16 @@ interface EntryBase {
   diagnosisCodes?: DiagnosisData["code"][];
 }
 
+interface Discharge {
+  date: string;
+  criteria: string;
+}
+
+interface EntryHospital extends EntryBase {
+  type: "Hospital";
+  discharge: Discharge;
+}
+
 
 export interface Patient {
   id: string;
