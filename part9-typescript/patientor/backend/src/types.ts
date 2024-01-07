@@ -61,6 +61,8 @@ interface EntryHealthCheck extends EntryBase {
   healthCheckRating: HealthCheckRating;
 }
 
+export type Entry = EntryHospital | EntryOccupationalHealthCare | EntryHealthCheck;
+
 
 export interface Patient {
   id: string;
