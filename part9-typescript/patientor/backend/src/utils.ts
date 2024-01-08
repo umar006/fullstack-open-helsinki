@@ -16,7 +16,7 @@ export const toNewPatient = (data: unknown): NewPatient => {
 
   const newPatient: NewPatient = {
     name: parsePatientName(data.name),
-    dateOfBirth: parsePatientDateOfBirth(data.dateOfBirth),
+    dateOfBirth: parseDate(data.dateOfBirth),
     gender: parsePatientGender(data.gender),
     ssn: parsePatientSsn(data.ssn),
     occupation: parsePatientOccupation(data.occupation),
@@ -40,7 +40,11 @@ export const toNewEntry = (data: unknown): NewEntry => {
   }
 
   const newEntry: NewEntry = {
-    ...data,
+    description: data.description,
+    date: parseDate(data.date),
+    specialist: data.specialist,
+    diagnosisCodes: data.diagnosisCodes,
+    type: data.type,
   };
 
   return newEntry;
@@ -66,9 +70,9 @@ const parsePatientName = (name: unknown): string => {
   return name;
 };
 
-const parsePatientDateOfBirth = (date: unknown): string => {
+const parseDate = (date: unknown): string => {
   if (!isString(date) || isEmptyString(date) || !isDate(date)) {
-    throw new Error("Incorrect patient date of birth");
+    throw new Error("Incorrect date");
   }
 
   return date;
