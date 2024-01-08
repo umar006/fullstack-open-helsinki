@@ -1,6 +1,9 @@
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import { green, red, yellow } from "@mui/material/colors";
 import { useEffect, useState } from "react";
 import diagnosisService from "../../services/diagnoses";
-import { Diagnosis, Patient } from "../../types";
+import { Diagnosis, HealthCheckRating, Patient } from "../../types";
+import { Box } from "@mui/material";
 
 interface Props {
   patient: Patient;
@@ -34,15 +37,29 @@ const PatientEntryList = ({ patient }: Props) => {
     ));
   };
 
+  const healthCheckRatingIcon: Record<HealthCheckRating, JSX.Element> = {
+    "0": <FavoriteIcon sx={{ color: green[500] }} />,
+    "1": <FavoriteIcon sx={{ color: yellow[500] }} />,
+    "2": <FavoriteIcon sx={{ color: red[500] }} />,
+    "3": <FavoriteIcon />,
+  };
+
   const entryList = patient.entries.map((entry) => (
-    <div key={entry.id}>
+    <Box
+      key={entry.id}
+      sx={{ border: 1, borderRadius: 2, marginY: 1, paddingX: 1 }}
+    >
+      <p>{entry.date}</p>
+      <em>{entry.description}</em>
       <p>
-        {entry.date} | {entry.description}
+        {entry.type === "HealthCheck" &&
+          healthCheckRatingIcon[entry.healthCheckRating]}
       </p>
       <ul>
         {entry.diagnosisCodes && getDiagnosisByCode(entry.diagnosisCodes)}
       </ul>
-    </div>
+      <p>diagnose by {entry.specialist}</p>
+    </Box>
   ));
 
   return entryList;

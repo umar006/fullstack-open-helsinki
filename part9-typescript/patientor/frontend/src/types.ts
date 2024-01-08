@@ -46,7 +46,7 @@ const HEALTH_CHECK_RATING = {
   CriticalRisk: 3,
 } as const;
 
-type HealthCheckRating =
+export type HealthCheckRating =
   (typeof HEALTH_CHECK_RATING)[keyof typeof HEALTH_CHECK_RATING];
 
 interface EntryHealthCheck extends EntryBase {
