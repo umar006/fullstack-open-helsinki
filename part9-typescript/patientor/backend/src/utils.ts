@@ -42,7 +42,7 @@ export const toNewEntry = (data: unknown): NewEntry => {
   const newEntry: NewEntry = {
     description: parseDescription(data.description),
     date: parseDate(data.date),
-    specialist: data.specialist,
+    specialist: parseSpecialist(data.specialist),
     diagnosisCodes: data.diagnosisCodes,
     type: data.type,
   };
@@ -112,4 +112,12 @@ const parseDescription = (description: unknown): string => {
   }
 
   return description;
+};
+
+const parseSpecialist = (specialist: unknown): string => {
+  if (!isString(specialist) || isEmptyString(specialist)) {
+    throw new Error("Incorrect specialist");
+  }
+
+  return specialist;
 };
