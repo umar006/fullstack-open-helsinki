@@ -40,7 +40,7 @@ export const toNewEntry = (data: unknown): NewEntry => {
   }
 
   const newEntry: NewEntry = {
-    description: data.description,
+    description: parseDescription(data.description),
     date: parseDate(data.date),
     specialist: data.specialist,
     diagnosisCodes: data.diagnosisCodes,
@@ -104,4 +104,12 @@ const parsePatientOccupation = (occupation: unknown): string => {
   }
 
   return occupation;
+};
+
+const parseDescription = (description: unknown): string => {
+  if (!isString(description) || isEmptyString(description)) {
+    throw new Error("Incorrect description");
+  }
+
+  return description;
 };
