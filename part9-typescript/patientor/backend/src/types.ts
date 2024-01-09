@@ -36,7 +36,7 @@ interface EntryHospital extends EntryBase {
   discharge: Discharge;
 }
 
-interface SickLeave {
+export interface SickLeave {
   startDate: string;
   endDate: string;
 }

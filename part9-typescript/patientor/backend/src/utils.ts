@@ -8,6 +8,7 @@ import {
   HealthCheckRating,
   NewEntry,
   NewPatient,
+  SickLeave,
 } from "./types";
 
 export const toNewPatient = (data: unknown): NewPatient => {
@@ -113,7 +114,7 @@ export const toNewEntry = (data: unknown): NewEntry => {
       specialist: parseSpecialist(data.specialist),
       diagnosisCodes: parseDiagnosisCodes(data.diagnosisCodes),
       type: data.type,
-      sickLeave: data.sickLeave,
+      sickLeave: parseSickLeave(data.sickLeave),
       employerName: data.employerName,
     };
 
@@ -258,4 +259,21 @@ const parseHealthCheckRating = (
   }
 
   return healthCheckRating;
+};
+
+const parseSickLeave = (sickLeave: unknown): SickLeave => {
+  if (!sickLeave || typeof sickLeave !== "object") {
+    throw new Error("Incorrect or missing sick leave");
+  }
+
+  const startDateExist = "startDate" in sickLeave;
+  const endDateExist = "endDate" in sickLeave;
+  if (!startDateExist || !endDateExist) {
+    throw new Error("Incorrect sick leave: some fields are missing");
+  }
+
+  return {
+    startDate: parseDate(sickLeave.startDate),
+    endDate: parseDate(sickLeave.endDate),
+  };
 };
