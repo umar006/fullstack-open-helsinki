@@ -1,4 +1,4 @@
-export interface DiagnosisData {
+export interface Diagnosis {
   code: string;
   name: string;
   latin?: string;
@@ -23,7 +23,7 @@ interface EntryBase {
   description: string;
   date: string;
   specialist: string;
-  diagnosisCodes?: DiagnosisData["code"][];
+  diagnosisCodes?: Diagnosis["code"][];
 }
 
 interface Discharge {
