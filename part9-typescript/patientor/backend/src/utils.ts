@@ -1,4 +1,5 @@
-import { GENDER, Gender, NewEntry, NewPatient } from "./types";
+import diagnosesData from "../data/diagnoses";
+import { Diagnosis, GENDER, Gender, NewEntry, NewPatient } from "./types";
 
 export const toNewPatient = (data: unknown): NewPatient => {
   if (!data || typeof data !== "object") {
@@ -43,7 +44,7 @@ export const toNewEntry = (data: unknown): NewEntry => {
     description: parseDescription(data.description),
     date: parseDate(data.date),
     specialist: parseSpecialist(data.specialist),
-    diagnosisCodes: data.diagnosisCodes,
+    diagnosisCodes: parseDiagnosisCodes(data.diagnosisCodes),
     type: data.type,
   };
 
@@ -120,4 +121,24 @@ const parseSpecialist = (specialist: unknown): string => {
   }
 
   return specialist;
+};
+
+const isDiagnosisCodes = (dcs: unknown[]): dcs is Diagnosis["code"][] => {
+  const diagnosisCodes = diagnosesData.map((diagnosis) => diagnosis.code);
+
+  for (const dc of dcs) {
+    if (typeof dc !== "string" || !diagnosisCodes.includes(dc)) {
+      return false;
+    }
+  }
+
+  return true;
+};
+
+const parseDiagnosisCodes = (diagnosisCodes: unknown): string[] => {
+  if (!Array.isArray(diagnosisCodes) || !isDiagnosisCodes(diagnosisCodes)) {
+    throw new Error("Incorrect diagnosis codes");
+  }
+
+  return diagnosisCodes;
 };
