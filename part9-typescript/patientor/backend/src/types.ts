@@ -47,23 +47,29 @@ interface EntryOccupationalHealthCare extends EntryBase {
   sickLeave?: SickLeave;
 }
 
-const HEALTH_CHECK_RATING = {
+export const HEALTH_CHECK_RATING = {
   Healthy: 0,
   LowRisk: 1,
   HighRisk: 2,
   CriticalRisk: 3,
 } as const;
 
-type HealthCheckRating = (typeof HEALTH_CHECK_RATING)[keyof typeof HEALTH_CHECK_RATING];
+export type HealthCheckRating =
+  (typeof HEALTH_CHECK_RATING)[keyof typeof HEALTH_CHECK_RATING];
 
 interface EntryHealthCheck extends EntryBase {
   type: "HealthCheck";
   healthCheckRating: HealthCheckRating;
 }
 
-export type Entry = EntryHospital | EntryOccupationalHealthCare | EntryHealthCheck;
+export type Entry =
+  | EntryHospital
+  | EntryOccupationalHealthCare
+  | EntryHealthCheck;
 
-type UnionOmit<T, K extends string | number | symbol> = T extends unknown ? Omit<T, K> : never;
+type UnionOmit<T, K extends string | number | symbol> = T extends unknown
+  ? Omit<T, K>
+  : never;
 
 export type NewEntry = UnionOmit<Entry, "id">;
 

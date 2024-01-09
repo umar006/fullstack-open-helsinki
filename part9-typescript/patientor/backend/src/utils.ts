@@ -1,5 +1,14 @@
 import diagnosesData from "../data/diagnoses";
-import { Diagnosis, Discharge, GENDER, Gender, NewEntry, NewPatient } from "./types";
+import {
+  Diagnosis,
+  Discharge,
+  GENDER,
+  Gender,
+  HEALTH_CHECK_RATING,
+  HealthCheckRating,
+  NewEntry,
+  NewPatient,
+} from "./types";
 
 export const toNewPatient = (data: unknown): NewPatient => {
   if (!data || typeof data !== "object") {
@@ -11,7 +20,13 @@ export const toNewPatient = (data: unknown): NewPatient => {
   const genderExist = "gender" in data;
   const ssnExist = "ssn" in data;
   const occupationExist = "occupation" in data;
-  if (!nameExist || !dateOfBirthExist || !genderExist || !ssnExist || !occupationExist) {
+  if (
+    !nameExist ||
+    !dateOfBirthExist ||
+    !genderExist ||
+    !ssnExist ||
+    !occupationExist
+  ) {
     throw new Error("Incorrect data: some fields are missing");
   }
 
@@ -36,14 +51,21 @@ export const toNewEntry = (data: unknown): NewEntry => {
   const specialistExist = "specialist" in data;
   const diagnosisCodesExist = "diagnosisCodes" in data;
   const typeExist = "type" in data;
-  if (!descExist || !dateExist || !specialistExist || !diagnosisCodesExist || !typeExist) {
+  if (
+    !descExist ||
+    !dateExist ||
+    !specialistExist ||
+    !diagnosisCodesExist ||
+    !typeExist
+  ) {
     throw new Error("Incorrect data: some fields are missing");
   }
 
   let newEntry: NewEntry;
   if (data.type === "Hospital") {
     const dischargeExist = "discharge" in data;
-    if (!dischargeExist) throw new Error("Incorrect data: discharge is missing");
+    if (!dischargeExist)
+      throw new Error("Incorrect data: discharge is missing");
 
     if (typeof data.discharge !== "object") {
       throw new Error("Incorrect discharge");
@@ -56,6 +78,43 @@ export const toNewEntry = (data: unknown): NewEntry => {
       diagnosisCodes: parseDiagnosisCodes(data.diagnosisCodes),
       type: data.type,
       discharge: parseDischarge(data.discharge),
+    };
+
+    return newEntry;
+  }
+
+  if (data.type === "HealthCheck") {
+    const healthCheckRatingExist = "healthCheckRating" in data;
+    if (!healthCheckRatingExist)
+      throw new Error("Incorrect data: health check rating is missing");
+
+    newEntry = {
+      description: parseDescription(data.description),
+      date: parseDate(data.date),
+      specialist: parseSpecialist(data.specialist),
+      diagnosisCodes: parseDiagnosisCodes(data.diagnosisCodes),
+      type: data.type,
+      healthCheckRating: parseHealthCheckRating(data.healthCheckRating),
+    };
+
+    return newEntry;
+  }
+
+  if (data.type === "OccupationalHealthcare") {
+    const sickLeaveExist = "sickLeave" in data;
+    const employerNameExist = "employerName" in data;
+    if (!sickLeaveExist || !employerNameExist) {
+      throw new Error("Incorrect data: sick leave or employer name is missing");
+    }
+
+    newEntry = {
+      description: parseDescription(data.description),
+      date: parseDate(data.date),
+      specialist: parseSpecialist(data.specialist),
+      diagnosisCodes: parseDiagnosisCodes(data.diagnosisCodes),
+      type: data.type,
+      sickLeave: data.sickLeave,
+      employerName: data.employerName,
     };
 
     return newEntry;
@@ -93,7 +152,9 @@ const parseDate = (date: unknown): string => {
 };
 
 const isGender = (gender: string): gender is Gender => {
-  return Object.values(GENDER).map((gender) => gender.toString()).includes(gender);
+  return Object.values(GENDER)
+    .map((gender) => gender.toString())
+    .includes(gender);
 };
 
 const parsePatientGender = (gender: unknown): Gender => {
@@ -175,9 +236,26 @@ const parseDischarge = (discharge: unknown): Discharge => {
     throw new Error("Incorrect discharge: some fields are missing");
   }
 
-
   return {
     date: parseDate(discharge.date),
     criteria: parseString(discharge.criteria),
   };
+};
+
+const isNumber = (value: unknown): value is number => {
+  return typeof value === "number" || value instanceof Number;
+};
+
+const isHealthCheckRating = (hcr: number): hcr is HealthCheckRating => {
+  return Object.values(HEALTH_CHECK_RATING).map(Number).includes(hcr);
+};
+
+const parseHealthCheckRating = (
+  healthCheckRating: unknown,
+): HealthCheckRating => {
+  if (!isNumber(healthCheckRating) || !isHealthCheckRating(healthCheckRating)) {
+    throw new Error("Incorrect health check rating");
+  }
+
+  return healthCheckRating;
 };
