@@ -26,22 +26,32 @@ patientRouter.post("/", (req, res) => {
     const addedPatient = patientServices.create(newPatient);
 
     res.send(addedPatient);
-  } catch(error: unknown) {
+  } catch (error: unknown) {
     let errorMessage = "Something went wrong.";
     if (error instanceof Error) {
       errorMessage += " Error: " + error.message;
     }
+    console.error(error);
     res.status(400).send(errorMessage);
   }
 });
 
 patientRouter.post("/:id/entries", (req, res) => {
-  const patientId = req.params.id;
-  const newEntry = toNewEntry(req.body);
+  try {
+    const patientId = req.params.id;
+    const newEntry = toNewEntry(req.body);
 
-  const addedEntry = patientServices.createEntry(patientId, newEntry);
+    const addedEntry = patientServices.createEntry(patientId, newEntry);
 
-  res.send(addedEntry);
+    res.send(addedEntry);
+  } catch (error: unknown) {
+    let errorMessage = "Something went wrong.";
+    if (error instanceof Error) {
+      errorMessage += " Error: " + error.message;
+    }
+    console.error(error);
+    res.status(400).send(errorMessage);
+  }
 });
 
 export default patientRouter;
