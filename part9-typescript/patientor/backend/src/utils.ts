@@ -115,7 +115,7 @@ export const toNewEntry = (data: unknown): NewEntry => {
       diagnosisCodes: parseDiagnosisCodes(data.diagnosisCodes),
       type: data.type,
       sickLeave: parseSickLeave(data.sickLeave),
-      employerName: data.employerName,
+      employerName: parseEmployerName(data.employerName),
     };
 
     return newEntry;
@@ -276,4 +276,12 @@ const parseSickLeave = (sickLeave: unknown): SickLeave => {
     startDate: parseDate(sickLeave.startDate),
     endDate: parseDate(sickLeave.endDate),
   };
+};
+
+const parseEmployerName = (employerName: unknown): string => {
+  if (!isString(employerName) || isEmptyString(employerName)) {
+    throw new Error("Incorrect employer name");
+  }
+
+  return employerName;
 };
