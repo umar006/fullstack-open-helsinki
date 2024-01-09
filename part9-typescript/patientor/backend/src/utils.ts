@@ -1,5 +1,5 @@
 import diagnosesData from "../data/diagnoses";
-import { Diagnosis, GENDER, Gender, NewEntry, NewPatient } from "./types";
+import { Diagnosis, Discharge, GENDER, Gender, NewEntry, NewPatient } from "./types";
 
 export const toNewPatient = (data: unknown): NewPatient => {
   if (!data || typeof data !== "object") {
@@ -40,15 +40,28 @@ export const toNewEntry = (data: unknown): NewEntry => {
     throw new Error("Incorrect data: some fields are missing");
   }
 
-  const newEntry: NewEntry = {
-    description: parseDescription(data.description),
-    date: parseDate(data.date),
-    specialist: parseSpecialist(data.specialist),
-    diagnosisCodes: parseDiagnosisCodes(data.diagnosisCodes),
-    type: data.type,
-  };
+  let newEntry: NewEntry;
+  if (data.type === "Hospital") {
+    const dischargeExist = "discharge" in data;
+    if (!dischargeExist) throw new Error("Incorrect data: discharge is missing");
 
-  return newEntry;
+    if (typeof data.discharge !== "object") {
+      throw new Error("Incorrect discharge");
+    }
+
+    newEntry = {
+      description: parseDescription(data.description),
+      date: parseDate(data.date),
+      specialist: parseSpecialist(data.specialist),
+      diagnosisCodes: parseDiagnosisCodes(data.diagnosisCodes),
+      type: data.type,
+      discharge: parseDischarge(data.discharge),
+    };
+
+    return newEntry;
+  }
+
+  throw new Error("Incorrect data: invalid type");
 };
 
 const isString = (text: unknown): text is string => {
@@ -141,4 +154,30 @@ const parseDiagnosisCodes = (diagnosisCodes: unknown): string[] => {
   }
 
   return diagnosisCodes;
+};
+
+const parseString = (data: unknown): string => {
+  if (!isString(data) || isEmptyString(data)) {
+    throw new Error("Incorrect data type");
+  }
+
+  return data;
+};
+
+const parseDischarge = (discharge: unknown): Discharge => {
+  if (!discharge || typeof discharge !== "object") {
+    throw new Error("Incorrect or missing discharge");
+  }
+
+  const dateExist = "date" in discharge;
+  const criteriaExist = "criteria" in discharge;
+  if (!dateExist || !criteriaExist) {
+    throw new Error("Incorrect discharge: some fields are missing");
+  }
+
+
+  return {
+    date: parseDate(discharge.date),
+    criteria: parseString(discharge.criteria),
+  };
 };
