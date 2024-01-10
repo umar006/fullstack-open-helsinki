@@ -28,7 +28,7 @@ const PatientDetailPage = () => {
       <p>ssh: {patient.ssn}</p>
       <p>occupation: {patient.occupation}</p>
 
-      <PatientEntryForm />
+      <PatientEntryForm setPatient={setPatient} />
 
       <h3>entries</h3>
       <PatientEntryList patient={patient} />

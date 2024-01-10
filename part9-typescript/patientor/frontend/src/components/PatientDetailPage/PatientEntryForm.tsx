@@ -1,6 +1,58 @@
 import { Box, Button, Input, InputLabel } from "@mui/material";
+import { ElementRef, useRef } from "react";
+import { useParams } from "react-router-dom";
+import patients from "../../services/patients";
+import { EntryFormValues, Patient } from "../../types";
 
-const PatientEntryForm = () => {
+interface Props {
+  setPatient: React.Dispatch<React.SetStateAction<Patient | undefined>>;
+}
+
+const PatientEntryForm = ({ setPatient }: Props) => {
+  const { patientId } = useParams();
+
+  const descriptionRef = useRef<ElementRef<"input">>(null);
+  const dateRef = useRef<ElementRef<"input">>(null);
+  const specialistRef = useRef<ElementRef<"input">>(null);
+  const diagnosisCodesRef = useRef<ElementRef<"input">>(null);
+  const typeRef = useRef<ElementRef<"input">>(null);
+  const healthCheckRatingRef = useRef<ElementRef<"input">>(null);
+
+  const addEntry = (event: React.SyntheticEvent) => {
+    event.preventDefault();
+
+    const description = descriptionRef.current?.value;
+    const date = dateRef.current?.value;
+    const specialist = specialistRef.current?.value;
+    const diagnosisCodes = diagnosisCodesRef.current?.value;
+    const type = typeRef.current?.value;
+    const healthCheckRating = healthCheckRatingRef.current?.value;
+
+    const newEntry: EntryFormValues = {
+      description,
+      date,
+      specialist,
+      type,
+      diagnosisCodes,
+      healthCheckRating,
+    };
+
+    patients
+      .createEntry(patientId!, newEntry)
+      .then((res) => {
+        setPatient((currVal) => {
+          if (!currVal) return currVal;
+
+          const newEntries = currVal.entries.concat(res);
+          if (!newEntries) return currVal;
+
+          currVal.entries = newEntries;
+          return { ...currVal };
+        });
+      })
+      .catch((error) => console.error(error));
+  };
+
   return (
     <Box
       sx={{
@@ -12,21 +64,25 @@ const PatientEntryForm = () => {
       }}
     >
       <h3>new health check entry</h3>
-      <form>
+      <form onSubmit={addEntry}>
         <InputLabel htmlFor="description">description</InputLabel>
-        <Input id="description" />
+        <Input id="description" inputRef={descriptionRef} />
         <InputLabel htmlFor="date">date</InputLabel>
-        <Input id="date" type="date" />
+        <Input id="date" type="date" inputRef={dateRef} />
         <InputLabel htmlFor="specialist">specialist</InputLabel>
-        <Input id="specialist" />
+        <Input id="specialist" inputRef={specialistRef} />
         <InputLabel htmlFor="diagnosisCodes">diagnosis codes</InputLabel>
-        <Input id="diagnosisCodes" />
+        <Input id="diagnosisCodes" inputRef={diagnosisCodesRef} />
         <InputLabel htmlFor="type">type</InputLabel>
-        <Input id="type" />
+        <Input id="type" inputRef={typeRef} />
         <InputLabel htmlFor="healthCheckRating">health check rating</InputLabel>
-        <Input id="healthCheckRating" type="number" />
+        <Input
+          id="healthCheckRating"
+          type="number"
+          inputRef={healthCheckRatingRef}
+        />
         <br />
-        <Button variant="contained" sx={{ marginTop: 3 }}>
+        <Button variant="contained" sx={{ marginTop: 3 }} type="submit">
           add
         </Button>
       </form>
