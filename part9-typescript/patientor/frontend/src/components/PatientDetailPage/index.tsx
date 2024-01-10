@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import patientService from "../../services/patients";
 import { Patient } from "../../types";
+import PatientEntryForm from "./PatientEntryForm";
 import PatientEntryList from "./PatientEntryList";
 
 const PatientDetailPage = () => {
@@ -26,6 +27,8 @@ const PatientDetailPage = () => {
       <h2>{patient.name}</h2>
       <p>ssh: {patient.ssn}</p>
       <p>occupation: {patient.occupation}</p>
+
+      <PatientEntryForm />
 
       <h3>entries</h3>
       <PatientEntryList patient={patient} />
