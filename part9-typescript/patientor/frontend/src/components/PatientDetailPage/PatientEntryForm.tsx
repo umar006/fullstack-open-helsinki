@@ -15,6 +15,7 @@ import {
   EntryFormValues,
   EntryType,
   HEALTH_CHECK_RATING,
+  HealthCheckRating,
   Patient,
 } from "../../types";
 
@@ -47,34 +48,48 @@ const PatientEntryForm = ({ setPatient }: Props) => {
     const date = dateRef.current?.value;
     const specialist = specialistRef.current?.value;
     const diagnosisCodes = diagnosisCodesRef.current?.value;
-    const healthCheckRating = healthCheckRatingRef.current?.value;
-    const discharge = {
-      date: dischargeDateRef.current?.value,
-      criteria: dischargeCriteriaRef.current?.value,
-    };
-    const sickLeave = {
-      startDate: sickLeaveStartDateRef.current?.value,
-      endDate: sickLeaveEndDateRef.current?.value,
-    };
+    // HealthCheck entry type
+    const healthCheckRating = Number(healthCheckRatingRef.current?.value);
+    // Hospital entry type
+    const dischargeDate = dischargeDateRef.current?.value;
+    const dischargeCriteria = dischargeCriteriaRef.current?.value;
+    // EntryOccupationalHealthCare entry type
     const employerName = employerNameRef.current?.value;
+    const sickLeaveStartDate = sickLeaveStartDateRef.current?.value;
+    const sickLeaveEndDate = sickLeaveEndDateRef.current?.value;
+
+    const isHealthCheckRating = (hcr: number): hcr is HealthCheckRating => {
+      return hcr >= 0 && hcr < 4;
+    };
 
     const entryBase =
       !description || !date || !specialist || !diagnosisCodes || !type;
-    const entryHealthCheck = !healthCheckRating;
-    const entryHospital = !discharge?.date || !discharge.criteria;
+    const entryHealthCheck =
+      isNaN(healthCheckRating) || !isHealthCheckRating(healthCheckRating);
+    const entryHospital = !dischargeDate || !dischargeCriteria;
     const entryOccupationalHealthCare =
-      !sickLeave?.startDate || !sickLeave.endDate || !employerName;
+      !employerName || !sickLeaveStartDate || !sickLeaveEndDate;
+    const isDiagnosisCodesArray = Array.isArray(diagnosisCodes);
+
     if (
       entryBase ||
       entryHealthCheck ||
       entryHospital ||
-      entryOccupationalHealthCare
+      entryOccupationalHealthCare ||
+      !isDiagnosisCodesArray
     ) {
       return;
     }
 
-    const isDiagnosisCodesArray = Array.isArray(diagnosisCodes);
-    if (!isDiagnosisCodesArray) return;
+    const discharge = {
+      date: dischargeDate,
+      criteria: dischargeCriteria,
+    };
+
+    const sickLeave = {
+      startDate: sickLeaveStartDate,
+      endDate: sickLeaveEndDate,
+    };
 
     const newEntry: Record<EntryType, EntryFormValues> = {
       Hospital: {
@@ -105,7 +120,7 @@ const PatientEntryForm = ({ setPatient }: Props) => {
     };
 
     patients
-      .createEntry(patientId!, newEntry[type as EntryType])
+      .createEntry(patientId!, newEntry[type])
       .then((res) => {
         setPatient((currVal) => {
           if (!currVal) return currVal;
