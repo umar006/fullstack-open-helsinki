@@ -7,7 +7,7 @@ import {
   Select,
   Stack,
 } from "@mui/material";
-import { ElementRef, useRef } from "react";
+import { ElementRef, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import patients from "../../services/patients";
 import {
@@ -24,12 +24,12 @@ interface Props {
 
 const PatientEntryForm = ({ setPatient }: Props) => {
   const { patientId } = useParams();
+  const [type, setType] = useState<EntryType>("HealthCheck");
 
   const descriptionRef = useRef<ElementRef<"input">>(null);
   const dateRef = useRef<ElementRef<"input">>(null);
   const specialistRef = useRef<ElementRef<"input">>(null);
   const diagnosisCodesRef = useRef<ElementRef<"input">>(null);
-  const typeRef = useRef<ElementRef<"input">>(null);
   const healthCheckRatingRef = useRef<ElementRef<"input">>(null);
 
   const addEntry = (event: React.SyntheticEvent) => {
@@ -39,16 +39,31 @@ const PatientEntryForm = ({ setPatient }: Props) => {
     const date = dateRef.current?.value;
     const specialist = specialistRef.current?.value;
     const diagnosisCodes = diagnosisCodesRef.current?.value;
-    const type = typeRef.current?.value;
     const healthCheckRating = healthCheckRatingRef.current?.value;
+    const discharge = {
+      date: dischargeDateRef.current?.value,
+      criteria: dischargeCriteriaRef.current?.value,
+    };
+    const sickLeave = {
+      startDate: sickLeaveStartDateRef.current?.value,
+      endDate: sickLeaveEndDateRef.current?.value,
+    };
+    const employerName = employerNameRef.current?.value;
 
-    const newEntry: EntryFormValues = {
-      description,
-      date,
-      specialist,
-      type,
-      diagnosisCodes,
-      healthCheckRating,
+    if (
+      !description ||
+      !date ||
+      !specialist ||
+      !diagnosisCodes ||
+      !type ||
+      !healthCheckRating ||
+      !discharge ||
+      !sickLeave ||
+      !employerName
+    ) {
+      return;
+    }
+
     };
 
     patients
@@ -92,7 +107,10 @@ const PatientEntryForm = ({ setPatient }: Props) => {
         <Input id="diagnosisCodes" inputRef={diagnosisCodesRef} />
 
         <InputLabel>type</InputLabel>
-        <Select inputRef={typeRef} defaultValue={""}>
+        <Select
+          value={type}
+          onChange={(e) => setType(e.target.value as EntryType)}
+        >
           {Object.values(ENTRY_TYPE).map((type, idx) => (
             <MenuItem key={idx} value={type}>
               {type}
