@@ -72,7 +72,7 @@ const PatientEntryForm = ({ setPatient }: Props) => {
       }}
     >
       <h3>new health check entry</h3>
-      <form onSubmit={addEntry}>
+      <Stack component="form" spacing={1.5} onSubmit={addEntry}>
         <InputLabel htmlFor="description">description</InputLabel>
         <Input id="description" inputRef={descriptionRef} />
         <InputLabel htmlFor="date">date</InputLabel>
@@ -81,15 +81,8 @@ const PatientEntryForm = ({ setPatient }: Props) => {
         <Input id="specialist" inputRef={specialistRef} />
         <InputLabel htmlFor="diagnosisCodes">diagnosis codes</InputLabel>
         <Input id="diagnosisCodes" inputRef={diagnosisCodesRef} />
-        <InputLabel id="type" htmlFor="type">
-          type
-        </InputLabel>
-        <Select
-          labelId="type"
-          label="type"
-          inputRef={typeRef}
-          defaultValue={""}
-        >
+        <InputLabel>type</InputLabel>
+        <Select inputRef={typeRef} defaultValue={""}>
           {Object.values(ENTRY_TYPE).map((type, idx) => (
             <MenuItem key={idx} value={type}>
               {type}
@@ -106,7 +99,7 @@ const PatientEntryForm = ({ setPatient }: Props) => {
         <Button variant="contained" sx={{ marginTop: 3 }} type="submit">
           add
         </Button>
-      </form>
+      </Stack>
     </Box>
   );
 };
