@@ -58,19 +58,23 @@ const PatientEntryForm = ({ setPatient }: Props) => {
     };
     const employerName = employerNameRef.current?.value;
 
+    const entryBase =
+      !description || !date || !specialist || !diagnosisCodes || !type;
+    const entryHealthCheck = !healthCheckRating;
+    const entryHospital = !discharge?.date || !discharge.criteria;
+    const entryOccupationalHealthCare =
+      !sickLeave?.startDate || !sickLeave.endDate || !employerName;
     if (
-      !description ||
-      !date ||
-      !specialist ||
-      !diagnosisCodes ||
-      !type ||
-      !healthCheckRating ||
-      !discharge ||
-      !sickLeave ||
-      !employerName
+      entryBase ||
+      entryHealthCheck ||
+      entryHospital ||
+      entryOccupationalHealthCare
     ) {
       return;
     }
+
+    const isDiagnosisCodesArray = Array.isArray(diagnosisCodes);
+    if (!isDiagnosisCodesArray) return;
 
     const newEntry: Record<EntryType, EntryFormValues> = {
       Hospital: {
