@@ -6,9 +6,9 @@ import { Link, Route, Routes } from "react-router-dom";
 import { apiBaseUrl } from "./constants";
 import { Patient } from "./types";
 
+import PatientDetailPage from "./components/PatientDetailPage";
 import PatientListPage from "./components/PatientListPage";
 import patientService from "./services/patients";
-import PatientDetailPage from "./components/PatientDetailPage";
 
 const App = () => {
   const [patients, setPatients] = useState<Patient[]>([]);
