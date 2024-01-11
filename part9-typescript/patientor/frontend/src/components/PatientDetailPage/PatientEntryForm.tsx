@@ -35,6 +35,10 @@ const PatientEntryForm = ({ setPatient }: Props) => {
   // Hospital entry type
   const dischargeDateRef = useRef<ElementRef<"input">>(null);
   const dischargeCriteriaRef = useRef<ElementRef<"input">>(null);
+  // EntryOccupationalHealthCare entry type
+  const sickLeaveStartDateRef = useRef<ElementRef<"input">>(null);
+  const sickLeaveEndDateRef = useRef<ElementRef<"input">>(null);
+  const employerNameRef = useRef<ElementRef<"input">>(null);
 
   const addEntry = (event: React.SyntheticEvent) => {
     event.preventDefault();
@@ -68,10 +72,36 @@ const PatientEntryForm = ({ setPatient }: Props) => {
       return;
     }
 
+    const newEntry: Record<EntryType, EntryFormValues> = {
+      Hospital: {
+        description,
+        date,
+        specialist,
+        diagnosisCodes,
+        type: "Hospital",
+        discharge,
+      },
+      HealthCheck: {
+        description,
+        date,
+        specialist,
+        diagnosisCodes,
+        type: "HealthCheck",
+        healthCheckRating,
+      },
+      OccupationalHealthcare: {
+        description,
+        date,
+        specialist,
+        diagnosisCodes,
+        type: "OccupationalHealthcare",
+        sickLeave,
+        employerName,
+      },
     };
 
     patients
-      .createEntry(patientId!, newEntry)
+      .createEntry(patientId!, newEntry[type as EntryType])
       .then((res) => {
         setPatient((currVal) => {
           if (!currVal) return currVal;
@@ -144,6 +174,18 @@ const PatientEntryForm = ({ setPatient }: Props) => {
             <Input type="date" inputRef={dischargeDateRef} />
             <InputLabel>criteria</InputLabel>
             <Input inputRef={dischargeCriteriaRef} />
+          </>
+        )}
+
+        {type === "OccupationalHealthcare" && (
+          <>
+            <p>sick leave</p>
+            <InputLabel>employer name</InputLabel>
+            <Input inputRef={employerNameRef} />
+            <InputLabel>start date</InputLabel>
+            <Input type="date" inputRef={sickLeaveStartDateRef} />
+            <InputLabel>end date</InputLabel>
+            <Input type="date" inputRef={sickLeaveEndDateRef} />
           </>
         )}
 
