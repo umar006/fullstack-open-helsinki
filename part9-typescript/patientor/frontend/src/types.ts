@@ -65,6 +65,14 @@ type UnionOmit<T, K extends string | number | symbol> = T extends unknown
 
 export type EntryFormValues = UnionOmit<Entry, "id">;
 
+export type EntryType = Entry["type"];
+
+export const ENTRY_TYPE: Record<string, EntryType> = {
+  hospital: "Hospital",
+  healthCheck: "HealthCheck",
+  occupationalHealthcare: "OccupationalHealthcare",
+} as const;
+
 export interface Patient {
   id: string;
   name: string;
