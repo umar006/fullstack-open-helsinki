@@ -10,7 +10,13 @@ import {
 import { ElementRef, useRef } from "react";
 import { useParams } from "react-router-dom";
 import patients from "../../services/patients";
-import { ENTRY_TYPE, EntryFormValues, EntryType, Patient } from "../../types";
+import {
+  ENTRY_TYPE,
+  EntryFormValues,
+  EntryType,
+  HEALTH_CHECK_RATING,
+  Patient,
+} from "../../types";
 
 interface Props {
   setPatient: React.Dispatch<React.SetStateAction<Patient | undefined>>;
@@ -75,12 +81,16 @@ const PatientEntryForm = ({ setPatient }: Props) => {
       <Stack component="form" spacing={1.5} onSubmit={addEntry}>
         <InputLabel htmlFor="description">description</InputLabel>
         <Input id="description" inputRef={descriptionRef} />
+
         <InputLabel htmlFor="date">date</InputLabel>
         <Input id="date" type="date" inputRef={dateRef} />
+
         <InputLabel htmlFor="specialist">specialist</InputLabel>
         <Input id="specialist" inputRef={specialistRef} />
+
         <InputLabel htmlFor="diagnosisCodes">diagnosis codes</InputLabel>
         <Input id="diagnosisCodes" inputRef={diagnosisCodesRef} />
+
         <InputLabel>type</InputLabel>
         <Select inputRef={typeRef} defaultValue={""}>
           {Object.values(ENTRY_TYPE).map((type, idx) => (
@@ -89,16 +99,16 @@ const PatientEntryForm = ({ setPatient }: Props) => {
             </MenuItem>
           ))}
         </Select>
+
         <InputLabel htmlFor="healthCheckRating">health check rating</InputLabel>
-        <Input
-          id="healthCheckRating"
-          type="number"
-          inputRef={healthCheckRatingRef}
-        />
-        <br />
-        <Button variant="contained" sx={{ marginTop: 3 }} type="submit">
-          add
-        </Button>
+        <Select inputRef={healthCheckRatingRef} defaultValue={""}>
+          {Object.entries(HEALTH_CHECK_RATING).map((hcr) => (
+            <MenuItem key={hcr[1]} value={hcr[1]}>
+              {hcr[0]}
+            </MenuItem>
+          ))}
+        </Select>
+
       </Stack>
     </Box>
   );

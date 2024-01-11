@@ -39,7 +39,7 @@ interface EntryOccupationalHealthCare extends EntryBase {
   sickLeave?: SickLeave;
 }
 
-const HEALTH_CHECK_RATING = {
+export const HEALTH_CHECK_RATING = {
   Healthy: 0,
   LowRisk: 1,
   HighRisk: 2,
