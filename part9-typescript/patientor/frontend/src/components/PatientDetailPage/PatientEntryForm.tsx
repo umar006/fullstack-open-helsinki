@@ -1,8 +1,16 @@
-import { Box, Button, Input, InputLabel } from "@mui/material";
+import {
+  Box,
+  Button,
+  Input,
+  InputLabel,
+  MenuItem,
+  Select,
+  Stack,
+} from "@mui/material";
 import { ElementRef, useRef } from "react";
 import { useParams } from "react-router-dom";
 import patients from "../../services/patients";
-import { EntryFormValues, Patient } from "../../types";
+import { ENTRY_TYPE, EntryFormValues, EntryType, Patient } from "../../types";
 
 interface Props {
   setPatient: React.Dispatch<React.SetStateAction<Patient | undefined>>;
@@ -73,8 +81,21 @@ const PatientEntryForm = ({ setPatient }: Props) => {
         <Input id="specialist" inputRef={specialistRef} />
         <InputLabel htmlFor="diagnosisCodes">diagnosis codes</InputLabel>
         <Input id="diagnosisCodes" inputRef={diagnosisCodesRef} />
-        <InputLabel htmlFor="type">type</InputLabel>
-        <Input id="type" inputRef={typeRef} />
+        <InputLabel id="type" htmlFor="type">
+          type
+        </InputLabel>
+        <Select
+          labelId="type"
+          label="type"
+          inputRef={typeRef}
+          defaultValue={""}
+        >
+          {Object.values(ENTRY_TYPE).map((type, idx) => (
+            <MenuItem key={idx} value={type}>
+              {type}
+            </MenuItem>
+          ))}
+        </Select>
         <InputLabel htmlFor="healthCheckRating">health check rating</InputLabel>
         <Input
           id="healthCheckRating"
