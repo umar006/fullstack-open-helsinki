@@ -32,6 +32,9 @@ const PatientEntryForm = ({ setPatient }: Props) => {
   const diagnosisCodesRef = useRef<ElementRef<"input">>(null);
   // HealthCheck entry type
   const healthCheckRatingRef = useRef<ElementRef<"input">>(null);
+  // Hospital entry type
+  const dischargeDateRef = useRef<ElementRef<"input">>(null);
+  const dischargeCriteriaRef = useRef<ElementRef<"input">>(null);
 
   const addEntry = (event: React.SyntheticEvent) => {
     event.preventDefault();
@@ -131,6 +134,16 @@ const PatientEntryForm = ({ setPatient }: Props) => {
                 </MenuItem>
               ))}
             </Select>
+          </>
+        )}
+
+        {type === "Hospital" && (
+          <>
+            <p>discharge</p>
+            <InputLabel>date</InputLabel>
+            <Input type="date" inputRef={dischargeDateRef} />
+            <InputLabel>criteria</InputLabel>
+            <Input inputRef={dischargeCriteriaRef} />
           </>
         )}
 
