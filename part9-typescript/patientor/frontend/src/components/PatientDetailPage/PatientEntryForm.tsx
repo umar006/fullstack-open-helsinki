@@ -109,6 +109,14 @@ const PatientEntryForm = ({ setPatient }: Props) => {
           ))}
         </Select>
 
+        <div>
+          <Button variant="contained" sx={{}} type="submit">
+            add
+          </Button>
+          <Button variant="contained" color="error" sx={{ marginLeft: 2 }}>
+            cancel
+          </Button>
+        </div>
       </Stack>
     </Box>
   );
