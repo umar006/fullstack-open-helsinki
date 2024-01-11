@@ -30,6 +30,7 @@ const PatientEntryForm = ({ setPatient }: Props) => {
   const dateRef = useRef<ElementRef<"input">>(null);
   const specialistRef = useRef<ElementRef<"input">>(null);
   const diagnosisCodesRef = useRef<ElementRef<"input">>(null);
+  // HealthCheck entry type
   const healthCheckRatingRef = useRef<ElementRef<"input">>(null);
 
   const addEntry = (event: React.SyntheticEvent) => {
@@ -118,14 +119,20 @@ const PatientEntryForm = ({ setPatient }: Props) => {
           ))}
         </Select>
 
-        <InputLabel htmlFor="healthCheckRating">health check rating</InputLabel>
-        <Select inputRef={healthCheckRatingRef} defaultValue={""}>
-          {Object.entries(HEALTH_CHECK_RATING).map((hcr) => (
-            <MenuItem key={hcr[1]} value={hcr[1]}>
-              {hcr[0]}
-            </MenuItem>
-          ))}
-        </Select>
+        {type === "HealthCheck" && (
+          <>
+            <InputLabel htmlFor="healthCheckRating">
+              health check rating
+            </InputLabel>
+            <Select inputRef={healthCheckRatingRef} defaultValue={0}>
+              {Object.entries(HEALTH_CHECK_RATING).map((hcr) => (
+                <MenuItem key={hcr[1]} value={hcr[1]}>
+                  {hcr[0]}
+                </MenuItem>
+              ))}
+            </Select>
+          </>
+        )}
 
         <div>
           <Button variant="contained" sx={{}} type="submit">
