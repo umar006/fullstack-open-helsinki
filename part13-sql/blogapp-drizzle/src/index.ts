@@ -22,6 +22,10 @@ server.get<{ Params: Pick<typeof blog.$inferSelect, "id"> }>(
 
     try {
       const b = await db.select().from(blog).where(eq(blog.id, blogId));
+      if (b.length === 0) {
+        await reply.code(404).send({ error: "Blog not found" });
+      }
+
       return b[0];
     } catch (e) {
       console.error(e);
