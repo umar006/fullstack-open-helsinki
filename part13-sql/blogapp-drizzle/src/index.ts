@@ -29,6 +29,23 @@ server.get<{ Params: Pick<typeof blog.$inferSelect, "id"> }>(
   },
 );
 
+server.delete<{ Params: Pick<typeof blog.$inferSelect, "id"> }>(
+  "/api/blogs/:id",
+  async (req, reply) => {
+    const blogId = req.params.id;
+
+    try {
+      const b = await db
+        .delete(blog)
+        .where(eq(blog.id, blogId))
+        .returning({ deletedId: blog.id });
+      return b[0];
+    } catch (e) {
+      console.error(e);
+    }
+  },
+);
+
 server.listen({ port: 3001 }, (err, address) => {
   if (err) {
     console.error(err);
