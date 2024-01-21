@@ -49,6 +49,25 @@ const blogRoute: FastifyPluginCallback = (fastify, _, done) => {
     },
   );
 
+  fastify.put<{
+    Params: Pick<typeof blog.$inferSelect, "id">;
+    Body: Partial<Omit<typeof blog.$inferInsert, "id">>;
+  }>("/:id", async (req, reply) => {
+    const blogId = req.params.id;
+    const body = req.body;
+
+    try {
+      const b = await db
+        .update(blog)
+        .set(body)
+        .where(eq(blog.id, blogId))
+        .returning({ updatedId: blog.id });
+      return b[0];
+    } catch (e) {
+      console.error(e);
+    }
+  });
+
   done();
 };
 
